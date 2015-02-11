@@ -1,8 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package edu.esprit.technique;
 
-
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,41 +15,36 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
- 
+/**
+ *
+ * @author Houssem
+ */
 public class MyConnection {
+    Properties properties;
+    private String url;
+    private String login;
+    private String password;
+    private static Connection instance;
 
-     public static Connection myinstance=null;
-     String url;
-     String username;
-     String password;
-     Properties prop;
+    private MyConnection() {
+            try {
+                properties = new Properties();
+                properties.load(new FileInputStream(new File("Configuration.properties")));
+                url = properties.getProperty("url");
+                login = properties.getProperty("login");
+                password = properties.getProperty("password");
+                instance= DriverManager.getConnection(url, login, password);
+                System.out.println("Connexion établie");
+            } catch (SQLException | IOException ex) {
+                System.out.println("Connexion non établie");
+                Logger.getLogger(MyConnection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     
-    private MyConnection()
-  {
-   prop=new Properties();
-       try {
-           prop.load(new FileInputStream("Config.properties"));
-           url =prop.getProperty("url");
-           username=prop.getProperty("username");
-           password=prop.getProperty("password");
-          
-       } catch (IOException ex) {
-           Logger.getLogger(MyConnection.class.getName()).log(Level.SEVERE, null, ex);
-       }
-         try {
-             myinstance=DriverManager.getConnection(url, username, password);
-             System.out.println("Connexion etablie");
-         } catch (SQLException ex) {
-             Logger.getLogger(MyConnection.class.getName()).log(Level.SEVERE, null, ex);
-         }
-
-  }
-  
-  public static Connection getInstance(){
-      if(myinstance==null)
-     new MyConnection();
-      return myinstance;
-  }
-  
+    public static Connection getInstance() {
+        if (instance == null) {
+            new MyConnection();
+        }
+        return instance;
+    }
 }

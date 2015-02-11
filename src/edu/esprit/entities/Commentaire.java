@@ -5,81 +5,48 @@
  */
 package edu.esprit.entities;
 
-
+/**
+ *
+ * @author Houssem
+ */
 public class Commentaire {
-    private String idCommentaire ;
-        private String idClient ;
-    private String idOffre ;
-        private int sujetCommentaire ;
-    private String contenu ;
-
     
+    private String idCommentaire;
+    private Client client;
+    private Offre offre;
+    private String contenu;
+
     public String getIdCommentaire() {
         return idCommentaire;
     }
 
-    /**
-     * @param idCommentaire the idCommentaire to set
-     */
     public void setIdCommentaire(String idCommentaire) {
         this.idCommentaire = idCommentaire;
     }
 
-    /**
-     * @return the idClient
-     */
-    public String getIdClient() {
-        return idClient;
+    public Client getClient() {
+        return client;
     }
 
-    /**
-     * @param idClient the idClient to set
-     */
-    public void setIdClient(String idClient) {
-        this.idClient = idClient;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    /**
-     * @return the idOffre
-     */
-    public String getIdOffre() {
-        return idOffre;
+    public Offre getOffre() {
+        return offre;
     }
 
-    /**
-     * @param idOffre the idOffre to set
-     */
-    public void setIdOffre(String idOffre) {
-        this.idOffre = idOffre;
+    public void setOffre(Offre offre) {
+        this.offre = offre;
     }
 
-    /**
-     * @return the sujetCommentaire
-     */
-    public int getSujetCommentaire() {
-        return sujetCommentaire;
-    }
-
-    /**
-     * @param sujetCommentaire the sujetCommentaire to set
-     */
-    public void setSujetCommentaire(int sujetCommentaire) {
-        this.sujetCommentaire = sujetCommentaire;
-    }
-
-    /**
-     * @return the contenu
-     */
     public String getContenu() {
         return contenu;
     }
 
-    /**
-     * @param contenu the contenu to set
-     */
     public void setContenu(String contenu) {
         this.contenu = contenu;
     }
-
-
+    
+    
 }

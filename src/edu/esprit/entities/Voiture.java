@@ -5,121 +5,56 @@
  */
 package edu.esprit.entities;
 
-import java.util.Date;
-
 /**
  *
- * @author amina jebari
+ * @author Houssem
  */
 public class Voiture {
-    
-      private String matricule;
-     private String idAgence;
-
+    private String matricule;
+    private Agence agence;
     private int nbrPlace;
     private String typeVoiture;
-    private int climatise;
-private Date datePremiereCirculation;
+    private boolean etat;
 
-public Voiture(String mat,String id,int nb,String type,int clim ) {
-      this.setMatricule(mat);
-      this.climatise=clim;
-      this.idAgence=id;
-      this.nbrPlace=nb;
-      this.typeVoiture=type;
-              
-    }
-public Voiture(String mat) {
-    
-      this.setMatricule(mat);
-              
-    }
-public Voiture () {
-    }
-    /**
-     * @return the matricule
-     */
     public String getMatricule() {
         return matricule;
     }
 
-    /**
-     * @param matricule the matricule to set
-     */
     public void setMatricule(String matricule) {
         this.matricule = matricule;
     }
 
-    /**
-     * @return the idAgence
-     */
-    public String getIdAgence() {
-        return idAgence;
+    public Agence getAgence() {
+        return agence;
     }
 
-    /**
-     * @param idAgence the idAgence to set
-     */
-    public void setIdAgence(String idAgence) {
-        this.idAgence = idAgence;
+    public void setAgence(Agence agence) {
+        this.agence = agence;
     }
 
-    /**
-     * @return the nbrPlace
-     */
     public int getNbrPlace() {
         return nbrPlace;
     }
 
-    /**
-     * @param nbrPlace the nbrPlace to set
-     */
     public void setNbrPlace(int nbrPlace) {
         this.nbrPlace = nbrPlace;
     }
 
-    /**
-     * @return the typeVoiture
-     */
     public String getTypeVoiture() {
         return typeVoiture;
     }
 
-    /**
-     * @param typeVoiture the typeVoiture to set
-     */
     public void setTypeVoiture(String typeVoiture) {
         this.typeVoiture = typeVoiture;
     }
 
-    /**
-     * @return the climatise
-     */
-    public int getClimatise() {
-        return climatise;
+    public boolean isEtat() {
+        return etat;
     }
 
-    /**
-     * @param climatise the climatise to set
-     */
-    public void setClimatise(int climatise) {
-        this.climatise = climatise;
+    public void setEtat(boolean etat) {
+        this.etat = etat;
     }
-
-    /**
-     * @return the datePremiereCirculation
-     */
-    public Date getDatePremiereCirculation() {
-        return datePremiereCirculation;
-    }
-
-    /**
-     * @param datePremiereCirculation the datePremiereCirculation to set
-     */
-    public void setDatePremiereCirculation(Date datePremiereCirculation) {
-        this.datePremiereCirculation = datePremiereCirculation;
-    }
-
-
+    
     
 }
