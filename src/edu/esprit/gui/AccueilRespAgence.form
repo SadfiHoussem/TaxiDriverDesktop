@@ -29,7 +29,7 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                           <Component id="jButton9" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+                          <Component id="TrajetButton" min="-2" max="-2" attributes="0"/>
                           <Component id="agenceButton" min="-2" max="-2" attributes="0"/>
                           <Component id="voitureButton" min="-2" max="-2" attributes="0"/>
                           <Component id="chauffeurButton" min="-2" max="-2" attributes="0"/>
@@ -62,7 +62,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="reservationButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+              <Component id="TrajetButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton9" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="128" max="32767" attributes="0"/>
@@ -127,10 +127,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reclamationButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton8">
+    <Component class="javax.swing.JButton" name="TrajetButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Gestion Trajet"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TrajetButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton9">
       <Properties>

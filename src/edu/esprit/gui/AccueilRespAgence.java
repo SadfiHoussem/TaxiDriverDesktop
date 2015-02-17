@@ -30,6 +30,7 @@ public class AccueilRespAgence extends javax.swing.JFrame {
     private final MonAgence monAgenceGUI;
     private final GestionReclamation gestionReclamationGUI;
     private final GestionReservation gestionReservationGUI;
+    private final GestionTrajet gestionTrajetGUI;
     
     public AccueilRespAgence() {
         initComponents();
@@ -42,7 +43,7 @@ public class AccueilRespAgence extends javax.swing.JFrame {
         monAgenceGUI=new MonAgence();
         gestionReclamationGUI= new GestionReclamation();
         gestionReservationGUI= new GestionReservation();
-        
+        gestionTrajetGUI= new GestionTrajet();
         
     }
 
@@ -80,7 +81,7 @@ public class AccueilRespAgence extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         reservationButton = new javax.swing.JButton();
         reclamationButton = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        TrajetButton = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -134,7 +135,12 @@ public class AccueilRespAgence extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setText("Gestion Trajet");
+        TrajetButton.setText("Gestion Trajet");
+        TrajetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TrajetButtonActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Gestion Offre");
 
@@ -148,7 +154,7 @@ public class AccueilRespAgence extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton9)
-                            .addComponent(jButton8)
+                            .addComponent(TrajetButton)
                             .addComponent(agenceButton)
                             .addComponent(voitureButton)
                             .addComponent(chauffeurButton)
@@ -176,7 +182,7 @@ public class AccueilRespAgence extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(reservationButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton8)
+                .addComponent(TrajetButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton9)
                 .addContainerGap(128, Short.MAX_VALUE))
@@ -219,6 +225,11 @@ public class AccueilRespAgence extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void TrajetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TrajetButtonActionPerformed
+        gestionTrajetGUI.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_TrajetButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -259,10 +270,10 @@ public class AccueilRespAgence extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton TrajetButton;
     private javax.swing.JButton agenceButton;
     private javax.swing.JButton chauffeurButton;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JButton profileButton;
     private javax.swing.JButton reclamationButton;

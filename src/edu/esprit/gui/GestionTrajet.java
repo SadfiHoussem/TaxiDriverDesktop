@@ -7,6 +7,9 @@ package edu.esprit.gui;
 
 import edu.esprit.DAO.classes.TrajetDAO;
 import edu.esprit.adapters.ConsulterTrajets;
+import edu.esprit.entities.Trajet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,14 +20,15 @@ public class GestionTrajet extends javax.swing.JFrame {
     /**
      * Creates new form GestionTrajet
      */
+    private List<Trajet> trajets = new ArrayList<>();
+    private final TrajetDAO trajetDAO;
+    
     public GestionTrajet() {
         initComponents();
-        jTable1.setModel(new ConsulterTrajets());
-    }
-
-    private void updateModel(){
         
-        jTable1.setModel(new ConsulterTrajets());
+        trajetDAO = TrajetDAO.getInstance();
+        trajets = trajetDAO.DisplayAllTrajets();
+        jTable1.setModel(new ConsulterTrajets(trajets));
     }
     
     /**
@@ -39,6 +43,7 @@ public class GestionTrajet extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        titre = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,25 +72,33 @@ public class GestionTrajet extends javax.swing.JFrame {
             }
         });
 
+        titre.setText("Gestion Trajet");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(464, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(134, 134, 134))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(titre)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(79, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(titre, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addGap(92, 92, 92))
         );
@@ -100,7 +113,7 @@ public class GestionTrajet extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         TrajetDAO tDAO =TrajetDAO.getInstance();
         tDAO.confirmeTrajet(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
-        updateModel();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -143,5 +156,6 @@ public class GestionTrajet extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel titre;
     // End of variables declaration//GEN-END:variables
 }

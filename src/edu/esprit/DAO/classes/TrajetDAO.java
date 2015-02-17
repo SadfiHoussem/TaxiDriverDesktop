@@ -6,6 +6,8 @@
 package edu.esprit.DAO.classes;
 
 import edu.esprit.DAO.interfaces.ITrajetDAO;
+import edu.esprit.entities.Client;
+import edu.esprit.entities.ResponsableAgence;
 import edu.esprit.entities.Trajet;
 import edu.esprit.technique.MyConnection;
 import java.sql.Connection;
@@ -141,7 +143,7 @@ public class TrajetDAO implements ITrajetDAO{
     public List<Trajet> DisplayAllTrajets() {
 
         List<Trajet> listeTrajets = new ArrayList<>();
-
+        System.out.println("3asba");
         String requete = "select * from trajet";
         try {
             Statement statement = conn.createStatement();
@@ -149,11 +151,43 @@ public class TrajetDAO implements ITrajetDAO{
             Trajet trajet = new Trajet();
             ClientDAO clientDAO = ClientDAO.getInstance();
             ResponsableAgenceDAO responsableAgenceDAO = ResponsableAgenceDAO.getInstance();
+            // Client non trouvé
+            Client c = new Client();
+            c.setIdClient(0);
+            c.setCin(0);
+            c.setAdresse("adresse");
+            c.setLogin("login");
+            c.setNom("nom");
+            c.setPrenom("prenom");
+            c.setPwd("123456");
+            c.setEmail("email");
+            c.setTelephone(715592);
+            // Responsable non trouvé
+            ResponsableAgence r = new ResponsableAgence();
+            r.setIdResponsableAgence(0);
+            r.setCin(0);
+            r.setAdresse("adresse");
+            r.setLogin("login");
+            r.setNom("nom");
+            r.setPrenom("prenom");
+            r.setPwd("123456");
+            r.setEmail("email");
+            r.setTelephone(715592);
+            
             while (resultat.next()) {
                 
                 trajet.setIdTrajet(resultat.getInt("idTrajet"));
-                trajet.setClient(clientDAO.findClientById(resultat.getInt("idClient")));
-                trajet.setRespAgence(responsableAgenceDAO.findRespAgenceById(resultat.getInt("idResponsable")));
+                
+                if(resultat.getInt("idClient")==0)
+                    trajet.setClient(c);
+                else 
+                    trajet.setClient(clientDAO.findClientById(resultat.getInt("idClient")));
+                
+                if(resultat.getInt("idResponsable")==0)
+                    trajet.setRespAgence(r);
+                else
+                    trajet.setRespAgence(responsableAgenceDAO.findRespAgenceById(resultat.getInt("idResponsable")));
+                
                 trajet.setAdresseDep(resultat.getString("adresseDep"));
                 trajet.setAdresseDest(resultat.getString("adresseDest"));
                 trajet.setCout(resultat.getDouble("cout"));

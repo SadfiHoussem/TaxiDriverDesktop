@@ -7,7 +7,6 @@ package edu.esprit.adapters;
 
 
 
-import edu.esprit.DAO.classes.TrajetDAO;
 import edu.esprit.entities.Trajet;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +20,9 @@ public class ConsulterTrajets extends AbstractTableModel{
 
     String[] headers = {"Identifiant", "Client", "Responsable Agence", "Adresse Départ", "Adresse Destination", "Cout", "Fonctionnel"};
     List<Trajet> trajets = new ArrayList<>();
-    TrajetDAO trajetDAO;
 
-    public ConsulterTrajets() {
-        trajetDAO = TrajetDAO.getInstance();
-        trajets = trajetDAO.DisplayAllTrajets();
+    public ConsulterTrajets(List<Trajet> listeTrajet) {
+        trajets = listeTrajet;  
     }
     
     @Override
@@ -42,15 +39,19 @@ public class ConsulterTrajets extends AbstractTableModel{
     public String getColumnName(int i) {
         return headers[i];
     }
-    
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
                 return trajets.get(rowIndex).getIdTrajet();
             case 1:
+                if (trajets.get(rowIndex).getClient().getIdClient()==0)
+                    return "None";
                 return trajets.get(rowIndex).getClient().getNom();
             case 2:
+                if (trajets.get(rowIndex).getRespAgence().getIdResponsableAgence()==0)
+                    return "None";
                 return trajets.get(rowIndex).getRespAgence().getNom();
             case 3:
                 return trajets.get(rowIndex).getAdresseDep();
