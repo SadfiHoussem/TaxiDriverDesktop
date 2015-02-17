@@ -15,9 +15,11 @@ import java.util.List;
 public interface IResponsableAgenceDAO {
     
     boolean insertRespAgence(ResponsableAgence r);
-    boolean deleteRespAgence(String idRespAgence);
+    boolean deleteRespAgence(int idRespAgence);
     boolean updateRespAgence(ResponsableAgence r);
-    boolean isRespAgenceExist(Long cin);
-    ResponsableAgence findRespAgenceById(String idRespAgence);
+    boolean isRespAgenceExist(ResponsableAgence ra);
+    boolean isRespAgenceExistUpdate(ResponsableAgence ra);
+    ResponsableAgence findRespAgenceById(int idRespAgence);
+    ResponsableAgence findRespAgenceByLogin(String loginRespAgence);
     List<ResponsableAgence> DisplayAllResponsableAgence();
 }

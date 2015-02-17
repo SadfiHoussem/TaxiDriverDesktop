@@ -6,15 +6,19 @@ import java.util.List;
 
 public interface IAgenceDAO {
     
-    boolean isAgenceExist(String idAgence);
+    boolean isAgenceExist(Agence a);
+    
+    boolean isAgenceExistUpdate(Agence a);
     
     boolean insertAgence(Agence a);
 
     boolean updateAgence(Agence a);
 
-    boolean deleteAgence(String id);
+    boolean deleteAgence(Agence a);
     
-    Agence findAgenceById(String id);
+    Agence findAgenceById(int id);
+    
+    Agence findAgenceByRespAgence(int id);
 
     List<Agence> DisplayAllAgences();
     

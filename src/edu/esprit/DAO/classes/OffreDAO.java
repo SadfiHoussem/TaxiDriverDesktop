@@ -37,12 +37,12 @@ public class OffreDAO implements IOffreDAO{
     }
     
     @Override
-    public boolean isOffreExist(String id) {
+    public boolean isOffreExist(int id) {
     String requete = "select * from offre where idOffre=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ResultSet resultat = ps.executeQuery();
             return resultat.next();
         }
@@ -64,8 +64,8 @@ public class OffreDAO implements IOffreDAO{
             try {
                 PreparedStatement ps = conn.prepareStatement(requete);
                 
-                ps.setString(1, o.getIdOffre());
-                ps.setString(2, o.getAgence().getIdAgence());
+                ps.setInt(1, o.getIdOffre());
+                ps.setInt(2, o.getAgence().getIdAgence());
                 ps.setString(3, o.getSujetOffre());
                 ps.setString(4, o.getContenu());
                 
@@ -78,14 +78,14 @@ public class OffreDAO implements IOffreDAO{
     }
     }
     @Override
-    public boolean deleteOffre(String idOffre) {
+    public boolean deleteOffre(int idOffre) {
         if(!isOffreExist(idOffre))
             return false;
         else{
         String requete="delete from offre where idOffre=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, idOffre);
+            ps.setInt(1, idOffre);
             
             ps.executeUpdate();
             return true;
@@ -105,7 +105,7 @@ public class OffreDAO implements IOffreDAO{
             PreparedStatement ps = conn.prepareStatement(requete);
             ps.setString(1, o.getSujetOffre());
             ps.setString(2, o.getContenu());
-            ps.setString(3, o.getIdOffre());
+            ps.setInt(3, o.getIdOffre());
           
             ps.executeUpdate();
             return true;
@@ -117,7 +117,7 @@ public class OffreDAO implements IOffreDAO{
     }
 
     @Override
-    public boolean updateSujetOffre(String idOffre, String sujetOffre) {
+    public boolean updateSujetOffre(int idOffre, String sujetOffre) {
         if(!isOffreExist(idOffre))
             return false;
         else{
@@ -125,7 +125,7 @@ public class OffreDAO implements IOffreDAO{
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             ps.setString(1, sujetOffre);
-            ps.setString(2, idOffre);
+            ps.setInt(2, idOffre);
           
             ps.executeUpdate();
             return true;
@@ -136,7 +136,7 @@ public class OffreDAO implements IOffreDAO{
     }
     }
     @Override
-    public boolean updateContenuOffre(String idOffre, String contenu) {
+    public boolean updateContenuOffre(int idOffre, String contenu) {
         if(!isOffreExist(idOffre))
             return false;
         else{
@@ -144,7 +144,7 @@ public class OffreDAO implements IOffreDAO{
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             ps.setString(1, contenu);
-            ps.setString(2, idOffre);
+            ps.setInt(2, idOffre);
           
             ps.executeUpdate();
             return true;
@@ -155,12 +155,12 @@ public class OffreDAO implements IOffreDAO{
     }
     }
         @Override
-    public Offre findOffreById(String id) {
+    public Offre findOffreById(int id) {
         
         String requete="select * from offre where idOffre=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ResultSet resultat = ps.executeQuery();
             if(resultat.next())
                 return null;
@@ -169,7 +169,7 @@ public class OffreDAO implements IOffreDAO{
             
             while (resultat.next()) {
                 offre.setIdOffre(id);
-                offre.setAgence(agenceDAO.findAgenceById(resultat.getString("idAgence")));
+                offre.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
                 offre.setSujetOffre(resultat.getString("sujetOffre"));
                 offre.setContenu(resultat.getString("contenu"));
             }
@@ -193,8 +193,8 @@ public class OffreDAO implements IOffreDAO{
             AgenceDAO agenceDAO = AgenceDAO.getInstance();
             while (resultat.next()) {
                 Offre offre = new Offre();
-                offre.setIdOffre(resultat.getString("idOffre"));
-                offre.setAgence(agenceDAO.findAgenceById(resultat.getString("idAgence")));
+                offre.setIdOffre(resultat.getInt("idOffre"));
+                offre.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
                 offre.setSujetOffre(resultat.getString("sujetOffre"));
                 offre.setContenu(resultat.getString("contenu"));
 

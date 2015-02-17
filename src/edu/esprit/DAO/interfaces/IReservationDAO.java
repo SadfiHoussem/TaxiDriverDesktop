@@ -5,11 +5,7 @@
  */
 package edu.esprit.DAO.interfaces;
 
-import edu.esprit.entities.Chauffeur;
-import edu.esprit.entities.Client;
-import edu.esprit.entities.Agence;
 import edu.esprit.entities.Reservation;
-import edu.esprit.entities.Trajet;
 import java.util.List;
 
 /**
@@ -20,11 +16,13 @@ public interface IReservationDAO {
     
 
     void insertReservation(Reservation r);
-    void deleteReservation(String idReservation);
-    void updateTrajetReservation(String idReservation,Trajet trajet);
-    void updateChauffeurReservation(String idReservation,Chauffeur chauffeur);
-    Reservation findReservationById(String idReservation);
+    void deleteReservation(int idReservation);
+    void updateTrajetReservation(Reservation r);
+    void updateChauffeurReservation(Reservation r);
+    void confirmerReservation(Reservation r);
+    Reservation findReservationById(int idReservation);
 
     List<Reservation> DisplayAllReservation();
+    List<Reservation> DisplayReservationsNonConfirme();
 
 }

@@ -5,26 +5,29 @@
  */
 package edu.esprit.entities;
 
+import java.util.Date;
+
 /**
  *
  * @author Houssem
  */
 public class Reservation {
     
-    private String idReservation;
+    private int idReservation;
     private Client client;
     private Taxi taxi;
     private Trajet trajet;
     private Agence agence;
     private Chauffeur chauffeur;
     private boolean confirme;
+    private Date date;
     private int note;
 
-    public String getIdReservation() {
+    public int getIdReservation() {
         return idReservation;
     }
 
-    public void setIdReservation(String idReservation) {
+    public void setIdReservation(int idReservation) {
         this.idReservation = idReservation;
     }
 
@@ -83,7 +86,13 @@ public class Reservation {
     public void setNote(int note) {
         this.note = note;
     }
-    
-    
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
     
 }

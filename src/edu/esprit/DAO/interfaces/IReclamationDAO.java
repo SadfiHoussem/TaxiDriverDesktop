@@ -14,10 +14,12 @@ import java.util.List;
  */
 public interface IReclamationDAO {
     
-    void insertReclamation(Reclamation reclamation);
-    void updateReclamation(Reclamation reclamation);
-    void deleteReclamation(String id);
-    Reclamation findReclamationById(String id);
+    boolean isReclamationExist(Reclamation r);
+    Boolean insertReclamation(Reclamation reclamation);
+    Boolean updateReclamation(Reclamation reclamation);
+    Boolean updateReclamationRespAgence(Reclamation reclamation);
+    Boolean deleteReclamation(Reclamation reclamation);
+    Reclamation findReclamationById(int id);
     List<Reclamation> DisplayAllReclamations();
     
 }

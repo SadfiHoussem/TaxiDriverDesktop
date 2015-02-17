@@ -37,12 +37,32 @@ class ClientDAO implements IClientDAO{
     }
     
     @Override
-    public boolean isClientExist(Long cin) {
-    String requete = "select * from client where cin=?";
-
+    public boolean isClientExist(Client c) {
+    String requete = "select * from client where cin=? and login=? and email=? and telephone=?";
+    
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setLong(1, cin);
+            ps.setLong(1, c.getCin());
+            ps.setString(2, c.getLogin());
+            ps.setString(3, c.getEmail());
+            ps.setInt(4, c.getTelephone());
+            ResultSet resultat = ps.executeQuery();
+            return resultat.next();
+        }
+        catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du client" + ex.getMessage());
+            return false;
+        }
+                
+    }
+    
+    @Override
+    public boolean isClientExistUpdate(Client c) {
+    String requete = "select * from client where login=?";
+    
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setString(1, c.getLogin());
             ResultSet resultat = ps.executeQuery();
             return resultat.next();
         }
@@ -55,13 +75,13 @@ class ClientDAO implements IClientDAO{
     
     @Override
     public boolean insertClient(Client client) {
-        if(!isClientExist(client.getCin()))
+        if(!isClientExist(client))
             return false;
         else{
             String requete = "insert into client values (?,?,?,?,?,?,?,?,?)";
             try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, client.getIdClient());
+            ps.setInt(1, client.getIdClient());
             ps.setString(2, client.getLogin());
             ps.setString(3, client.getPwd());
             ps.setString(4, client.getNom());
@@ -84,7 +104,7 @@ class ClientDAO implements IClientDAO{
 
     @Override
     public boolean updateClient(Client client) {
-        if(!isClientExist(client.getCin()))
+        if(!isClientExist(client))
             return false;
         else{
             String requete = "update client set login=?, pwd=?, nom=?, prenom=?, email=?, telephone=?, adresse=?, cin=? where idClient=?";
@@ -99,7 +119,7 @@ class ClientDAO implements IClientDAO{
             ps.setInt(6, client.getTelephone());
             ps.setString(7, client.getAdresse());
             ps.setLong(8, client.getCin());
-            ps.setString(9, client.getIdClient());
+            ps.setInt(9, client.getIdClient());
              
             ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
@@ -114,16 +134,16 @@ class ClientDAO implements IClientDAO{
     }
 
     @Override
-    public boolean deleteClient(String id) {
-        ClientDAO clientDAO = new ClientDAO();
-        Client client = clientDAO.findClientById(id);
-        if(isClientExist(client.getCin()))
+    public boolean deleteClient(int id) {
+        ClientDAO cDAO =getInstance();
+        Client client = cDAO.findClientById(id);
+        if(isClientExist(client))
             return false;
         else{
         String requete = "delete from client where idClient=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ps.executeUpdate();
             System.out.println("Suppression effectuée avec succès");
             return true;
@@ -135,18 +155,18 @@ class ClientDAO implements IClientDAO{
     }
     }
     @Override
-    public Client findClientById(String id) {
+    public Client findClientById(int id) {
         String requete = "select * from client where idClient=?";
 
         try {
             boolean b=false;
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ResultSet resultat = ps.executeQuery();
             Client client = new Client();
             while (resultat.next()) {
                 b=true;
-                client.setIdClient(resultat.getString("idClient"));
+                client.setIdClient(resultat.getInt("idClient"));
                 client.setLogin(resultat.getString("login"));
                 client.setPwd(resultat.getString("pwd"));
                 client.setNom(resultat.getString("nom"));
@@ -177,7 +197,7 @@ class ClientDAO implements IClientDAO{
             Client client = new Client();
             while (resultat.next()) {
                 b=true;
-                client.setIdClient(resultat.getString("idClient"));
+                client.setIdClient(resultat.getInt("idClient"));
                 client.setLogin(resultat.getString("login"));
                 client.setPwd(resultat.getString("pwd"));
                 client.setNom(resultat.getString("nom"));
@@ -210,7 +230,7 @@ class ClientDAO implements IClientDAO{
                 b=true;
                 Client client = new Client();
 
-                client.setIdClient(resultat.getString("idClient"));
+                client.setIdClient(resultat.getInt("idClient"));
                 client.setLogin(resultat.getString("login"));
                 client.setPwd(resultat.getString("pwd"));
                 client.setNom(resultat.getString("nom"));

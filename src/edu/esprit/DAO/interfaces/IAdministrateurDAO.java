@@ -16,7 +16,7 @@ public interface IAdministrateurDAO {
     
     void insertAdministrateur(Administrateur administrateur);
     void updateAdministrateur(Administrateur administrateur);
-    void deleteAdministrateur(String id);
+    void deleteAdministrateur(int id);
     Administrateur findAdministrateurById(String id);
     List<Administrateur> DisplayAllAdministrateurs();
     

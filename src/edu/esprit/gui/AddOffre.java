@@ -132,9 +132,9 @@ public class AddOffre extends javax.swing.JFrame {
 
     private void ButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAjouterActionPerformed
         Offre o = new Offre();
-        o.setIdOffre(identifiant.getText());
+        o.setIdOffre(Integer.parseInt(identifiant.getText()));
         AgenceDAO aDAO = AgenceDAO.getInstance();
-        o.setAgence(aDAO.findAgenceById("agence1"));
+        o.setAgence(aDAO.findAgenceById(1));
         o.setSujetOffre(sujetOffre.getText());
         o.setContenu(contenuOffre.getText());
         OffreDAO oDAO =OffreDAO.getInstance();

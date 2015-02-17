@@ -242,7 +242,7 @@ public class AddChauffeur extends javax.swing.JFrame {
 
     private void ButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAjouterActionPerformed
         Chauffeur c=new Chauffeur();
-        c.setIdChauffeur(idChaffeur.getText());
+        c.setIdChauffeur(Integer.parseInt(idChaffeur.getText()));
         c.setNumPermis(numPermis.getText());
         if (etatDispo.isSelected())
             c.setEtat(true);

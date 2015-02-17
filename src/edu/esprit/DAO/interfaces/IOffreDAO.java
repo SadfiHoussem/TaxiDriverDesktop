@@ -14,12 +14,12 @@ import java.util.List;
  */
 public interface IOffreDAO {
     
-    boolean isOffreExist(String id);
+    boolean isOffreExist(int id);
     boolean insertOffre(Offre o);
-    boolean deleteOffre(String idOffre);
+    boolean deleteOffre(int idOffre);
     boolean updateOffre(Offre o);
-    boolean updateSujetOffre(String idOffre,String sujetOffre);
-    boolean updateContenuOffre(String idOffre,String contenu);
-    Offre findOffreById(String id);
+    boolean updateSujetOffre(int idOffre,String sujetOffre);
+    boolean updateContenuOffre(int idOffre,String contenu);
+    Offre findOffreById(int id);
     List<Offre> DisplayAllOffres();
 }

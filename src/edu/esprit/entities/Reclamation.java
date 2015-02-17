@@ -4,18 +4,19 @@ package edu.esprit.entities;
 
 public class Reclamation {
     
-    private String idReclamation;
+    private int idReclamation;
     private Client client;
     private Agence agence;
     private String sujetReclamation;
     private String contenu;
+    private boolean etat;
 
     
-     public String getIdReclamation() {
+     public int getIdReclamation() {
         return idReclamation;
     }
 
-    public void setIdReclamation(String idReclamation) {
+    public void setIdReclamation(int idReclamation) {
         this.idReclamation = idReclamation;
     }
 
@@ -49,6 +50,14 @@ public class Reclamation {
 
     public void setAgence(Agence agence) {
         this.agence = agence;
+    }
+
+    public boolean isEtat() {
+        return etat;
+    }
+
+    public void setEtat(boolean etat) {
+        this.etat = etat;
     }
     
     

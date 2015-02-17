@@ -11,13 +11,13 @@ package edu.esprit.entities;
  */
 public class Client extends User{
     
-    private String idClient;
+    private int idClient;
 
-    public String getIdClient() {
+    public int getIdClient() {
         return idClient;
     }
 
-    public void setIdClient(String idClient) {
+    public void setIdClient(int idClient) {
         this.idClient = idClient;
     }
     

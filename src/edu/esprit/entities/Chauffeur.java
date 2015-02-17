@@ -11,15 +11,15 @@ package edu.esprit.entities;
  */
 public class Chauffeur extends User{
     
-    private String idChauffeur;
+    private int idChauffeur;
     private String numPermis;
     private boolean etat;
 
-    public String getIdChauffeur() {
+    public int getIdChauffeur() {
         return idChauffeur;
     }
 
-    public void setIdChauffeur(String idChauffeur) {
+    public void setIdChauffeur(int idChauffeur) {
         this.idChauffeur = idChauffeur;
     }
 

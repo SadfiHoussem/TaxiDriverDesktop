@@ -16,9 +16,10 @@ public interface IClientDAO {
     
     boolean insertClient(Client client);
     boolean updateClient(Client client);
-    boolean deleteClient(String id);
-    boolean isClientExist(Long cin); 
-    Client findClientById(String id);
+    boolean deleteClient(int id);
+    boolean isClientExist(Client c); 
+    boolean isClientExistUpdate(Client c);
+    Client findClientById(int id);
     Client findClientByCin(Long cin);
     List<Client> DisplayAllClients();
     

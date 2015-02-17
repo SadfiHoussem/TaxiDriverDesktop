@@ -11,16 +11,16 @@ package edu.esprit.entities;
  */
 public class Offre {
     
-    private String idOffre;
+    private int idOffre;
     private Agence agence;
     private String sujetOffre;
     private String contenu;
 
-    public String getIdOffre() {
+    public int getIdOffre() {
         return idOffre;
     }
 
-    public void setIdOffre(String idOffre) {
+    public void setIdOffre(int idOffre) {
         this.idOffre = idOffre;
     }
 

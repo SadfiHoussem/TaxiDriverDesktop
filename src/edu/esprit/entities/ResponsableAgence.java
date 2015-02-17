@@ -11,13 +11,13 @@ package edu.esprit.entities;
  */
 public class ResponsableAgence extends User{
     
-    private String idResponsableAgence;
+    private int idResponsableAgence;
 
-    public String getIdResponsableAgence() {
+    public int getIdResponsableAgence() {
         return idResponsableAgence;
     }
 
-    public void setIdResponsableAgence(String idResponsableAgence) {
+    public void setIdResponsableAgence(int idResponsableAgence) {
         this.idResponsableAgence = idResponsableAgence;
     }
     

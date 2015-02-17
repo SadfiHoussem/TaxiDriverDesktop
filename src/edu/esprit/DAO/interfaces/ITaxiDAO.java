@@ -16,7 +16,7 @@ public interface ITaxiDAO {
     
     void insertTaxi(Taxi taxi);
     void updateTaxi(Taxi taxi);
-    void deleteTaxi(String id);
-    Taxi findTaxiById(String id);
+    void deleteTaxi(int id);
+    Taxi findTaxiById(int id);
     List<Taxi> DisplayAllTaxi();
 }

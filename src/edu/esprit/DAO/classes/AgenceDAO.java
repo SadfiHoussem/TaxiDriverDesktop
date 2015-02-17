@@ -30,12 +30,33 @@ public class AgenceDAO implements IAgenceDAO{
     }
           
     @Override
-    public boolean isAgenceExist(String idAgence) {
+    public boolean isAgenceExist(Agence a) {
+    String requete = "select * from agence where idAgence=? and nomAgence=? and telAgence=? and idRespAgence=?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(requete);
+            ps.setInt(1, a.getIdAgence());
+            ps.setString(2, a.getNomAgence());
+            ps.setInt(3, a.getTelAgence());
+            ps.setInt(4, a.getRespAgence().getIdResponsableAgence());
+            ResultSet resultat = ps.executeQuery();
+            return resultat.next();
+        }
+        catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du responsable agence" + ex.getMessage());
+            return false;
+        }
+                
+    }
+    
+      @Override
+        public boolean isAgenceExistUpdate(Agence a) {
     String requete = "select * from agence where idAgence=?";
 
         try {
             PreparedStatement ps = connection.prepareStatement(requete);
-            ps.setString(1, idAgence);
+            ps.setInt(1, a.getIdAgence());
+            
             ResultSet resultat = ps.executeQuery();
             return resultat.next();
         }
@@ -49,14 +70,14 @@ public class AgenceDAO implements IAgenceDAO{
     //ajouter agence(insert)
       @Override
    public boolean insertAgence(Agence a){
-        if(isAgenceExist(a.getIdAgence()))
+        if(isAgenceExist(a))
             return false;
         else{
             String requete = "insert into agence values (?,?,?,?,?)";
             try {
                 PreparedStatement ps = connection.prepareStatement(requete);
-                ps.setString(1, a.getIdAgence());
-                ps.setString(2, a.getRespAgence().getIdResponsableAgence());
+                ps.setInt(1, a.getIdAgence());
+                ps.setInt(2, a.getRespAgence().getIdResponsableAgence());
                 ps.setString(3, a.getNomAgence());
                 ps.setInt(4, a.getTelAgence());
                 ps.setString(5, a.getAdresseAgence());
@@ -74,19 +95,20 @@ public class AgenceDAO implements IAgenceDAO{
      //modifier agence
       @Override
     public boolean updateAgence(Agence a){
-        if(!isAgenceExist(a.getIdAgence()))
+        if(!isAgenceExistUpdate(a))
             return false;
         else{
-            String requete = "update agence set idAgence=?, nomAgence=?, telAgence=?, adresseAgence=? where idAgence=?";
+            String requete = "update agence set nomAgence=?, telAgence=?, adresseAgence=? where idAgence=?";
             try {
                 PreparedStatement ps = connection.prepareStatement(requete);
-                ps.setString(1, a.getIdAgence());
-                ps.setString(2, a.getNomAgence());
-                ps.setInt(4, a.getTelAgence());
+                
+                ps.setString(1, a.getNomAgence());
+                ps.setInt(2, a.getTelAgence());
                 ps.setString(3, a.getAdresseAgence());
-          
+                ps.setInt(4, a.getIdAgence());
+
                 ps.executeUpdate();
-                System.out.println("Mise Ã  jour effectuée avec succés");
+                System.out.println("Mise à  jour effectuée avec succés");
                 return true;
             } catch (SQLException ex) {
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,14 +120,14 @@ public class AgenceDAO implements IAgenceDAO{
     
     //supprimer une agence
       @Override
-   public boolean deleteAgence(String id){
-        if(!isAgenceExist(id))
+   public boolean deleteAgence(Agence a){
+        if(!isAgenceExist(a))
             return false;
         else{
             String requete = "delete from agence where idAgence=?";
             try {
                 PreparedStatement ps = connection.prepareStatement(requete);
-                ps.setString(1, id);
+                ps.setInt(1, a.getIdAgence());
                 ps.executeUpdate();
                 System.out.println("Suppression effectuée avec succés");
                 return true;
@@ -118,12 +140,12 @@ public class AgenceDAO implements IAgenceDAO{
    }
 
     @Override
-    public Agence findAgenceById(String id) {
+    public Agence findAgenceById(int id) {
         String requete="select * from agence where idAgence=?";
         try {
             boolean b=false;
             PreparedStatement ps = connection.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ResultSet resultat = ps.executeQuery();
             Agence agence = new Agence();
             while (resultat.next()) {
@@ -132,7 +154,7 @@ public class AgenceDAO implements IAgenceDAO{
                 ResponsableAgence respAgence;
                 
                 agence.setIdAgence(id);
-                respAgence=respAgenceDAO.findRespAgenceById(resultat.getString("idRespAgence"));
+                respAgence=respAgenceDAO.findRespAgenceById(resultat.getInt("idRespAgence"));
                 agence.setRespAgence(respAgence);
                 agence.setNomAgence(resultat.getString("nomAgence"));
                 agence.setTelAgence(resultat.getInt("telAgence"));
@@ -149,6 +171,37 @@ public class AgenceDAO implements IAgenceDAO{
             }
         }
     
+    @Override
+    public Agence findAgenceByRespAgence(int id) {
+        String requete="select * from agence where idRespAgence=?";
+        try {
+            boolean b=false;
+            PreparedStatement ps = connection.prepareStatement(requete);
+            ps.setInt(1, id);
+            ResultSet resultat = ps.executeQuery();
+            Agence agence = new Agence();
+            while (resultat.next()) {
+                b=true;
+                ResponsableAgenceDAO respAgenceDAO=ResponsableAgenceDAO.getInstance();
+                ResponsableAgence respAgence;
+                
+                agence.setIdAgence(id);
+                respAgence=respAgenceDAO.findRespAgenceById(resultat.getInt("idRespAgence"));
+                agence.setRespAgence(respAgence);
+                agence.setNomAgence(resultat.getString("nomAgence"));
+                agence.setTelAgence(resultat.getInt("telAgence"));
+                agence.setAdresseAgence(resultat.getString("adresseAgence"));
+                
+            }
+            if(b==false)
+                return null;            
+            return agence;
+        }catch (SQLException ex) {
+                //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("erreur lors du chargement des agences " + ex.getMessage());
+                return null;
+            }
+        }
     
     @Override
     public List<Agence> DisplayAllAgences() {
@@ -167,8 +220,8 @@ public class AgenceDAO implements IAgenceDAO{
                 b=true;
                 Agence agence = new Agence();
 
-                agence.setIdAgence(resultat.getString("idAgence"));
-                respAgence=respAgenceDAO.findRespAgenceById(resultat.getString("idRespAgence"));
+                agence.setIdAgence(Integer.parseInt(resultat.getString("idAgence")));
+                respAgence=respAgenceDAO.findRespAgenceById(resultat.getInt("idRespAgence"));
                 agence.setRespAgence(respAgence);
                 agence.setNomAgence(resultat.getString("nomAgence"));
                 agence.setTelAgence(resultat.getInt("telAgence"));

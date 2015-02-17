@@ -42,8 +42,8 @@ class TaxiDAO implements ITaxiDAO{
         String requete = "insert into taxi values (?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, taxi.getIdTaxi());
-            ps.setString(2, taxi.getChauffeur().getIdChauffeur());
+            ps.setInt(1, taxi.getIdTaxi());
+            ps.setInt(2, taxi.getChauffeur().getIdChauffeur());
             ps.setString(3, taxi.getVoiture().getMatricule());
             ps.setBoolean(4, taxi.isEtat());
             
@@ -61,10 +61,10 @@ class TaxiDAO implements ITaxiDAO{
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             
-            ps.setString(1, taxi.getChauffeur().getIdChauffeur());
+            ps.setInt(1, taxi.getChauffeur().getIdChauffeur());
             ps.setString(2, taxi.getVoiture().getMatricule());
             ps.setBoolean(3, taxi.isEtat());
-            ps.setString(4, taxi.getIdTaxi());
+            ps.setInt(4, taxi.getIdTaxi());
              
             ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
@@ -75,11 +75,11 @@ class TaxiDAO implements ITaxiDAO{
 
     }
     @Override
-    public void deleteTaxi(String id) {
+    public void deleteTaxi(int id) {
         String requete = "delete from taxi where idTaxi=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ps.executeUpdate();
             System.out.println("Suppression effectuée avec succès");
         } catch (SQLException ex) {
@@ -89,23 +89,23 @@ class TaxiDAO implements ITaxiDAO{
     }
 
     @Override
-    public Taxi findTaxiById(String id) {
+    public Taxi findTaxiById(int id) {
         String requete = "select * from taxi where idTaxi=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ResultSet resultat = ps.executeQuery();
             Taxi taxi=null;
             
             while (resultat.next()) {
                 ChauffeurDAO chauffeurDAO = ChauffeurDAO.getInstance(); 
                 Chauffeur chauffeur;
-                chauffeur=chauffeurDAO.findChauffeurById(resultat.getString("idChauffeur"));
+                chauffeur=chauffeurDAO.findChauffeurById(resultat.getInt("idChauffeur"));
                 
                 VoitureDAO voitureDAO = VoitureDAO.getInstance();
                 Voiture voiture;
-                voiture=voitureDAO.findVoitureById(resultat.getString("idVoiture"));
+                voiture=voitureDAO.findVoitureByMatricule(resultat.getString("matricule"));
                 taxi = new Taxi(id,chauffeur, voiture);
             }
             return taxi;
@@ -129,12 +129,12 @@ class TaxiDAO implements ITaxiDAO{
             while (resultat.next()) {
                 ChauffeurDAO chauffeurDAO = ChauffeurDAO.getInstance(); 
                 Chauffeur chauffeur;
-                chauffeur=chauffeurDAO.findChauffeurById(resultat.getString("idChauffeur"));
+                chauffeur=chauffeurDAO.findChauffeurById(resultat.getInt("idChauffeur"));
                 
                 VoitureDAO voitureDAO = VoitureDAO.getInstance();
                 Voiture voiture;
-                voiture=voitureDAO.findVoitureById(resultat.getString("idVoiture"));
-                taxi = new Taxi(resultat.getString("idTaxi"),chauffeur, voiture);
+                voiture=voitureDAO.findVoitureByMatricule(resultat.getString("idVoiture"));
+                taxi = new Taxi(resultat.getInt("idTaxi"),chauffeur, voiture);
 
                 listeTaxi.add(taxi);
             }

@@ -39,17 +39,37 @@ public class ChauffeurDAO implements IChauffeurDAO{
     }
 
     @Override
-    public boolean isChauffeurExist(String id,Long cin,String numPermis,String login,String email,int telephone) {
-    String requete = "select * from chauffeur where idChauffeur=? and telephone=? and numPermis=? and login=? and email=? and cin=?";
+    public boolean isChauffeurExist(Chauffeur c) {
+    String requete = "select * from chauffeur where telephone=? and numPermis=? and login=? and email=? and cin=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
-            ps.setInt(2, telephone);
-            ps.setString(3, numPermis);
-            ps.setString(4, login);
-            ps.setString(5, email);
-            ps.setLong(6, cin);
+
+            ps.setInt(1, c.getTelephone());
+            ps.setString(2, c.getNumPermis());
+            ps.setString(3, c.getLogin());
+            ps.setString(4, c.getEmail());
+            ps.setLong(5, c.getCin());
+            
+            ResultSet resultat = ps.executeQuery();
+            return resultat.next();
+        }
+        catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du chauffeur" + ex.getMessage());
+            return false;
+        }
+                
+    }
+    
+       @Override
+    public boolean isChauffeurExistUpdate(Chauffeur c) {
+    String requete = "select * from chauffeur where login=?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+
+            ps.setString(1, c.getLogin());
+            
             ResultSet resultat = ps.executeQuery();
             return resultat.next();
         }
@@ -62,23 +82,23 @@ public class ChauffeurDAO implements IChauffeurDAO{
     
     @Override
     public boolean insertChauffeur(Chauffeur c) {
-        if(isChauffeurExist(c.getIdChauffeur(),c.getCin(), c.getNumPermis(), c.getLogin(), c.getEmail(),c.getTelephone()))
+        if(isChauffeurExist(c))
             return false;
             
-            String requete = "insert into chauffeur values (?,?,?,?,?,?,?,?,?,?,?)";
+            String requete = "insert into chauffeur (numPermis,etat,login,pwd,nom,prenom,email,telephone,adresse,cin) values (?,?,?,?,?,?,?,?,?,?)";
             try {
                 PreparedStatement ps = conn.prepareStatement(requete);
-                ps.setString(1, c.getIdChauffeur());
-                ps.setString(2, c.getNumPermis());
-                ps.setBoolean(3, c.isEtat());
-                ps.setString(4, c.getLogin());
-                ps.setString(5, c.getPwd());
-                ps.setString(6, c.getNom());
-                ps.setString(7, c.getPrenom());
-                ps.setString(8, c.getEmail());
-                ps.setInt(9, c.getTelephone());
-                ps.setString(10, c.getAdresse());
-                ps.setLong(11, c.getCin());
+                
+                ps.setString(1, c.getNumPermis());
+                ps.setBoolean(2, c.isEtat());
+                ps.setString(3, c.getLogin());
+                ps.setString(4, c.getPwd());
+                ps.setString(5, c.getNom());
+                ps.setString(6, c.getPrenom());
+                ps.setString(7, c.getEmail());
+                ps.setInt(8, c.getTelephone());
+                ps.setString(9, c.getAdresse());
+                ps.setLong(10, c.getCin());
                 ps.executeUpdate();
                 System.out.println("Ajout effectuée avec succès");
                 return true;
@@ -87,29 +107,27 @@ public class ChauffeurDAO implements IChauffeurDAO{
                 System.out.println("erreur lors de l'insertion " + ex.getMessage());
                 return false;
                 }
-        
     }
     
     @Override
     public boolean updateChauffeur(Chauffeur c) {
-        if(isChauffeurExist(c.getIdChauffeur(),c.getCin(), c.getNumPermis(), c.getLogin(), c.getEmail(),c.getTelephone()))
+        
+        if(!isChauffeurExistUpdate(c))
             return false;
-        String requete = "update chauffeur set numPermis=?, login=?, pwd=?, nom=?, prenom=?, email=?, telephone=?, adresse=?, cin=?,etat=? where idChauffeur=?";
+        String requete = "update chauffeur set numPermis=?, nom=?, prenom=?, email=?, telephone=?, adresse=?, cin=?,etat=? where login=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             
             ps.setString(1, c.getNumPermis());
-            ps.setString(2, c.getLogin());
-            ps.setString(3, c.getPwd());
-            ps.setString(4, c.getNom());
-            ps.setString(5, c.getPrenom());
-            ps.setString(6, c.getEmail());
-            ps.setInt(7, c.getTelephone());
-            ps.setString(8, c.getAdresse());
-            ps.setLong(9, c.getCin());
-            ps.setBoolean(10, c.isEtat());
-            ps.setString(11, c.getIdChauffeur());
-             
+            ps.setString(2, c.getNom());
+            ps.setString(3, c.getPrenom());
+            ps.setString(4, c.getEmail());
+            ps.setInt(5, c.getTelephone());
+            ps.setString(6, c.getAdresse());
+            ps.setLong(7, c.getCin());
+            ps.setBoolean(8, c.isEtat());
+            ps.setString(9, c.getLogin());
+            
             ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
             return true;
@@ -118,18 +136,19 @@ public class ChauffeurDAO implements IChauffeurDAO{
             System.out.println("erreur lors de la mise à jour " + ex.getMessage());
             return true;
         }
-
     }
 
     @Override
-    public boolean deleteChauffeur(String id) {
+    public boolean deleteChauffeur(int id) {
         Chauffeur c = findChauffeurById(id);
-        if(!isChauffeurExist(c.getIdChauffeur(),c.getCin(), c.getNumPermis(), c.getLogin(), c.getEmail(),c.getTelephone()))
+        if(!isChauffeurExist(c)){
             return false;
+        }
+            
         String requete = "delete from chauffeur where idChauffeur=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ps.executeUpdate();
             System.out.println("Suppression effectuée avec succès");
             return true;
@@ -141,20 +160,21 @@ public class ChauffeurDAO implements IChauffeurDAO{
     }
     
     @Override
-    public Chauffeur findChauffeurById(String id) {
+    public Chauffeur findChauffeurById(int id) {
 
         String requete = "select * from chauffeur where idChauffeur=?";
 
         try {
+            boolean b=false;
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ResultSet resultat = ps.executeQuery();
-            if (!resultat.next())
-                return null;
+     
             Chauffeur chauffeur = new Chauffeur();
             while (resultat.next()) {
+                b=true;
                 
-                chauffeur.setIdChauffeur(resultat.getString("idChauffeur"));
+                chauffeur.setIdChauffeur(resultat.getInt("idChauffeur"));
                 chauffeur.setNumPermis(resultat.getString("numPermis"));
                 chauffeur.setLogin(resultat.getString("login"));
                 chauffeur.setPwd(resultat.getString("pwd"));
@@ -165,6 +185,8 @@ public class ChauffeurDAO implements IChauffeurDAO{
                 chauffeur.setAdresse(resultat.getString("adresse"));
                 chauffeur.setCin(resultat.getInt("cin"));
             }
+            if (b==false)
+                return null;
             return chauffeur;
         } catch (SQLException ex) {
             System.out.println("erreur lors du chargement du chauffeur" + ex.getMessage());
@@ -188,7 +210,7 @@ public class ChauffeurDAO implements IChauffeurDAO{
                 b=true;
                 Chauffeur chauffeur = new Chauffeur();
 
-                chauffeur.setIdChauffeur(resultat.getString("idChauffeur"));
+                chauffeur.setIdChauffeur(resultat.getInt("idChauffeur"));
                 chauffeur.setNumPermis(resultat.getString("numPermis"));
                 chauffeur.setLogin(resultat.getString("login"));
                 chauffeur.setPwd(resultat.getString("pwd"));
@@ -198,6 +220,7 @@ public class ChauffeurDAO implements IChauffeurDAO{
                 chauffeur.setTelephone(resultat.getInt("telephone"));
                 chauffeur.setAdresse(resultat.getString("adresse"));
                 chauffeur.setCin(resultat.getInt("cin"));
+                chauffeur.setEtat(resultat.getBoolean("etat"));
 
                 listeChauffeurs.add(chauffeur);
             }
@@ -218,7 +241,7 @@ public class ChauffeurDAO implements IChauffeurDAO{
         try {
             boolean b=false;
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, c.getIdChauffeur());
+            ps.setInt(1, c.getIdChauffeur());
             ResultSet resultat = ps.executeQuery();
             List<Reservation> listeReservations=new ArrayList<>();
             ClientDAO clientDAO = ClientDAO.getInstance();
@@ -228,12 +251,11 @@ public class ChauffeurDAO implements IChauffeurDAO{
             while (resultat.next()) {
                 b=true;
                 Reservation reservation = new Reservation();
-                reservation.setIdReservation(resultat.getString("idReservation"));
-                reservation.setClient(clientDAO.findClientById(resultat.getString("idClient")));
-                System.out.println(clientDAO.findClientById(resultat.getString("idClient")).getPrenom());
-                reservation.setTaxi(taxiDAO.findTaxiById(resultat.getString("idTaxi")));
-                reservation.setTrajet(trajetDAO.findTrajetById(resultat.getString("idTrajet")));
-                reservation.setAgence(agenceDAO.findAgenceById(resultat.getString("idAgence")));
+                reservation.setIdReservation(resultat.getInt("idReservation"));
+                reservation.setClient(clientDAO.findClientById(resultat.getInt("idClient")));
+                reservation.setTaxi(taxiDAO.findTaxiById(resultat.getInt("idTaxi")));
+                reservation.setTrajet(trajetDAO.findTrajetById(resultat.getInt("idTrajet")));
+                reservation.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
                 reservation.setConfirme(resultat.getBoolean("confirme"));
                 reservation.setNote(resultat.getInt("note"));
                 listeReservations.add(reservation);
@@ -254,7 +276,7 @@ public class ChauffeurDAO implements IChauffeurDAO{
         try {
             boolean b=false;
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, c.getIdChauffeur());
+            ps.setInt(1, c.getIdChauffeur());
             ResultSet resultat = ps.executeQuery();
             List<Reservation> listeReservations=new ArrayList<>();
             ClientDAO clientDAO = ClientDAO.getInstance();
@@ -264,11 +286,11 @@ public class ChauffeurDAO implements IChauffeurDAO{
             while (resultat.next()) {
                 b=true;
                 Reservation reservation = new Reservation();
-                reservation.setIdReservation(resultat.getString("idReservation"));
-                reservation.setClient(clientDAO.findClientById(resultat.getString("idClient")));
-                reservation.setTaxi(taxiDAO.findTaxiById(resultat.getString("idTaxi")));
-                reservation.setTrajet(trajetDAO.findTrajetById(resultat.getString("idTrajet")));
-                reservation.setAgence(agenceDAO.findAgenceById(resultat.getString("idAgence")));
+                reservation.setIdReservation(resultat.getInt("idReservation"));
+                reservation.setClient(clientDAO.findClientById(resultat.getInt("idClient")));
+                reservation.setTaxi(taxiDAO.findTaxiById(resultat.getInt("idTaxi")));
+                reservation.setTrajet(trajetDAO.findTrajetById(resultat.getInt("idTrajet")));
+                reservation.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
                 reservation.setConfirme(resultat.getBoolean("confirme"));
                 reservation.setNote(resultat.getInt("note"));
                 

@@ -11,23 +11,23 @@ package edu.esprit.entities;
  */
 public class Taxi {
     
-    private String idTaxi;
+    private int idTaxi;
     private Chauffeur chauffeur;
     private Voiture voiture;
     private boolean etat;
 
-    public Taxi(String idTaxi,Chauffeur chauffeur, Voiture voiture) {
+    public Taxi(int idTaxi,Chauffeur chauffeur, Voiture voiture) {
         this.idTaxi=idTaxi;
         this.chauffeur = chauffeur;
         this.voiture = voiture;
         this.etat=(this.chauffeur.isEtat())&&(this.voiture.isEtat());
     }
 
-    public String getIdTaxi() {
+    public int getIdTaxi() {
         return idTaxi;
     }
 
-    public void setIdTaxi(String idTaxi) {
+    public void setIdTaxi(int idTaxi) {
         this.idTaxi = idTaxi;
     }
     

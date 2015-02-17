@@ -11,16 +11,16 @@ package edu.esprit.entities;
  */
 public class Commentaire {
     
-    private String idCommentaire;
+    private int idCommentaire;
     private Client client;
     private Offre offre;
     private String contenu;
 
-    public String getIdCommentaire() {
+    public int getIdCommentaire() {
         return idCommentaire;
     }
 
-    public void setIdCommentaire(String idCommentaire) {
+    public void setIdCommentaire(int idCommentaire) {
         this.idCommentaire = idCommentaire;
     }
 

@@ -11,13 +11,13 @@ package edu.esprit.entities;
  */
 public class Administrateur extends User{
     
-    private String idAdministrateur;
+    private int idAdministrateur;
 
-    public String getIdAdministrateur() {
+    public int getIdAdministrateur() {
         return idAdministrateur;
     }
 
-    public void setIdAdministrateur(String idAdministrateur) {
+    public void setIdAdministrateur(int idAdministrateur) {
         this.idAdministrateur = idAdministrateur;
     }
     

@@ -41,7 +41,7 @@ public class AdministrateurDAO implements IAdministrateurDAO{
         String requete = "insert into administrateur values (?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1, administrateur.getIdAdministrateur());
+            ps.setInt(1, administrateur.getIdAdministrateur());
             ps.setString(2, administrateur.getLogin());
             ps.setString(3, administrateur.getPwd());
             ps.setString(4, administrateur.getNom());
@@ -74,7 +74,7 @@ public class AdministrateurDAO implements IAdministrateurDAO{
             ps.setInt(6, administrateur.getTelephone());
             ps.setString(7, administrateur.getAdresse());
             ps.setLong(8, administrateur.getCin());
-            ps.setString(9, administrateur.getIdAdministrateur());
+            ps.setInt(9, administrateur.getIdAdministrateur());
              
             ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
@@ -86,7 +86,7 @@ public class AdministrateurDAO implements IAdministrateurDAO{
     }
 
     @Override
-    public void deleteAdministrateur(String id) {
+    public void deleteAdministrateur(int id) {
 
         String requete = "delete from administrateur where idAdministrateur='"+id+"'";
         try {
@@ -110,7 +110,7 @@ public class AdministrateurDAO implements IAdministrateurDAO{
             Administrateur administrateur = new Administrateur();
             while (resultat.next()) {
                 
-                administrateur.setIdAdministrateur(resultat.getString("idAdministrateur"));
+                administrateur.setIdAdministrateur(resultat.getInt("idAdministrateur"));
                 administrateur.setLogin(resultat.getString("login"));
                 administrateur.setPwd(resultat.getString("pwd"));
                 administrateur.setNom(resultat.getString("nom"));
@@ -140,7 +140,7 @@ public class AdministrateurDAO implements IAdministrateurDAO{
             while (resultat.next()) {
                 Administrateur administrateur = new Administrateur();
 
-                administrateur.setIdAdministrateur(resultat.getString("idAdministrateur"));
+                administrateur.setIdAdministrateur(resultat.getInt("idAdministrateur"));
                 administrateur.setLogin(resultat.getString("login"));
                 administrateur.setPwd(resultat.getString("pwd"));
                 administrateur.setNom(resultat.getString("nom"));

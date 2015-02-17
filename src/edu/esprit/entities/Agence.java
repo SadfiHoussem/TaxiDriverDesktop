@@ -11,17 +11,17 @@ package edu.esprit.entities;
  */
 public class Agence {
     
-    private String idAgence;
+    private int idAgence;
     private ResponsableAgence RespAgence;
     private String nomAgence;
     private String adresseAgence;
     private int telAgence;
 
-    public String getIdAgence() {
+    public int getIdAgence() {
         return idAgence;
     }
 
-    public void setIdAgence(String idAgence) {
+    public void setIdAgence(int idAgence) {
         this.idAgence = idAgence;
     }
 

@@ -16,8 +16,9 @@ public interface ITrajetDAO {
     
     void insertTrajet(Trajet t);
     void updateTrajet(Trajet t);
-    void deleteTrajet(String id);
-    Trajet findTrajetById(String id);
+    void confirmeTrajet(int idTrajet);
+    void deleteTrajet(int id);
+    Trajet findTrajetById(int id);
     List<Trajet> DisplayAllTrajets();
     
 }

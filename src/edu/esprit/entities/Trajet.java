@@ -5,26 +5,25 @@
  */
 package edu.esprit.entities;
 
-import java.util.Date;
-
 /**
  *
  * @author Houssem
  */
 public class Trajet {
     
-    private String idTrajet;
+    private int idTrajet;
     private Client client;
     private ResponsableAgence respAgence;
     private String adresseDep;
     private String adresseDest;
     private double cout;
+    private boolean etat;
 
-    public String getIdTrajet() {
+    public int getIdTrajet() {
         return idTrajet;
     }
 
-    public void setIdTrajet(String idTrajet) {
+    public void setIdTrajet(int idTrajet) {
         this.idTrajet = idTrajet;
     }
 
@@ -69,5 +68,12 @@ public class Trajet {
         this.cout = cout;
     }
 
+    public boolean isEtat() {
+        return etat;
+    }
+
+    public void setEtat(boolean etat) {
+        this.etat = etat;
+    }
     
 }
