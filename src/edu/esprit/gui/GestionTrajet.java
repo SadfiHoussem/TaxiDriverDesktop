@@ -28,6 +28,8 @@ public class GestionTrajet extends javax.swing.JFrame {
         
         trajetDAO = TrajetDAO.getInstance();
         trajets = trajetDAO.DisplayAllTrajets();
+        System.out.println(trajets.get(0).getIdTrajet());
+        System.out.println(trajets.get(1).getIdTrajet());
         jTable1.setModel(new ConsulterTrajets(trajets));
     }
     
