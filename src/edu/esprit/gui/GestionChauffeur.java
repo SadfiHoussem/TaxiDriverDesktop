@@ -65,6 +65,7 @@ public class GestionChauffeur extends javax.swing.JFrame {
         ButtonUpdate = new javax.swing.JButton();
         ButtonSupprimer = new javax.swing.JButton();
         ButtonReset = new javax.swing.JButton();
+        retourButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -250,14 +251,23 @@ public class GestionChauffeur extends javax.swing.JFrame {
 
         ButtonReset.setText("Reset");
 
+        retourButton.setText("Retour");
+        retourButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(retourButton)
+                .addGap(26, 26, 26)
                 .addComponent(ButtonReset)
-                .addGap(56, 56, 56)
+                .addGap(37, 37, 37)
                 .addComponent(ButtonSupprimer)
                 .addGap(31, 31, 31)
                 .addComponent(ButtonUpdate)
@@ -283,7 +293,8 @@ public class GestionChauffeur extends javax.swing.JFrame {
                     .addComponent(ButtonAjouter)
                     .addComponent(ButtonUpdate)
                     .addComponent(ButtonSupprimer)
-                    .addComponent(ButtonReset))
+                    .addComponent(ButtonReset)
+                    .addComponent(retourButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -375,6 +386,11 @@ public class GestionChauffeur extends javax.swing.JFrame {
             etatNDispo.setSelected(false);
     }//GEN-LAST:event_etatDispoActionPerformed
 
+    private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
+        AccueilRespAgence.getAccueilRespAgence().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_retourButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -441,6 +457,7 @@ public class GestionChauffeur extends javax.swing.JFrame {
     private javax.swing.JTextField numPermis;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField prenom;
+    private javax.swing.JButton retourButton;
     private javax.swing.JTextField telephone;
     // End of variables declaration//GEN-END:variables
 }

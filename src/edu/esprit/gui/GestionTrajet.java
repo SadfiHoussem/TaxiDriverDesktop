@@ -7,6 +7,7 @@ package edu.esprit.gui;
 
 import edu.esprit.DAO.classes.TrajetDAO;
 import edu.esprit.adapters.ConsulterTrajets;
+import edu.esprit.entities.Client;
 import edu.esprit.entities.Trajet;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +29,17 @@ public class GestionTrajet extends javax.swing.JFrame {
         
         trajetDAO = TrajetDAO.getInstance();
         trajets = trajetDAO.DisplayAllTrajets();
-        System.out.println(trajets.get(0).getIdTrajet());
-        System.out.println(trajets.get(1).getIdTrajet());
-        jTable1.setModel(new ConsulterTrajets(trajets));
+        List<Trajet> trajetsDispo = new ArrayList<>();
+        for (Trajet trajet : trajets) {
+            if(trajet.isEtat()==true)
+                trajetsDispo.add(trajet);
+        }
+        jTable1.setModel(new ConsulterTrajets(trajetsDispo));
     }
     
+    private void update(){
+        trajets = trajetDAO.DisplayAllTrajets();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,8 +51,14 @@ public class GestionTrajet extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        ajouterButton = new javax.swing.JButton();
         titre = new javax.swing.JLabel();
+        deleteButton = new javax.swing.JButton();
+        adresseDepLabel = new javax.swing.JLabel();
+        adresseDestLabel = new javax.swing.JLabel();
+        adresseDep = new javax.swing.JTextField();
+        adresseDest = new javax.swing.JTextField();
+        retourButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,42 +80,86 @@ public class GestionTrajet extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Confirmer");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ajouterButton.setText("Ajouter");
+        ajouterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ajouterButtonActionPerformed(evt);
             }
         });
 
         titre.setText("Gestion Trajet");
+
+        deleteButton.setText("Supprimer");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        adresseDepLabel.setText("Adresse Départ");
+
+        adresseDestLabel.setText("Adresse Destination");
+
+        retourButton.setText("Retour");
+        retourButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(464, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(134, 134, 134))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(retourButton)
+                .addGap(32, 32, 32)
+                .addComponent(deleteButton)
+                .addGap(41, 41, 41)
+                .addComponent(ajouterButton)
+                .addGap(76, 76, 76))
             .addGroup(layout.createSequentialGroup()
-                .addGap(291, 291, 291)
-                .addComponent(titre)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(293, 293, 293)
+                        .addComponent(titre))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(adresseDepLabel)
+                            .addComponent(adresseDestLabel))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(adresseDep)
+                            .addComponent(adresseDest, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titre, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                .addGap(50, 50, 50)
+                .addComponent(titre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adresseDepLabel)
+                    .addComponent(adresseDep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adresseDestLabel)
+                    .addComponent(adresseDest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ajouterButton)
+                    .addComponent(deleteButton)
+                    .addComponent(retourButton))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(92, 92, 92))
+                .addContainerGap())
         );
 
         pack();
@@ -112,11 +169,36 @@ public class GestionTrajet extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TrajetDAO tDAO =TrajetDAO.getInstance();
-        tDAO.confirmeTrajet(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
+    private void ajouterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterButtonActionPerformed
+        Trajet t = new Trajet();
+        Client c = new Client();
+        c.setIdClient(0);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+        t.setAdresseDep(adresseDep.getText());
+        t.setAdresseDest(adresseDest.getText());
+        t.setClient(c);
+        t.setCout(0);
+        t.setRespAgence(AccueilRespAgence.getRespAgence());
+        t.setEtat(true);
+        
+        if(trajetDAO.insertTrajet(t)){
+            update();
+            jTable1.setModel(new ConsulterTrajets(trajets));
+        }
+        
+    }//GEN-LAST:event_ajouterButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        
+        trajetDAO.deleteTrajet(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
+        update();
+        jTable1.setModel(new ConsulterTrajets(trajets));
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
+        AccueilRespAgence.getAccueilRespAgence().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_retourButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,9 +237,15 @@ public class GestionTrajet extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField adresseDep;
+    private javax.swing.JLabel adresseDepLabel;
+    private javax.swing.JTextField adresseDest;
+    private javax.swing.JLabel adresseDestLabel;
+    private javax.swing.JButton ajouterButton;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton retourButton;
     private javax.swing.JLabel titre;
     // End of variables declaration//GEN-END:variables
 }

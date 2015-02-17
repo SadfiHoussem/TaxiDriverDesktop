@@ -76,6 +76,7 @@ public class GestionVoiture extends javax.swing.JFrame {
         ButtonUpdate = new javax.swing.JButton();
         ButtonSupprimer = new javax.swing.JButton();
         ButtonReset = new javax.swing.JButton();
+        retourButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -223,12 +224,21 @@ public class GestionVoiture extends javax.swing.JFrame {
 
         ButtonReset.setText("Reset");
 
+        retourButton.setText("Retour");
+        retourButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(retourButton)
+                .addGap(18, 18, 18)
                 .addComponent(ButtonReset)
                 .addGap(56, 56, 56)
                 .addComponent(ButtonSupprimer)
@@ -256,7 +266,8 @@ public class GestionVoiture extends javax.swing.JFrame {
                     .addComponent(ButtonAjouter)
                     .addComponent(ButtonUpdate)
                     .addComponent(ButtonSupprimer)
-                    .addComponent(ButtonReset))
+                    .addComponent(ButtonReset)
+                    .addComponent(retourButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -349,6 +360,11 @@ public class GestionVoiture extends javax.swing.JFrame {
             etatNDispo.setSelected(false);
     }//GEN-LAST:event_etatDispoActionPerformed
 
+    private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
+        AccueilRespAgence.getAccueilRespAgence().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_retourButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -403,6 +419,7 @@ public class GestionVoiture extends javax.swing.JFrame {
     private javax.swing.JLabel labelPrenom;
     private javax.swing.JTextField matricule;
     private javax.swing.JTextField nbrPlace;
+    private javax.swing.JButton retourButton;
     private javax.swing.JTextField typeVoiture;
     // End of variables declaration//GEN-END:variables
 }

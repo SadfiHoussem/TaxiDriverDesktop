@@ -8,6 +8,10 @@ package edu.esprit.gui;
 import edu.esprit.DAO.classes.ReservationDAO;
 import edu.esprit.adapters.ConsulterReservations;
 import edu.esprit.entities.Reservation;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,13 +22,33 @@ public class GestionReservation extends javax.swing.JFrame {
     /**
      * Creates new form GestionReservation
      */
+    private static NewReservation newReservation;  
+    
+    private List<Reservation> reservations = new ArrayList<>();
+    private ReservationDAO reservationDAO;
+    
     public GestionReservation() {
         initComponents();
-        jTable1.setModel(new ConsulterReservations());
+        newReservation=new NewReservation();
+        
+        List<Reservation> auxReservations = new ArrayList<>();
+        reservationDAO = ReservationDAO.getInstance();
+        auxReservations = reservationDAO.DisplayAllReservation();
+        
+        for (Reservation auxReservation : auxReservations) {
+            if(auxReservation.isConfirme()==true)
+                reservations.add(auxReservation);
+        }
+        jTable1.setModel(new ConsulterReservations(reservations));
+    }
+
+    public static NewReservation getNewReservation() {
+        return newReservation;
     }
     
+    
     private void updateModel(){
-        jTable1.setModel(new ConsulterReservations());       
+        jTable1.setModel(new ConsulterReservations(reservations));       
     }
 
     /**
@@ -38,9 +62,21 @@ public class GestionReservation extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        ajouterButton = new javax.swing.JButton();
+        retourButton = new javax.swing.JButton();
+        newReservationButton = new javax.swing.JButton();
+        listeCritereComboBox = new javax.swing.JComboBox();
+        recherche = new javax.swing.JTextField();
+        rechercheButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -53,12 +89,38 @@ public class GestionReservation extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        ajouterButton.setText("Confirmer");
-        ajouterButton.addActionListener(new java.awt.event.ActionListener() {
+        retourButton.setText("Retour");
+        retourButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ajouterButtonActionPerformed(evt);
+                retourButtonActionPerformed(evt);
+            }
+        });
+
+        newReservationButton.setText("Les nouvelles reservations ");
+        newReservationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newReservationButtonActionPerformed(evt);
+            }
+        });
+
+        listeCritereComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Client", "Chauffeur", "Voiture", "Adresse depart", "Adresse destination", "Date" }));
+        listeCritereComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listeCritereComboBoxActionPerformed(evt);
+            }
+        });
+
+        rechercheButton.setText("Recherche");
+        rechercheButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechercheButtonActionPerformed(evt);
             }
         });
 
@@ -68,33 +130,169 @@ public class GestionReservation extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(retourButton)
+                .addGap(224, 224, 224)
+                .addComponent(newReservationButton)
                 .addContainerGap(160, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ajouterButton)
-                .addGap(178, 178, 178))
+                .addComponent(recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(listeCritereComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(rechercheButton)
+                .addGap(118, 118, 118))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(ajouterButton)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addGap(82, 82, 82)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listeCritereComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rechercheButton))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(retourButton)
+                    .addComponent(newReservationButton))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ajouterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterButtonActionPerformed
-        ReservationDAO rDAO=ReservationDAO.getInstance();
-        Reservation r=new Reservation();
-        r.setIdReservation(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
-        rDAO.confirmerReservation(r);
-        updateModel();
-    }//GEN-LAST:event_ajouterButtonActionPerformed
+    private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
+        AccueilRespAgence.getAccueilRespAgence().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_retourButtonActionPerformed
+
+    private void newReservationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newReservationButtonActionPerformed
+        newReservation.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_newReservationButtonActionPerformed
+
+    private void listeCritereComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listeCritereComboBoxActionPerformed
+        try {
+        switch (listeCritereComboBox.getSelectedIndex()) {
+                case 0:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),1).toString());
+                    break;
+                case 1:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),2).toString());
+                    break;
+                case 2:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),3).toString());
+                    break;
+                case 3:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),4).toString());
+                    break;
+                case 4:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),5).toString());
+                    break;
+                case 5:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),6).toString());
+                    break;
+                default:
+                    recherche.setText("erreur");
+                    break;
+            }
+        } catch (Exception e) {
+            recherche.setText("Veuillez Selectionner une ligne d'abord");
+        }
+    }//GEN-LAST:event_listeCritereComboBoxActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
+        switch (listeCritereComboBox.getSelectedIndex()) {
+                case 0:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),1).toString());
+                    break;
+                case 1:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),2).toString());
+                    break;
+                case 2:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),3).toString());
+                    break;
+                case 3:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),4).toString());
+                    break;
+                case 4:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),5).toString());
+                    break;
+                case 5:
+                    recherche.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),6).toString());
+                    break;
+                default:
+                    recherche.setText("erreur");
+                    break;
+            }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void rechercheButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercheButtonActionPerformed
+        List<Reservation> rechercheReservations = new ArrayList<>();
+        
+        switch (listeCritereComboBox.getSelectedIndex()) {
+                case 0:
+                    for (Reservation reservation : reservations) {
+                        if(reservation.getClient().getNom().equals(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),1).toString()))
+                            rechercheReservations.add(reservation);
+                    }
+                    jTable1.setModel(new ConsulterReservations(rechercheReservations));
+                    break;
+                case 1:
+                    for (Reservation reservation : reservations) {
+                        if(reservation.getChauffeur().getNom().equals(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),2).toString()))
+                            rechercheReservations.add(reservation);
+                    }
+                    jTable1.setModel(new ConsulterReservations(rechercheReservations));
+                    break;
+                case 2:
+                    for (Reservation reservation : reservations) {
+                        if(reservation.getTaxi().getVoiture().getTypeVoiture().equals(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),3).toString()))
+                            rechercheReservations.add(reservation);
+                    }
+                    jTable1.setModel(new ConsulterReservations(rechercheReservations));
+                    break;
+                case 3:
+                    for (Reservation reservation : reservations) {
+                        if(reservation.getTrajet().getAdresseDep().equals(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),4).toString()))
+                            rechercheReservations.add(reservation);
+                    }
+                    jTable1.setModel(new ConsulterReservations(rechercheReservations));
+                    break;
+                case 4:
+                    for (Reservation reservation : reservations) {
+                        if(reservation.getTrajet().getAdresseDest().equals(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),5).toString()))
+                            rechercheReservations.add(reservation);
+                    }
+                    jTable1.setModel(new ConsulterReservations(rechercheReservations));
+                    break;
+                case 5:
+                    for (Reservation reservation : reservations) {
+                        if(reservation.getDate().toString().equals(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),6).toString()))
+                            rechercheReservations.add(reservation);
+                    }
+                    jTable1.setModel(new ConsulterReservations(rechercheReservations));
+                    break;
+                default:
+                    recherche.setText("Erreur lors de la Recherche");
+                    break;
+            }
+    }//GEN-LAST:event_rechercheButtonActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -133,8 +331,12 @@ public class GestionReservation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ajouterButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox listeCritereComboBox;
+    private javax.swing.JButton newReservationButton;
+    private javax.swing.JTextField recherche;
+    private javax.swing.JButton rechercheButton;
+    private javax.swing.JButton retourButton;
     // End of variables declaration//GEN-END:variables
 }

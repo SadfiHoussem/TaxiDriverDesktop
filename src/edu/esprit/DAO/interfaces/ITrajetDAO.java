@@ -14,8 +14,9 @@ import java.util.List;
  */
 public interface ITrajetDAO {
     
-    void insertTrajet(Trajet t);
-    void updateTrajet(Trajet t);
+    boolean isTrajetExist(Trajet t);
+    boolean insertTrajet(Trajet t);
+    boolean updateTrajet(Trajet t);
     void confirmeTrajet(int idTrajet);
     void deleteTrajet(int id);
     Trajet findTrajetById(int id);

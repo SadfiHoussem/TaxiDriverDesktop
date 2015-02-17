@@ -58,6 +58,7 @@ public class GestionReclamation extends javax.swing.JFrame {
         contenuReclamation = new javax.swing.JTextArea();
         confirmer = new javax.swing.JButton();
         Refresh = new javax.swing.JButton();
+        retourButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +99,13 @@ public class GestionReclamation extends javax.swing.JFrame {
             }
         });
 
+        retourButton.setText("Retour");
+        retourButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,7 +114,10 @@ public class GestionReclamation extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Refresh))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(retourButton)
+                        .addGap(31, 31, 31)
+                        .addComponent(Refresh)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(confirmer)
@@ -123,7 +134,8 @@ public class GestionReclamation extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmer)
-                    .addComponent(Refresh))
+                    .addComponent(Refresh)
+                    .addComponent(retourButton))
                 .addGap(109, 109, 109))
         );
 
@@ -150,6 +162,11 @@ public class GestionReclamation extends javax.swing.JFrame {
         
         updateModel();
     }//GEN-LAST:event_confirmerActionPerformed
+
+    private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
+        AccueilRespAgence.getAccueilRespAgence().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_retourButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,5 +213,6 @@ public class GestionReclamation extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton retourButton;
     // End of variables declaration//GEN-END:variables
 }

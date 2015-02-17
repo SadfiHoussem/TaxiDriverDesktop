@@ -61,6 +61,7 @@ public class ProfileRespAgence extends javax.swing.JFrame {
         nom = new javax.swing.JTextField();
         telephone = new javax.swing.JTextField();
         labelNom = new javax.swing.JLabel();
+        retourButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,6 +94,13 @@ public class ProfileRespAgence extends javax.swing.JFrame {
         });
 
         labelNom.setText("Nom");
+
+        retourButton.setText("Retour");
+        retourButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,23 +135,24 @@ public class ProfileRespAgence extends javax.swing.JFrame {
                             .addComponent(prenom, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(nom)
                             .addComponent(telephone, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(100, 100, 100)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelPwd)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(login)
-                                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(labelLogin)))
-                        .addGap(149, 149, 149))
+                        .addGap(100, 100, 100))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(ButtonReset)
                         .addGap(18, 18, 18)
-                        .addComponent(ButtonUpdate)
-                        .addGap(245, 245, 245))))
+                        .addComponent(retourButton)
+                        .addGap(27, 27, 27)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelPwd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(login)
+                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(labelLogin))
+                    .addComponent(ButtonUpdate))
+                .addGap(149, 149, 149))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +194,8 @@ public class ProfileRespAgence extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonUpdate)
-                    .addComponent(ButtonReset))
+                    .addComponent(ButtonReset)
+                    .addComponent(retourButton))
                 .addGap(62, 62, 62))
         );
 
@@ -218,6 +228,11 @@ public class ProfileRespAgence extends javax.swing.JFrame {
         login.setText(ra.getLogin());
         password.setText(ra.getPwd());
     }//GEN-LAST:event_ButtonResetActionPerformed
+
+    private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
+        AccueilRespAgence.getAccueilRespAgence().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_retourButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,6 +288,7 @@ public class ProfileRespAgence extends javax.swing.JFrame {
     private javax.swing.JTextField nom;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField prenom;
+    private javax.swing.JButton retourButton;
     private javax.swing.JTextField telephone;
     // End of variables declaration//GEN-END:variables
 }

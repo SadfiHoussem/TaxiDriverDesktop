@@ -25,20 +25,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="jButton9" min="-2" max="-2" attributes="0"/>
-                          <Component id="TrajetButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="agenceButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="voitureButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="chauffeurButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="profileButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="reclamationButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="reservationButton" alignment="1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                      <Component id="jButton9" min="-2" max="-2" attributes="0"/>
+                      <Component id="TrajetButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="agenceButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="voitureButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="chauffeurButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="profileButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="reclamationButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                  <Component id="reservationButton" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="502" max="32767" attributes="0"/>
           </Group>
@@ -57,9 +54,7 @@
               <Component id="profileButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="reclamationButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="reservationButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="TrajetButton" min="-2" max="-2" attributes="0"/>
@@ -101,14 +96,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="profileButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Consulter Planning"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="reservationButton">
