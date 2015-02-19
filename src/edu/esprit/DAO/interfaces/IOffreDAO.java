@@ -6,6 +6,7 @@
 package edu.esprit.DAO.interfaces;
 
 import edu.esprit.entities.Offre;
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -22,4 +23,5 @@ public interface IOffreDAO {
     boolean updateContenuOffre(int idOffre,String contenu);
     Offre findOffreById(int id);
     List<Offre> DisplayAllOffres();
+    ResultSet DisplayAllOffres2();
 }

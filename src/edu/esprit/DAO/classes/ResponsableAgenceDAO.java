@@ -258,4 +258,23 @@ public class ResponsableAgenceDAO implements IResponsableAgenceDAO{
             return null;
         }
     }
+
+    @Override
+    public boolean findRespAgenceByLogin_PWD(String login, String pwd) {
+        String requete = "select * from responsableagence where login=? and pwd=?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setString(1, login);
+            ps.setString(2, pwd);
+
+            ResultSet resultat = ps.executeQuery();
+            
+            return resultat.next();
+       
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du administrateur" + ex.getMessage());
+            return false;
+        }
+    }
 }

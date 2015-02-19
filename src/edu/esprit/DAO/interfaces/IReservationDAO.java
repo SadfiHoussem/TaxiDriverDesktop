@@ -6,6 +6,7 @@
 package edu.esprit.DAO.interfaces;
 
 import edu.esprit.entities.Reservation;
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ public interface IReservationDAO {
     Reservation findReservationById(int idReservation);
 
     List<Reservation> DisplayAllReservation();
-    List<Reservation> DisplayReservationsNonConfirme();
-
+    List<Reservation> DisplayReservationsConfirme(boolean b);
+    ResultSet DisplayFeedbackByChauffeur(String login);
+    ResultSet DisplayAllReservationByChauffeur(String login);
 }

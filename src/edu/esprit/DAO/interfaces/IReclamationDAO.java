@@ -21,5 +21,6 @@ public interface IReclamationDAO {
     Boolean deleteReclamation(Reclamation reclamation);
     Reclamation findReclamationById(int id);
     List<Reclamation> DisplayAllReclamations();
+    List<Reclamation> DisplayReclamationsConfirme(boolean b);
     
 }

@@ -207,5 +207,21 @@ public class OffreDAO implements IOffreDAO{
             return null;
         }
     }
+    
+    @Override
+    public ResultSet DisplayAllOffres2() {
 
+        String requete = "select * from offre";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+          
+        
+            return resultat;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des offres " + ex.getMessage());
+            return null;
+        }
+    }
 }

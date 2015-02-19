@@ -182,13 +182,13 @@ public class ReservationDAO implements IReservationDAO{
     }
     
     @Override
-    public List<Reservation> DisplayReservationsNonConfirme() {
+    public List<Reservation> DisplayReservationsConfirme(boolean b) {
         List<Reservation> listeReservations = new ArrayList<>();
 
         String requete = "select * from reservation where confirme=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setBoolean(1, false);
+            ps.setBoolean(1, b);
             ResultSet resultat = ps.executeQuery();
             ClientDAO clientDAO = ClientDAO.getInstance();
             TaxiDAO taxiDAO = TaxiDAO.getInstance();
@@ -215,6 +215,40 @@ public class ReservationDAO implements IReservationDAO{
             System.out.println("erreur lors du chargement des stocks " + ex.getMessage());
             return null;
         }
+    }
+    
+    public ResultSet DisplayAllReservationByChauffeur(String login) {
+
+        String requete = "select adresseDep as 'Adresse de départ', adresseDest as 'Adresse de destination' , cout as 'Coût', Date, chauffeur.login from reservation, taxi, chauffeur, trajet where reservation.idTrajet=trajet.idTrajet and taxi.idChauffeur=chauffeur.idChauffeur and taxi.idTaxi=reservation.idTaxi and Date >= CURRENT_DATE and chauffeur.login='"+login+"' ";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+            
+           
+            return resultat;
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement des stocks " + ex.getMessage());
+            return null;
+        }
+    
+    }
+
+     @Override
+    public ResultSet DisplayFeedbackByChauffeur(String login) {
+
+    
+        String requete = "select note, client.prenom, chauffeur.login from reservation, taxi, client, chauffeur, trajet where reservation.idClient=client.idClient and reservation.idTrajet=trajet.idTrajet and taxi.idChauffeur=chauffeur.idChauffeur and taxi.idTaxi=reservation.idTaxi and chauffeur.login='"+login+"' ";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+            
+           
+            return resultat;
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement des stocks " + ex.getMessage());
+            return null;
+        }
+    
     }
     
 }

@@ -160,5 +160,56 @@ public class AdministrateurDAO implements IAdministrateurDAO{
         }
     }
 
+    @Override
+    public boolean findAdministrateurByLogin_PWD(String log, String pwd) {
+        String requete = "select * from administrateur where login=? and pwd=?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setString(1, log);
+            ps.setString(2, pwd);
+
+            ResultSet resultat = ps.executeQuery();
+            
+            return resultat.next();
+       
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du administrateur" + ex.getMessage());
+            return false;
+        }
+    }
+
+    public Administrateur findAdminByLogin(String loginChauffeur) {
+        String requete="select * from Administrateur where login=?";
+            try {
+                boolean b=false;
+                PreparedStatement ps = conn.prepareStatement(requete);
+                ps.setString(1, loginChauffeur);
+                ResultSet resultat = ps.executeQuery();
+                Administrateur administrateur = new Administrateur();
+
+                while (resultat.next()) {
+                    b=true;
+                    
+
+                administrateur.setIdAdministrateur(resultat.getInt("idAdministrateur"));
+                administrateur.setLogin(resultat.getString("login"));
+                administrateur.setPwd(resultat.getString("pwd"));
+                administrateur.setNom(resultat.getString("nom"));
+                administrateur.setPrenom(resultat.getString("prenom"));
+                administrateur.setEmail(resultat.getString("email"));
+                administrateur.setTelephone(resultat.getInt("telephone"));
+                administrateur.setAdresse(resultat.getString("adresse"));
+                administrateur.setCin(resultat.getInt("cin"));
+                }
+                if(b==false){
+                return null;
+            }
+                return administrateur;
+            } catch (SQLException ex) {
+                System.out.println("erreur lors de la recherche de l'admin" + ex.getMessage());
+                return null;
+            }
+        }
     
 }

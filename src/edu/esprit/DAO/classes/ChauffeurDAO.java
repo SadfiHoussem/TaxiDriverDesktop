@@ -193,6 +193,41 @@ public class ChauffeurDAO implements IChauffeurDAO{
             return null;
         }
     }
+    
+    @Override
+    public Chauffeur findChauffeurByLogin(String loginChauffeur) {
+        String requete="select * from chauffeur where login=?";
+            try {
+                boolean b=false;
+                PreparedStatement ps = conn.prepareStatement(requete);
+                ps.setString(1, loginChauffeur);
+                ResultSet resultat = ps.executeQuery();
+                Chauffeur chauffeur = new Chauffeur();
+
+                while (resultat.next()) {
+                    b=true;
+                    chauffeur.setIdChauffeur(resultat.getInt("idChauffeur"));
+                    chauffeur.setNumPermis(resultat.getString("numPermis"));
+                    chauffeur.setEtat(resultat.getBoolean("etat"));
+                    chauffeur.setLogin(resultat.getString("login"));
+                    chauffeur.setPwd(resultat.getString("pwd"));
+                    chauffeur.setNom(resultat.getString("nom"));
+                    chauffeur.setPrenom(resultat.getString("prenom"));
+                    chauffeur.setEmail(resultat.getString("email"));
+                    chauffeur.setTelephone(resultat.getInt("telephone"));
+                    chauffeur.setAdresse(resultat.getString("adresse"));
+                    chauffeur.setCin(resultat.getInt("cin"));
+                }
+                if(b==false){
+                return null;
+            }
+                return chauffeur;
+            } catch (SQLException ex) {
+                System.out.println("erreur lors de la recherche du chauffeur" + ex.getMessage());
+                return null;
+            }
+        }
+   
 
     @Override
     public List<Chauffeur> DisplayAllChauffeur() {
@@ -303,6 +338,25 @@ public class ChauffeurDAO implements IChauffeurDAO{
             System.out.println("erreur lors du chargement des données" + ex.getMessage());
             return null;
             }
+    }
+
+    @Override
+    public boolean findChauffeurByLogin_PWD(String login, String pwd) {
+        String requete = "select * from chauffeur where login=? and pwd=?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setString(1, login);
+            ps.setString(2, pwd);
+
+            ResultSet resultat = ps.executeQuery();
+            
+            return resultat.next();
+       
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du administrateur" + ex.getMessage());
+            return false;
+        }
     }
     
 }

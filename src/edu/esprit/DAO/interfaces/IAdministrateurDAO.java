@@ -18,6 +18,9 @@ public interface IAdministrateurDAO {
     void updateAdministrateur(Administrateur administrateur);
     void deleteAdministrateur(int id);
     Administrateur findAdministrateurById(String id);
+    Administrateur findAdminByLogin(String loginChauffeur);
+    boolean findAdministrateurByLogin_PWD(String log, String pwd);
     List<Administrateur> DisplayAllAdministrateurs();
+    
     
 }

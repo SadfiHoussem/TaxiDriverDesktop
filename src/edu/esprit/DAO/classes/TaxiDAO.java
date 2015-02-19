@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author Houssem
  */
-class TaxiDAO implements ITaxiDAO{
+public class TaxiDAO implements ITaxiDAO{
 
     private Connection conn;
     private static TaxiDAO taxiDAO;

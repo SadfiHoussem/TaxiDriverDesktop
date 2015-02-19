@@ -5,9 +5,9 @@
  */
 package edu.esprit.adapters;
 
-import edu.esprit.DAO.classes.ReclamationDAO;
 import edu.esprit.entities.Reclamation;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -17,13 +17,11 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ConsulterReclamations extends AbstractTableModel{
 
-    private final String[] headers = {"Identifiant","Client" , "Sujet", "Etat"};
-    private List<Reclamation> reclamations = new ArrayList<>();
-    ReclamationDAO reclamationDAO;
+    private final String[] headers = {"Identifiant","ID Client" ,"Client" , "Sujet", "Date", "Etat"};
+    private List<Reclamation> reclamations;
 
-    public ConsulterReclamations() {
-        reclamationDAO = ReclamationDAO.getInstance();
-        reclamations = reclamationDAO.DisplayAllReclamations();
+    public ConsulterReclamations(List<Reclamation> reclamation) {
+        reclamations=reclamation;
     }
 
     public List<Reclamation> getListeReclamations() {
@@ -51,11 +49,19 @@ public class ConsulterReclamations extends AbstractTableModel{
             case 0:
                 return reclamations.get(rowIndex).getIdReclamation();
             case 1:
-                return reclamations.get(rowIndex).getClient().getNom();
+                return reclamations.get(rowIndex).getClient().getIdClient();
             case 2:
-                return reclamations.get(rowIndex).getsujetReclamation();
+                return reclamations.get(rowIndex).getClient().getNom();
             case 3:
-                return reclamations.get(rowIndex).isEtat();
+                return reclamations.get(rowIndex).getsujetReclamation();
+            case 4:
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                return dateFormat.format(reclamations.get(rowIndex).getDate());
+            case 5:
+                if(reclamations.get(rowIndex).isEtat())
+                    return "Confirmée";
+                else if(!reclamations.get(rowIndex).isEtat())
+                    return "En attente";
             default:
                 return null;
         }

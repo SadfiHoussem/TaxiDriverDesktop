@@ -21,6 +21,7 @@ public interface IClientDAO {
     boolean isClientExistUpdate(Client c);
     Client findClientById(int id);
     Client findClientByCin(Long cin);
+    boolean findClientByLogin_PWD(String login, String pwd);
     List<Client> DisplayAllClients();
     
 }

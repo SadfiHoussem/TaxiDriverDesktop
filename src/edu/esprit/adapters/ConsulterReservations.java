@@ -21,7 +21,7 @@ import javax.swing.table.AbstractTableModel;
 public class ConsulterReservations extends AbstractTableModel{
 
     String[] headers = {"Identifiant", "Client", "Chauffeur", "Voiture","Adresse Depart","Adresse Destination", "Date", "Etat"};
-    List<Reservation> reservations = new ArrayList<>();
+    List<Reservation> reservations;
     ReservationDAO reservationDAO;
 
     public ConsulterReservations(List<Reservation> listeReservation) {

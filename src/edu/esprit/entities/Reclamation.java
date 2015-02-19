@@ -1,6 +1,8 @@
 
 package edu.esprit.entities;
 
+import java.util.Date;
+
 
 public class Reclamation {
     
@@ -10,6 +12,7 @@ public class Reclamation {
     private String sujetReclamation;
     private String contenu;
     private boolean etat;
+    private Date date;
 
     
      public int getIdReclamation() {
@@ -59,6 +62,15 @@ public class Reclamation {
     public void setEtat(boolean etat) {
         this.etat = etat;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
     
     
 }

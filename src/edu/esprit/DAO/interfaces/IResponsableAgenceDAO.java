@@ -21,5 +21,6 @@ public interface IResponsableAgenceDAO {
     boolean isRespAgenceExistUpdate(ResponsableAgence ra);
     ResponsableAgence findRespAgenceById(int idRespAgence);
     ResponsableAgence findRespAgenceByLogin(String loginRespAgence);
+    boolean findRespAgenceByLogin_PWD(String login, String pwd);
     List<ResponsableAgence> DisplayAllResponsableAgence();
 }

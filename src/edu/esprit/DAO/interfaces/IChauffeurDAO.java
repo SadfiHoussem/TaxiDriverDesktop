@@ -21,6 +21,8 @@ public interface IChauffeurDAO {
     boolean updateChauffeur(Chauffeur c);
     boolean deleteChauffeur(int id);
     Chauffeur findChauffeurById(int id);
+    Chauffeur findChauffeurByLogin(String loginChauffeur);
+    boolean findChauffeurByLogin_PWD(String login,String pwd);
     List<Chauffeur> DisplayAllChauffeur();
     
     List<Reservation> consulterPlanning(Chauffeur c);
