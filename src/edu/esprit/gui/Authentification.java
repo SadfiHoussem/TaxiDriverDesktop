@@ -11,8 +11,9 @@ import edu.esprit.DAO.classes.AdministrateurDAO;
 import edu.esprit.DAO.classes.ChauffeurDAO;
 import edu.esprit.DAO.classes.ClientDAO;
 import edu.esprit.DAO.classes.ResponsableAgenceDAO;
-import edu.esprit.gui.administrateur.accueilA;
+import edu.esprit.gui.administrateur.AccueilA;
 import edu.esprit.gui.chauffeur.AccueilChauffeur;
+import edu.esprit.gui.client.AccueilClient;
 import edu.esprit.gui.responsableagence.AccueilRespAgence;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -32,23 +33,17 @@ public class Authentification extends javax.swing.JFrame {
     
     private static AccueilChauffeur accueilChauffeurGUI;
     private static AccueilRespAgence accueilRespAgenceGUI;
-    private static accueilA accueilAdmin;
+    private static AccueilA accueilAdmin;
+    private static AccueilClient accueilClient;
     
     public Authentification() {
         initComponents();
-        
-        accueilChauffeurGUI=new AccueilChauffeur();
-        accueilRespAgenceGUI=new AccueilRespAgence();
-        accueilAdmin=new accueilA();
         
         aDAO=AdministrateurDAO.getInstance();
         rDAO=ResponsableAgenceDAO.getInstance();
         chDAO=ChauffeurDAO.getInstance();
         cDAO=ClientDAO.getInstance();
-        
-        // Chargement des Accueil
-        
-        
+               
     }
 
     /**
@@ -109,7 +104,9 @@ public class Authentification extends javax.swing.JFrame {
         switch(user.getSelectedItem()+""){
             case "Administrateur":
                 if(aDAO.findAdministrateurByLogin_PWD(login.getText(), pwd.getText())){
+                    accueilAdmin=new AccueilA(login.getText());
                     accueilAdmin.setVisible(true);
+                    
                     this.setVisible(false);
                 }
                 else
@@ -117,7 +114,9 @@ public class Authentification extends javax.swing.JFrame {
             break;
             case "Responsable Agence":
                 if(rDAO.findRespAgenceByLogin_PWD(login.getText(), pwd.getText())){
+                    accueilRespAgenceGUI=new AccueilRespAgence(login.getText());
                     accueilRespAgenceGUI.setVisible(true);
+                    
                     this.setVisible(false);
                 }
                 else
@@ -125,7 +124,9 @@ public class Authentification extends javax.swing.JFrame {
             break;
             case "Chauffeur":
                 if(chDAO.findChauffeurByLogin_PWD(login.getText(), pwd.getText())){
+                    accueilChauffeurGUI=new AccueilChauffeur(login.getText());
                     accueilChauffeurGUI.setVisible(true);
+                    
                     this.setVisible(false);
                 }
                 else
@@ -133,7 +134,9 @@ public class Authentification extends javax.swing.JFrame {
             break;
             case "Client":
                 if(cDAO.findClientByLogin_PWD(login.getText(), pwd.getText())){
-                    
+                    accueilClient =new AccueilClient(login.getText(),pwd.getText());
+                    accueilClient.setVisible(true);
+                    this.setVisible(false);
                 }
                 else
                     JOptionPane.showMessageDialog(null, "Combinaison de login et mot de passe non trouvée" );
@@ -142,7 +145,7 @@ public class Authentification extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erreur lors du chargement des données" );
             break;
         }
-            
+
     }//GEN-LAST:event_connexionActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
