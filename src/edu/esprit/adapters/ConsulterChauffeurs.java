@@ -63,7 +63,7 @@ public class ConsulterChauffeurs extends AbstractTableModel{
             case 8:
                 return chauffeurs.get(rowIndex).getAdresse();
             case 9:
-                return chauffeurs.get(rowIndex).isEtat();
+                return chauffeurs.get(rowIndex).isConge();
             default:
                 return null;
         }

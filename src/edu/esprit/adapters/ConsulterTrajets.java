@@ -18,7 +18,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ConsulterTrajets extends AbstractTableModel{
 
-    String[] headers = {"Identifiant", "Client", "Responsable Agence", "Adresse Départ", "Adresse Destination", "Cout"};
+    String[] headers = {"Identifiant", "Agence", "Adresse Départ", "Adresse Destination", "Cout"};
     List<Trajet> trajets = new ArrayList<>();
 
     public ConsulterTrajets(List<Trajet> listeTrajet) {
@@ -46,13 +46,7 @@ public class ConsulterTrajets extends AbstractTableModel{
             case 0:
                 return trajets.get(rowIndex).getIdTrajet();
             case 1:
-                if (trajets.get(rowIndex).getClient().getIdClient()==0)
-                    return "None";
-                return trajets.get(rowIndex).getClient().getNom();
-            case 2:
-                if (trajets.get(rowIndex).getRespAgence().getIdResponsableAgence()==0)
-                    return "None";
-                return trajets.get(rowIndex).getRespAgence().getNom();
+                return trajets.get(rowIndex).getAgence().getNomAgence();
             case 3:
                 return trajets.get(rowIndex).getAdresseDep();
             case 4:

@@ -61,7 +61,7 @@ public class ChauffeurAdapter extends AbstractTableModel{
             case 7:
                 return chauffeurs.get(rowIndex).getAdresse();
             case 8:
-                return chauffeurs.get(rowIndex).isEtat();
+                return chauffeurs.get(rowIndex).isConge();
             default:
                 return null;
         }
