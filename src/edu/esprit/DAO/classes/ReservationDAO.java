@@ -248,7 +248,40 @@ public class ReservationDAO implements IReservationDAO{
             System.out.println("erreur lors du chargement des stocks " + ex.getMessage());
             return null;
         }
-    
     }
+     public void insertReservation2(Reservation r) {
+          String requete="insert into reservation (idClient,idTaxi,idTrajet,idAgence,confirme,date) values (?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+    
+            ps.setInt(1, r.getClient().getIdClient());
+            ps.setInt(2, r.getTaxi().getIdTaxi());
+
+            ps.setInt(3, r.getTrajet().getIdTrajet());
+            ps.setInt(4, r.getAgence().getIdAgence());
+            ps.setInt(5, 0);
+            ps.setString(6,r.getDateRes());
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("erreur lors de l'ajout de la réservation" + ex.getMessage());
+          
+            }
+    }
+     
+     public ResultSet DisplayReservationByIdClient(int id) {
+
+        String requete = "select r.idReservation as 'numéro de la réservation', a.nomAgence as 'nom de lagence', t.adresseDep as 'adresse de depart', t.adresseDest as 'adresse de destination', c.nom as 'nom du chauffeur' , c.prenom as 'prénom du chauffeur' , r.date as 'date de la réservation' , r.confirme as ' confirmation' from reservation r,trajet t,agence a,taxi ta,chauffeur c  where r.idTrajet=t.idTrajet and a.idAgence=r.idAgence and ta.idTaxi=r.idTaxi and ta.idChauffeur=c.idChauffeur and idClient="+id;
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+        
+          
+            return resultat;
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement des réservations " + ex.getMessage());
+            return null;
+        } 
+        }
     
 }

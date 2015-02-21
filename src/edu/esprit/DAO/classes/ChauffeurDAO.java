@@ -90,7 +90,7 @@ public class ChauffeurDAO implements IChauffeurDAO{
                 PreparedStatement ps = conn.prepareStatement(requete);
                 
                 ps.setString(1, c.getNumPermis());
-                ps.setBoolean(2, c.isEtat());
+                ps.setBoolean(2, c.isConge());
                 ps.setString(3, c.getLogin());
                 ps.setString(4, c.getPwd());
                 ps.setString(5, c.getNom());
@@ -125,7 +125,7 @@ public class ChauffeurDAO implements IChauffeurDAO{
             ps.setInt(5, c.getTelephone());
             ps.setString(6, c.getAdresse());
             ps.setLong(7, c.getCin());
-            ps.setBoolean(8, c.isEtat());
+            ps.setBoolean(8, c.isConge());
             ps.setString(9, c.getLogin());
             
             ps.executeUpdate();
@@ -208,7 +208,7 @@ public class ChauffeurDAO implements IChauffeurDAO{
                     b=true;
                     chauffeur.setIdChauffeur(resultat.getInt("idChauffeur"));
                     chauffeur.setNumPermis(resultat.getString("numPermis"));
-                    chauffeur.setEtat(resultat.getBoolean("etat"));
+                    chauffeur.setConge(resultat.getBoolean("etat"));
                     chauffeur.setLogin(resultat.getString("login"));
                     chauffeur.setPwd(resultat.getString("pwd"));
                     chauffeur.setNom(resultat.getString("nom"));
@@ -255,7 +255,7 @@ public class ChauffeurDAO implements IChauffeurDAO{
                 chauffeur.setTelephone(resultat.getInt("telephone"));
                 chauffeur.setAdresse(resultat.getString("adresse"));
                 chauffeur.setCin(resultat.getInt("cin"));
-                chauffeur.setEtat(resultat.getBoolean("etat"));
+                chauffeur.setConge(resultat.getBoolean("etat"));
 
                 listeChauffeurs.add(chauffeur);
             }
@@ -359,4 +359,25 @@ public class ChauffeurDAO implements IChauffeurDAO{
         }
     }
     
+    public ResultSet DisplayAllChauffeurTypeResultSet() {
+    
+    
+        String requete = "select nom, prenom, email, adresse, telephone from chauffeur";
+        try {
+            boolean b=false;
+            Statement statement = conn.createStatement();
+            ResultSet resultat;
+            resultat = statement.executeQuery(requete);
+                
+           
+          
+            return resultat;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des stocks " + ex.getMessage());
+            return null;
+        }
+    
+    
+    }
 }

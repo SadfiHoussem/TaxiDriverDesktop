@@ -157,4 +157,34 @@ public class CommentaireDAO implements ICommentaireDAO{
         }
     
     }
+    
+    public ResultSet DisplayAllCommentairesByoffre(int idOffre) {
+
+        String requete = "select login,contenu from commentaire,client  where idOffre="+idOffre;
+        try {
+            Statement statement = conn.createStatement();
+           return statement.executeQuery(requete);
+         
+          
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement des commentaires " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    public void insertCommentaire2(Commentaire commentaire) {
+        String requete = "insert into commentaire (idOffre, contenu, idClient) values (?,?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setInt(1, commentaire.getOffre().getIdOffre());
+            ps.setString(2, commentaire.getContenu());
+            ps.setInt(3, commentaire.getClient().getIdClient());
+
+
+            ps.executeUpdate();
+            System.out.println("Ajout du commentaire  effectuée avec succès");
+        } catch (SQLException ex) {
+            System.out.println("erreur lors de l'insertion dans commentaire " + ex.getMessage());
+        }
+    }
 }

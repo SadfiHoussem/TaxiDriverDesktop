@@ -224,4 +224,37 @@ public class OffreDAO implements IOffreDAO{
             return null;
         }
     }
+    
+    public int findAgenceByIdOffre(int idOffre) {
+        
+        String requete="select * from offre,agence where agence.idAgence=offre.idAgence and offre.idOffre=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+           ps.setInt(1, idOffre);
+            ResultSet resultat = ps.executeQuery();
+          resultat.next();
+                return resultat.getInt("agence.idAgence");
+            }
+         catch (SQLException ex) {
+           System.out.println("erreur lors du chargement des offres" + ex.getMessage());
+         return -1;   
+         }
+    }
+         public ResultSet DisplayAllOffresTypeResultSet() {
+        
+        
+        
+        String requete = "select idOffre, sujetOffre, contenu, nomAgence from offre, agence where agence.idAgence=offre.idAgence";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+        
+            return resultat;
+           
+                    } 
+        catch (SQLException ex) {
+            System.out.println("erreur lors du chargement des offres " + ex.getMessage());
+            return null;
+        }
+    }
 }

@@ -63,17 +63,16 @@ public class TrajetDAO implements ITrajetDAO{
         if(isTrajetExist(t))
             return false;
         
-        String requete = "insert into trajet (idClient,idResponsable,adresseDep,adresseDest,cout,etat) values (?,?,?,?,?,?)";
+        String requete = "insert into trajet (idAgence,adresseDep,adresseDest,cout,etat) values (?,?,?,?,?)";
         try {
 
             PreparedStatement ps = conn.prepareStatement(requete);
             
-            ps.setInt(1, t.getClient().getIdClient());
-            ps.setInt(2, t.getRespAgence().getIdResponsableAgence());
-            ps.setString(3, t.getAdresseDep());
-            ps.setString(4, t.getAdresseDest());
-            ps.setDouble(5, t.getCout());
-            ps.setBoolean(6, t.isEtat());
+            ps.setInt(1, t.getAgence().getIdAgence());
+            ps.setString(2, t.getAdresseDep());
+            ps.setString(3, t.getAdresseDest());
+            ps.setDouble(4, t.getCout());
+            ps.setBoolean(5, t.isEtat());
             
             ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
@@ -90,17 +89,17 @@ public class TrajetDAO implements ITrajetDAO{
         if(!isTrajetExist(t))
             return false;
         
-        String requete = "update trajet set idClient=?, idResponsable=?, adresseDep=?, adresseDest=?, cout=?, etat=? where idTrajet=?";
+        String requete = "update trajet set idAgence, adresseDep=?, adresseDest=?, cout=?, etat=? where idTrajet=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             
-            ps.setInt(7, t.getIdTrajet());
-            ps.setInt(1, t.getClient().getIdClient());
-            ps.setInt(2, t.getRespAgence().getIdResponsableAgence());
-            ps.setString(3, t.getAdresseDep());
-            ps.setString(4, t.getAdresseDest());
-            ps.setDouble(5, t.getCout());
-            ps.setBoolean(6, t.isEtat()); 
+            ps.setInt(6, t.getIdTrajet());
+            ps.setInt(1, t.getAgence().getIdAgence());
+            ps.setString(2, t.getAdresseDep());
+            ps.setString(3, t.getAdresseDest());
+            ps.setDouble(4, t.getCout());
+            ps.setBoolean(5, t.isEtat()); 
+            
             ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
             return true;
@@ -153,13 +152,11 @@ public class TrajetDAO implements ITrajetDAO{
             ps.setInt(1, id);
             ResultSet resultat = ps.executeQuery();
             Trajet trajet = new Trajet();
-            ClientDAO clientDAO = ClientDAO.getInstance();
-            ResponsableAgenceDAO responsableAgenceDAO = ResponsableAgenceDAO.getInstance();
+
             while (resultat.next()) {
                 
                 trajet.setIdTrajet(id);
-                trajet.setClient(clientDAO.findClientById(resultat.getInt("idClient")));
-                trajet.setRespAgence(responsableAgenceDAO.findRespAgenceById(resultat.getInt("idResponsable")));
+                trajet.setAgence(AgenceDAO.getInstance().findAgenceById(resultat.getInt("idAgence")));
                 trajet.setAdresseDep(resultat.getString("adresseDep"));
                 trajet.setAdresseDest(resultat.getString("adresseDest"));
                 trajet.setCout(resultat.getDouble("cout"));
@@ -180,58 +177,15 @@ public class TrajetDAO implements ITrajetDAO{
             Statement statement = conn.createStatement();
             ResultSet resultat = statement.executeQuery(requete);
             
-            ClientDAO clientDAO = ClientDAO.getInstance();
-            ResponsableAgenceDAO responsableAgenceDAO = ResponsableAgenceDAO.getInstance();
-            // Client non trouvé
-            Client c = new Client();
-            c.setIdClient(0);
-            c.setCin(0);
-            c.setAdresse("adresse");
-            c.setLogin("login");
-            c.setNom("nom");
-            c.setPrenom("prenom");
-            c.setPwd("123456");
-            c.setEmail("email");
-            c.setTelephone(715592);
-            // Responsable non trouvé
-            ResponsableAgence r = new ResponsableAgence();
-            r.setIdResponsableAgence(0);
-            r.setCin(0);
-            r.setAdresse("adresse");
-            r.setLogin("login");
-            r.setNom("nom");
-            r.setPrenom("prenom");
-            r.setPwd("123456");
-            r.setEmail("email");
-            r.setTelephone(715592);
-            
-            int rClient=0;
-            int rResp=0;
-            int rTrajet=0;
             while (resultat.next()) {
                 Trajet trajet = new Trajet();
                 
-                rTrajet=resultat.getInt("idTrajet");
-                rClient=resultat.getInt("idClient");
-                rResp=resultat.getInt("idResponsable");
-                
-                trajet.setIdTrajet(rTrajet);
-                if(rClient==0)
-                    trajet.setClient(c);
-                else 
-                    trajet.setClient(clientDAO.findClientById(rClient));
-                
-                if(rResp==0)
-                    trajet.setRespAgence(r);
-                    else
-                    trajet.setRespAgence(responsableAgenceDAO.findRespAgenceById(rResp));
-                
+                trajet.setAgence(AgenceDAO.getInstance().findAgenceById(resultat.getInt("idAgence")));
                 trajet.setAdresseDep(resultat.getString("adresseDep"));
                 trajet.setAdresseDest(resultat.getString("adresseDest"));
                 trajet.setCout(resultat.getDouble("cout"));
                 trajet.setEtat(resultat.getBoolean("etat"));
-                
-               
+
                 listeTrajets.add(trajet);
             }
             return listeTrajets;
@@ -242,4 +196,40 @@ public class TrajetDAO implements ITrajetDAO{
         }
     }
     
+    public void insertTrajet2(Trajet t) {
+        String requete = "insert into trajet (adresseDep,adresseDest) values (?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            
+            ps.setString(1, t.getAdresseDep());
+            ps.setString(2, t.getAdresseDest());
+
+            ps.executeUpdate();
+            System.out.println("Ajout effectuée avec succès");
+        } catch (SQLException ex) {
+            System.out.println("erreur lors de l'insertion dans trajet " + ex.getMessage());
+        }
+    }
+    
+      public int findIdTrajet(String destination,String depart) {
+
+
+        String requete = "select * from trajet where adresseDest ='"+destination+"' and adresseDep='"+depart+"' " ;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+         
+            ResultSet resultat = ps.executeQuery();
+             while(resultat.next())
+           {
+            return resultat.getInt("idTrajet");
+           }
+            return resultat.getInt("idTrajet");
+
+        }
+        catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du trajet" + ex.getMessage());
+            return -1;
+        }
+        } 
 }

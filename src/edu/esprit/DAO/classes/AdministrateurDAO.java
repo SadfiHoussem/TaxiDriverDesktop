@@ -100,12 +100,12 @@ public class AdministrateurDAO implements IAdministrateurDAO{
     }
 
     @Override
-    public Administrateur findAdministrateurById(String id) {
+    public Administrateur findAdministrateurById(int id) {
         String requete = "select * from administrateur where idAdministrateur=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet resultat = ps.executeQuery();
             Administrateur administrateur = new Administrateur();
             while (resultat.next()) {
@@ -179,12 +179,13 @@ public class AdministrateurDAO implements IAdministrateurDAO{
         }
     }
 
-    public Administrateur findAdminByLogin(String loginChauffeur) {
+    @Override
+    public Administrateur findAdminByLogin(String loginAdmin) {
         String requete="select * from Administrateur where login=?";
             try {
                 boolean b=false;
                 PreparedStatement ps = conn.prepareStatement(requete);
-                ps.setString(1, loginChauffeur);
+                ps.setString(1, loginAdmin);
                 ResultSet resultat = ps.executeQuery();
                 Administrateur administrateur = new Administrateur();
 

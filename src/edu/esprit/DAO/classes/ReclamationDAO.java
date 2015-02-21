@@ -240,4 +240,21 @@ public class ReclamationDAO implements IReclamationDAO{
         }
     }
     
+    @Override
+    public ResultSet DisplayAllReclamationsByIdClient(int idClient) {
+
+
+        String requete = "select * from reclamation where idClient="+idClient;
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+           
+            
+            return resultat;
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement des reclamations " + ex.getMessage());
+            return null;
+        }
+        
+    }
 }

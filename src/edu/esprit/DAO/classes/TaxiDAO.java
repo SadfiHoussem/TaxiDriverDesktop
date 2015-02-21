@@ -146,4 +146,23 @@ public class TaxiDAO implements ITaxiDAO{
         }
     }
     
+    public ResultSet DisplayAllTaxiTypeResultSetByIdAgence(int idAgence) {
+
+     String requete = "select idTaxi, typeVoiture, nbrPlace, nom, prenom, email, telephone from taxi, voiture, chauffeur where taxi.matricule=voiture.matricule and taxi.idChauffeur=chauffeur.idChauffeur and taxi.idAgence="+idAgence;
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat;
+            resultat = statement.executeQuery(requete);
+         
+            
+        
+            return resultat;
+        } 
+        catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des taxis " + ex.getMessage());
+            return null;
+        }
+    
+    }
 }

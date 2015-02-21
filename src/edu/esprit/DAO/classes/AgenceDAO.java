@@ -98,14 +98,15 @@ public class AgenceDAO implements IAgenceDAO{
         if(!isAgenceExistUpdate(a))
             return false;
         else{
-            String requete = "update agence set nomAgence=?, telAgence=?, adresseAgence=? where idAgence=?";
+            String requete = "update agence set idRespAgence=?, nomAgence=?, telAgence=?, adresseAgence=? where idAgence=?";
             try {
                 PreparedStatement ps = connection.prepareStatement(requete);
                 
-                ps.setString(1, a.getNomAgence());
-                ps.setInt(2, a.getTelAgence());
-                ps.setString(3, a.getAdresseAgence());
-                ps.setInt(4, a.getIdAgence());
+                ps.setInt(1, a.getRespAgence().getIdResponsableAgence());
+                ps.setString(2, a.getNomAgence());
+                ps.setInt(3, a.getTelAgence());
+                ps.setString(4, a.getAdresseAgence());
+                ps.setInt(5, a.getIdAgence());
 
                 ps.executeUpdate();
                 System.out.println("Mise à  jour effectuée avec succés");
@@ -234,6 +235,23 @@ public class AgenceDAO implements IAgenceDAO{
             return listeAgences;
         } catch (SQLException ex) {
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des agences " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    public ResultSet DisplayAllAgencesTypeResultSet() {
+        
+        String requete = "select * from agence";
+        try {
+            boolean b=false;
+            Statement statement = connection.createStatement();
+            ResultSet resultat;
+            resultat = statement.executeQuery(requete);
+        
+          
+            return resultat;
+        } catch (SQLException ex) {
             System.out.println("erreur lors du chargement des agences " + ex.getMessage());
             return null;
         }

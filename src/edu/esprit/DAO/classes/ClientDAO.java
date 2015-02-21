@@ -270,4 +270,28 @@ public class ClientDAO implements IClientDAO{
             return false;
         }
     }
+    
+    public int findIdClientByLogin_PWD(String log, String pwd) {
+        
+           String requete = "select * from client where login=? and pwd=?";
+             int idClient=-1;
+        try {
+            boolean b=false;
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setString(1, log);
+            ps.setString(2, pwd);
+
+            ResultSet resultat = ps.executeQuery();
+            while (resultat.next()) {
+                b=true;
+             idClient=resultat.getInt("idClient");
+
+            }
+
+                return idClient;
+        } catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du client" + ex.getMessage());
+            return -1;
+        }
+    }
 }
