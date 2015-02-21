@@ -217,10 +217,9 @@ public class AccueilA extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        JfreeChart jf = new JfreeChart ();
+        //JfreeChart jf = new JfreeChart ();
         this.setVisible(false);
-        jf.setVisible(true);
+        this.setVisible(true);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
