@@ -20,9 +20,6 @@ import java.util.List;
  */
 public class GestionAgence1 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GestionVoiture
-     */
     
     private List<Agence> listeAgences = new ArrayList<>();
     private List<ResponsableAgence> listeResponsableAgences = new ArrayList<>();
@@ -33,7 +30,7 @@ public class GestionAgence1 extends javax.swing.JFrame {
         listeResponsableAgences =getlisteResponsableAgence();
         setMyListBox();
     }
-    
+
     private void updateModel(){
         
         jTable1.setModel(new ConsulterAgences());
@@ -172,7 +169,7 @@ public class GestionAgence1 extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNom)
                     .addComponent(adresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -193,6 +190,11 @@ public class GestionAgence1 extends javax.swing.JFrame {
         });
 
         ButtonReset.setText("Reset");
+        ButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonResetActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Retour");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -205,25 +207,25 @@ public class GestionAgence1 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ButtonReset)
-                .addGap(56, 56, 56)
-                .addComponent(ButtonSupprimer)
-                .addGap(31, 31, 31)
-                .addComponent(ButtonUpdate)
-                .addGap(42, 42, 42)
-                .addComponent(ButtonAjouter)
-                .addGap(118, 118, 118))
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(116, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ButtonReset)
+                                .addGap(291, 291, 291)
+                                .addComponent(ButtonSupprimer)
+                                .addGap(18, 18, 18)
+                                .addComponent(ButtonUpdate)
+                                .addGap(18, 18, 18)))
+                        .addComponent(ButtonAjouter)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -231,7 +233,7 @@ public class GestionAgence1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonAjouter)
                     .addComponent(ButtonUpdate)
@@ -290,7 +292,7 @@ public class GestionAgence1 extends javax.swing.JFrame {
 
       ResponsableAgence r=ResponsableAgenceDAO.getInstance().findRespAgenceById(Integer.parseInt(aux.substring(0, aux.indexOf(":"))));    
       g.setRespAgence(r);
-            
+
       g.setTelAgence(Integer.parseInt(tel.getText()));
       g.setAdresseAgence(adresse.getText());
       
@@ -300,24 +302,28 @@ public class GestionAgence1 extends javax.swing.JFrame {
 
     private void ButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSupprimerActionPerformed
 
-       String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
-       Agence a=new Agence();
-       a.setIdAgence(Integer.parseInt(id));
-          AgenceDAO.getInstance().deleteAgence(a);
-         updateModel();
+        String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
+        Agence a=AgenceDAO.getInstance().findAgenceById(Integer.parseInt(id));
+        
+        AgenceDAO.getInstance().deleteAgence(a);
+        updateModel();
     }//GEN-LAST:event_ButtonSupprimerActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-                 accueilA a  =new accueilA();
-    this.setVisible(false);
-    a.setVisible(true);
+        this.setVisible(false);
+        AccueilA.getAccueilAGUI().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void idrespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idrespActionPerformed
         // TODO add your handling code here:
         
     }//GEN-LAST:event_idrespActionPerformed
+
+    private void ButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonResetActionPerformed
+        nom.setText("");
+        tel.setText("");
+        adresse.setText("");
+    }//GEN-LAST:event_ButtonResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,6 +350,10 @@ public class GestionAgence1 extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GestionAgence1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

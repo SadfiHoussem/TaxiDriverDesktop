@@ -14,13 +14,12 @@ import edu.esprit.entities.Client;
  * @author Houssem
  */
 public class GestionClient extends javax.swing.JFrame {
-
     
     public GestionClient() {
         initComponents();
         jTable1.setModel(new ConsulterClients());
     }
-    
+
     private void updateModel(){
         jTable1.setModel(new ConsulterClients());       
     }
@@ -54,11 +53,11 @@ public class GestionClient extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        ButtonAjouter = new javax.swing.JButton();
+        BannirButton = new javax.swing.JButton();
         ButtonUpdate = new javax.swing.JButton();
         ButtonSupprimer = new javax.swing.JButton();
         ButtonReset = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        retourButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,41 +87,42 @@ public class GestionClient extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelNom)
-                        .addGap(18, 18, 18)
-                        .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelPrenom)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(prenom, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelEmail)
-                            .addComponent(labelCin))
-                        .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelNom)
+                                .addGap(18, 18, 18)
+                                .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelPrenom)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(prenom, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelEmail)
+                                    .addComponent(labelCin))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelLogin, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelPwd, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelTelephone, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelAdresse, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(telephone, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                    .addComponent(adresse, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                    .addComponent(password)
-                    .addComponent(login))
+                            .addComponent(labelLogin, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelPwd, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelTelephone, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelAdresse, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(telephone, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(adresse, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(password)
+                            .addComponent(login))))
                 .addGap(25, 25, 25))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(106, 106, 106)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,10 +175,10 @@ public class GestionClient extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        ButtonAjouter.setText("Ajouter");
-        ButtonAjouter.addActionListener(new java.awt.event.ActionListener() {
+        BannirButton.setText("Activé/Désactivé");
+        BannirButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonAjouterActionPerformed(evt);
+                BannirButtonActionPerformed(evt);
             }
         });
 
@@ -203,10 +203,10 @@ public class GestionClient extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Retour");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        retourButton.setText("Retour");
+        retourButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                retourButtonActionPerformed(evt);
             }
         });
 
@@ -215,25 +215,27 @@ public class GestionClient extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(183, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(79, 79, 79)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(retourButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addComponent(ButtonReset)
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
                 .addComponent(ButtonSupprimer)
-                .addGap(46, 46, 46)
+                .addGap(18, 18, 18)
+                .addComponent(BannirButton)
+                .addGap(18, 18, 18)
                 .addComponent(ButtonUpdate)
-                .addGap(41, 41, 41)
-                .addComponent(ButtonAjouter)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(29, 29, 29))
+                .addGap(113, 113, 113))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,11 +244,11 @@ public class GestionClient extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ButtonAjouter)
-                    .addComponent(ButtonUpdate)
+                    .addComponent(BannirButton)
                     .addComponent(ButtonSupprimer)
                     .addComponent(ButtonReset)
-                    .addComponent(jButton1))
+                    .addComponent(ButtonUpdate)
+                    .addComponent(retourButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -255,7 +257,7 @@ public class GestionClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAjouterActionPerformed
+    private void BannirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BannirButtonActionPerformed
 
         Client c =new Client();
    
@@ -274,7 +276,7 @@ public class GestionClient extends javax.swing.JFrame {
         cDAO.insertClient(c);
         
         updateModel();
-    }//GEN-LAST:event_ButtonAjouterActionPerformed
+    }//GEN-LAST:event_BannirButtonActionPerformed
 
     private void ButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUpdateActionPerformed
    
@@ -329,13 +331,11 @@ public class GestionClient extends javax.swing.JFrame {
      
     }//GEN-LAST:event_ButtonResetActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-               accueilA a  =new accueilA();
-    this.setVisible(false);
-    a.setVisible(true);
+    private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
+        this.setVisible(false);
+        AccueilA.getAccueilAGUI().setVisible(true);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_retourButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,6 +370,14 @@ public class GestionClient extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -380,14 +388,13 @@ public class GestionClient extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonAjouter;
+    private javax.swing.JButton BannirButton;
     private javax.swing.JButton ButtonReset;
     private javax.swing.JButton ButtonSupprimer;
     private javax.swing.JButton ButtonUpdate;
     private javax.swing.JTextField adresse;
     private javax.swing.JTextField cin;
     private javax.swing.JTextField email;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -404,6 +411,7 @@ public class GestionClient extends javax.swing.JFrame {
     private javax.swing.JTextField nom;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField prenom;
+    private javax.swing.JButton retourButton;
     private javax.swing.JTextField telephone;
     // End of variables declaration//GEN-END:variables
 }

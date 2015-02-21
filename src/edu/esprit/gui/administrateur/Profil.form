@@ -100,7 +100,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="119" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="92" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -167,11 +167,6 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="photo">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\samar\Desktop\images\images.jpg"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>

@@ -6,12 +6,9 @@
 package edu.esprit.gui.administrateur;
 
 import edu.esprit.DAO.classes.AgenceDAO;
-import edu.esprit.DAO.classes.VoitureDAO;
-import edu.esprit.DAO.interfaces.IAgenceDAO;
 import edu.esprit.adapters.ConsulterVoitures;
 import edu.esprit.entities.Agence;
 import edu.esprit.entities.Voiture;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +17,6 @@ import java.util.List;
  * @author Houssem
  */
 public class GestionVoiture extends javax.swing.JFrame {
-
-    /**
-     * Creates new form GestionVoiture
-     */
     
     private List<Agence> listeAgences = new ArrayList<>();
     private List<Voiture> listeVoitures = new ArrayList<>();
@@ -32,25 +25,17 @@ public class GestionVoiture extends javax.swing.JFrame {
         initComponents();
         jTable1.setModel(new ConsulterVoitures());
         listeAgences=getListeAgence();
-        setMyListBox();
     }
-    
-    private void updateModel(){
-        
+
+    private void updateModel(){        
         jTable1.setModel(new ConsulterVoitures());
     }
 
-    private List<Agence> getListeAgence() {
-        
+    private List<Agence> getListeAgence() {    
         AgenceDAO agenceDao = AgenceDAO.getInstance();
         return agenceDao.DisplayAllAgences();         
     }
     
-    private void setMyListBox(){
-        for (Agence a : listeAgences) {
-            idagence.addItem(a.getNomAgence());
-        }
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,24 +47,16 @@ public class GestionVoiture extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        typeVoiture = new javax.swing.JTextField();
-        nbrPlace = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        matricule = new javax.swing.JTextField();
-        idChauffeur = new javax.swing.JLabel();
-        etatDispo = new javax.swing.JRadioButton();
-        labelPrenom = new javax.swing.JLabel();
-        etatNDispo = new javax.swing.JRadioButton();
-        labelNom = new javax.swing.JLabel();
-        idagence = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        ButtonReset = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 102));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTable1.setBackground(new java.awt.Color(255, 255, 102));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -100,133 +77,15 @@ public class GestionVoiture extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 102));
-
-        jLabel2.setText("Etat");
-
-        matricule.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                matriculeActionPerformed(evt);
-            }
-        });
-
-        idChauffeur.setText("Matricule");
-
-        etatDispo.setText("Disponible");
-        etatDispo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                etatDispoActionPerformed(evt);
-            }
-        });
-
-        labelPrenom.setText("Type Voiture");
-
-        etatNDispo.setText("Non Disponible");
-        etatNDispo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                etatNDispoActionPerformed(evt);
-            }
-        });
-
-        labelNom.setText("Nombre de Place");
-
-        idagence.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idagenceActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Agence");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        jLabel3.setText("Consulter Les Voitures ");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelNom)
-                                .addGap(34, 34, 34)
-                                .addComponent(nbrPlace, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(107, 107, 107)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(typeVoiture, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(idagence, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(57, 57, 57)
-                                                .addComponent(jLabel2))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(104, 104, 104)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(etatNDispo)
-                                                    .addComponent(etatDispo)))))))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelPrenom)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(idChauffeur))
-                                .addGap(30, 30, 30)
-                                .addComponent(matricule, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(91, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(135, 135, 135))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idChauffeur)
-                    .addComponent(matricule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(etatDispo)
-                            .addComponent(jLabel2)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(idagence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(etatNDispo)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelPrenom)
-                        .addComponent(typeVoiture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(67, 67, 67)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelNom)
-                    .addComponent(nbrPlace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-
-        ButtonReset.setText("Reset");
-
         jButton1.setText("Retour");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jLabel3.setText("Consulter Les Voitures ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -235,27 +94,23 @@ public class GestionVoiture extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ButtonReset)
-                .addGap(42, 42, 42))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addGap(42, 774, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(242, 242, 242)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ButtonReset)
-                    .addComponent(jButton1))
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(261, 261, 261)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -265,47 +120,17 @@ public class GestionVoiture extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        
-        matricule.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString());
-        idagence.setSelectedItem(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),1).toString());
-        nbrPlace.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),2).toString());
-        typeVoiture.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),3).toString());
-        
-        if ("false".equals(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),4).toString())){
-            etatNDispo.setSelected(true);
-            etatDispo.setSelected(false);
-        }            
-        else if ("true".equals(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),4).toString())){
-            etatDispo.setSelected(true);
-            etatNDispo.setSelected(false);
-        }
+
     }//GEN-LAST:event_jTable1MouseClicked
-
-    private void matriculeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matriculeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_matriculeActionPerformed
-
-    private void etatNDispoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_etatNDispoActionPerformed
-        if (etatDispo.isSelected())
-            etatDispo.setSelected(false);
-    }//GEN-LAST:event_etatNDispoActionPerformed
-
-    private void etatDispoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_etatDispoActionPerformed
-        if (etatNDispo.isSelected())
-            etatNDispo.setSelected(false);
-    }//GEN-LAST:event_etatDispoActionPerformed
-
         
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-               accueilA a  =new accueilA();
-    this.setVisible(false);
-    a.setVisible(true);
+        this.setVisible(false);
+        AccueilA.getAccueilAGUI().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void idagenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idagenceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idagenceActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        updateModel();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -334,6 +159,8 @@ public class GestionVoiture extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -344,22 +171,9 @@ public class GestionVoiture extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonReset;
-    private javax.swing.JRadioButton etatDispo;
-    private javax.swing.JRadioButton etatNDispo;
-    private javax.swing.JLabel idChauffeur;
-    private javax.swing.JComboBox idagence;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel labelNom;
-    private javax.swing.JLabel labelPrenom;
-    private javax.swing.JTextField matricule;
-    private javax.swing.JTextField nbrPlace;
-    private javax.swing.JTextField typeVoiture;
     // End of variables declaration//GEN-END:variables
 }

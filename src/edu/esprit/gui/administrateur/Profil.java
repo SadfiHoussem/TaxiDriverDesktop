@@ -6,7 +6,6 @@
 package edu.esprit.gui.administrateur;
 
 import edu.esprit.DAO.classes.AdministrateurDAO;
-import edu.esprit.DAO.classes.ChauffeurDAO;
 import edu.esprit.entities.Administrateur;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -21,19 +20,11 @@ import javax.swing.JOptionPane;
  * @author samar
  */
 public class Profil extends javax.swing.JFrame {
-private Administrateur a ;
-
-    /**
-     * Creates new form Profil
-     */
-    public Profil (Administrateur administrateur) {
-        
-        this.a=administrateur;
-        initComponents();
-    }
-
+    private Administrateur admin ;
+    
     public  Profil() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.admin=AccueilA.getAdmin();
+        initComponents();
     }
 
     /**
@@ -75,8 +66,6 @@ private Administrateur a ;
         });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 102));
-
-        photo.setIcon(new javax.swing.ImageIcon("C:\\Users\\samar\\Desktop\\images\\images.jpg")); // NOI18N
 
         jButton1.setText("Télécharger photo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -157,7 +146,7 @@ private Administrateur a ;
                             .addComponent(mdp)
                             .addComponent(login)
                             .addComponent(cin))))
-                .addGap(0, 119, Short.MAX_VALUE))
+                .addGap(0, 92, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,27 +285,25 @@ private Administrateur a ;
 		return;
         }}
             
-       a.setLogin(login.getText());
-        a.setNom(nom.getText());
-        a.setPrenom(prenom.getText());
-         a.setPwd(mdp.getText());
-       a.setEmail(email.getText());
-        a.setTelephone(Integer.parseInt(tel.getText()));
-        a.setAdresse(adresse.getText());
-        a.setCin(Long.parseLong(cin.getText()));
+       admin.setLogin(login.getText());
+        admin.setNom(nom.getText());
+        admin.setPrenom(prenom.getText());
+         admin.setPwd(mdp.getText());
+       admin.setEmail(email.getText());
+        admin.setTelephone(Integer.parseInt(tel.getText()));
+        admin.setAdresse(adresse.getText());
+        admin.setCin(Long.parseLong(cin.getText()));
 
         AdministrateurDAO aDAO = AdministrateurDAO.getInstance();
-        aDAO.updateAdministrateur(a);
+        aDAO.updateAdministrateur(admin);
        // AccueilChauffeur.setChauffeur(c);
         JOptionPane.showMessageDialog(this, "Modification reusie");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        accueilA a = new accueilA();
-          this.setVisible(false);
-    a.setVisible(true);
+        this.setVisible(false);
+        AccueilA.getAccueilAGUI().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -349,15 +336,15 @@ private Administrateur a ;
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
            
-       login.setText(a.getLogin());
-      nom.setText(a.getNom());
-        prenom.setText(a.getPrenom());
-      tel.setText(a.getTelephone()+"");
-        email.setText(a.getEmail());
-        cin.setText(a.getCin()+"");
-        adresse.setText(a.getAdresse());
+       login.setText(admin.getLogin());
+      nom.setText(admin.getNom());
+        prenom.setText(admin.getPrenom());
+      tel.setText(admin.getTelephone()+"");
+        email.setText(admin.getEmail());
+        cin.setText(admin.getCin()+"");
+        adresse.setText(admin.getAdresse());
        
-           mdp.setText(a.getPwd());
+           mdp.setText(admin.getPwd());
     }//GEN-LAST:event_formWindowOpened
  
     /**
@@ -385,6 +372,8 @@ private Administrateur a ;
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Profil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
