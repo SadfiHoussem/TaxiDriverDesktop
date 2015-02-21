@@ -12,13 +12,12 @@ package edu.esprit.entities;
 public class Trajet {
     
     private int idTrajet;
-    private Client client;
-    private ResponsableAgence respAgence;
+    private Agence agence;
     private String adresseDep;
     private String adresseDest;
     private double cout;
     private boolean etat;
-
+    
     public int getIdTrajet() {
         return idTrajet;
     }
@@ -27,22 +26,13 @@ public class Trajet {
         this.idTrajet = idTrajet;
     }
 
-    public Client getClient() {
-        return client;
+    public Agence getAgence() {
+        return agence;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setAgence(Agence agence) {
+        this.agence = agence;
     }
-
-    public ResponsableAgence getRespAgence() {
-        return respAgence;
-    }
-
-    public void setRespAgence(ResponsableAgence respAgence) {
-        this.respAgence = respAgence;
-    }
-
     
     public String getAdresseDep() {
         return adresseDep;

@@ -21,6 +21,7 @@ public class Reservation {
     private Chauffeur chauffeur;
     private boolean confirme;
     private Date date;
+    private String dateRes;
     private int note;
 
     public int getIdReservation() {
@@ -94,5 +95,14 @@ public class Reservation {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public String getDateRes() {
+        return dateRes;
+    }
+
+    public void setDateRes(String dateRes) {
+        this.dateRes = dateRes;
+    }
+    
     
 }

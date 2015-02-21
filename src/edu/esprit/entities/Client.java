@@ -12,6 +12,7 @@ package edu.esprit.entities;
 public class Client extends User{
     
     private int idClient;
+    private int actif;
 
     public int getIdClient() {
         return idClient;
@@ -20,6 +21,15 @@ public class Client extends User{
     public void setIdClient(int idClient) {
         this.idClient = idClient;
     }
+
+    public int getActif() {
+        return actif;
+    }
+
+    public void setActif(int actif) {
+        this.actif = actif;
+    }
+    
     
     
 }

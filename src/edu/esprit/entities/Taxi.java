@@ -20,7 +20,7 @@ public class Taxi {
         this.idTaxi=idTaxi;
         this.chauffeur = chauffeur;
         this.voiture = voiture;
-        this.etat=(this.chauffeur.isEtat())&&(this.voiture.isEtat());
+        this.etat=(this.chauffeur.isConge())&&(this.voiture.isEtat());
     }
 
     public int getIdTaxi() {
@@ -53,7 +53,7 @@ public class Taxi {
     }    
 
     public void setEtat() {
-        this.etat=(this.chauffeur.isEtat())&&(this.voiture.isEtat());
+        this.etat=(this.chauffeur.isConge())&&(this.voiture.isEtat());
     }
     
 }

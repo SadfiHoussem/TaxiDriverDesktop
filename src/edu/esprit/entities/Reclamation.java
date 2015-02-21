@@ -15,7 +15,7 @@ public class Reclamation {
     private Date date;
 
     
-     public int getIdReclamation() {
+    public int getIdReclamation() {
         return idReclamation;
     }
 

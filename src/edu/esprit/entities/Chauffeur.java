@@ -13,8 +13,8 @@ public class Chauffeur extends User{
     
     private int idChauffeur;
     private String numPermis;
-    private boolean etat;
-
+    private boolean conge;
+    
     public int getIdChauffeur() {
         return idChauffeur;
     }
@@ -31,12 +31,12 @@ public class Chauffeur extends User{
         this.numPermis = numPermis;
     }
 
-    public boolean isEtat() {
-        return etat;
+    public boolean isConge() {
+        return conge;
     }
 
-    public void setEtat(boolean etat) {
-        this.etat = etat;
+    public void setConge(boolean conge) {
+        this.conge = conge;
     }
     
     
