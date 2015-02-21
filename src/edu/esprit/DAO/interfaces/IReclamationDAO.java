@@ -6,6 +6,7 @@
 package edu.esprit.DAO.interfaces;
 
 import edu.esprit.entities.Reclamation;
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -22,5 +23,6 @@ public interface IReclamationDAO {
     Reclamation findReclamationById(int id);
     List<Reclamation> DisplayAllReclamations();
     List<Reclamation> DisplayReclamationsConfirme(boolean b);
+    ResultSet DisplayAllReclamationsByIdClient(int idClient);
     
 }

@@ -17,8 +17,8 @@ public interface IAdministrateurDAO {
     void insertAdministrateur(Administrateur administrateur);
     void updateAdministrateur(Administrateur administrateur);
     void deleteAdministrateur(int id);
-    Administrateur findAdministrateurById(String id);
-    Administrateur findAdminByLogin(String loginChauffeur);
+    Administrateur findAdministrateurById(int id);
+    Administrateur findAdminByLogin(String loginAdmin);
     boolean findAdministrateurByLogin_PWD(String log, String pwd);
     List<Administrateur> DisplayAllAdministrateurs();
     
