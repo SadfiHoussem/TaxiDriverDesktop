@@ -8,6 +8,7 @@ package edu.esprit.gui.administrateur;
 import edu.esprit.DAO.classes.AdministrateurDAO;
 import edu.esprit.charts.JfreeChart;
 import edu.esprit.entities.Administrateur;
+import edu.esprit.gui.Authentification;
 
 /**
  *
@@ -79,6 +80,7 @@ public class AccueilA extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        deconncterButton = new javax.swing.JButton();
 
         jCheckBoxMenuItem8.setSelected(true);
         jCheckBoxMenuItem8.setText("jCheckBoxMenuItem8");
@@ -149,6 +151,13 @@ public class AccueilA extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 0));
         jLabel1.setMaximumSize(new java.awt.Dimension(963, 200));
 
+        deconncterButton.setText("Se deconnecter");
+        deconncterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deconncterButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -171,11 +180,13 @@ public class AccueilA extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7))
+                        .addComponent(jButton7)
+                        .addGap(18, 18, 18)
+                        .addComponent(deconncterButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1040, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 71, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +201,8 @@ public class AccueilA extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addComponent(jButton5)
                         .addComponent(jButton6)
-                        .addComponent(jButton7)))
+                        .addComponent(jButton7)
+                        .addComponent(deconncterButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(426, 426, 426))
@@ -265,6 +277,12 @@ public class AccueilA extends javax.swing.JFrame {
         gestionCommentaireAdminGUI.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void deconncterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconncterButtonActionPerformed
+        Authentification auth=new Authentification();
+        this.setVisible(false);
+        auth.setVisible(true);
+    }//GEN-LAST:event_deconncterButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -309,6 +327,7 @@ public class AccueilA extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton MonProfil;
+    private javax.swing.JButton deconncterButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
