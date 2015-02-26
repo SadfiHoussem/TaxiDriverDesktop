@@ -5,6 +5,7 @@
  */
 package edu.esprit.DAO.interfaces;
 
+import edu.esprit.entities.Agence;
 import edu.esprit.entities.Voiture;
 import java.util.List;
 
@@ -20,4 +21,9 @@ public interface IVoitureDAO {
     boolean deleteVoiture(String matricule);
     Voiture findVoitureByMatricule(String matricule);
     List<Voiture> DisplayAllVoitures();
+    List<Voiture> DisplayAllVoituresByAgence(int idAgence);
+    List<Voiture> DisplayVoitureNAByAgence(Agence agence);
+    List<Voiture> FindByMatriculeLike(String matricule);
+    List<Voiture> FindByNbrPlaceLike(int nbrPlace);
+    List<Voiture> FindByMarqueLike(String matricule);
 }

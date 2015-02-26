@@ -17,6 +17,8 @@ public interface IClientDAO {
     boolean insertClient(Client client);
     boolean updateClient(Client client);
     boolean deleteClient(int id);
+    boolean activCompteClient(int idClient);
+    boolean desacCompteClient(int idClient);
     boolean isClientExist(Client c); 
     boolean isClientExistUpdate(Client c);
     Client findClientById(int id);

@@ -19,4 +19,5 @@ public interface ITaxiDAO {
     void deleteTaxi(int id);
     Taxi findTaxiById(int id);
     List<Taxi> DisplayAllTaxi();
+    List<Taxi> DisplayAllTaxiByAgence(int idAgence);
 }

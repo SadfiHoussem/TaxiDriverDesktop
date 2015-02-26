@@ -16,12 +16,15 @@ import java.util.List;
 public interface IOffreDAO {
     
     boolean isOffreExist(int id);
+    boolean isOffreExist2(Offre o);
     boolean insertOffre(Offre o);
     boolean deleteOffre(int idOffre);
     boolean updateOffre(Offre o);
     boolean updateSujetOffre(int idOffre,String sujetOffre);
     boolean updateContenuOffre(int idOffre,String contenu);
     Offre findOffreById(int id);
+    List<Offre> FindBySujetLike(String sujet);
+    List<Offre> FindByDateLike(String date);
     List<Offre> DisplayAllOffres();
     ResultSet DisplayAllOffres2();
 }
