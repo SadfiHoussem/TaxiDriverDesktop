@@ -8,6 +8,7 @@ package edu.esprit.gui.responsableagence;
 import edu.esprit.DAO.classes.AgenceDAO;
 import edu.esprit.DAO.classes.OffreDAO;
 import edu.esprit.entities.Offre;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,21 +33,23 @@ public class AddOffre extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        identifiant = new javax.swing.JTextField();
         labelContenu = new javax.swing.JLabel();
-        labelIdentifiant = new javax.swing.JLabel();
         sujetOffre = new javax.swing.JTextField();
         labelSujet = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         contenuOffre = new javax.swing.JTextArea();
         ButtonAjouter = new javax.swing.JButton();
         ButtonReset = new javax.swing.JButton();
+        retourButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            public void windowStateChanged(java.awt.event.WindowEvent evt) {
+                formWindowStateChanged(evt);
+            }
+        });
 
         labelContenu.setText("Contenu");
-
-        labelIdentifiant.setText("Identifiant");
 
         labelSujet.setText("Sujet Offre");
 
@@ -62,6 +65,18 @@ public class AddOffre extends javax.swing.JFrame {
         });
 
         ButtonReset.setText("Reset");
+        ButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonResetActionPerformed(evt);
+            }
+        });
+
+        retourButton.setText("Retour");
+        retourButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,16 +88,16 @@ public class AddOffre extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelContenu)
-                            .addComponent(labelSujet)
-                            .addComponent(labelIdentifiant))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                            .addComponent(labelSujet))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(sujetOffre, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(identifiant, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(15, 15, 15)
+                        .addComponent(retourButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ButtonReset)
                         .addGap(27, 27, 27)
                         .addComponent(ButtonAjouter)))
@@ -91,11 +106,7 @@ public class AddOffre extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelIdentifiant)
-                    .addComponent(identifiant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelSujet)
                     .addComponent(sujetOffre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -106,7 +117,8 @@ public class AddOffre extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonAjouter)
-                    .addComponent(ButtonReset))
+                    .addComponent(ButtonReset)
+                    .addComponent(retourButton))
                 .addContainerGap())
         );
 
@@ -122,7 +134,7 @@ public class AddOffre extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -131,15 +143,44 @@ public class AddOffre extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAjouterActionPerformed
-        Offre o = new Offre();
-        o.setIdOffre(Integer.parseInt(identifiant.getText()));
-        AgenceDAO aDAO = AgenceDAO.getInstance();
-        o.setAgence(aDAO.findAgenceById(1));
-        o.setSujetOffre(sujetOffre.getText());
-        o.setContenu(contenuOffre.getText());
-        OffreDAO oDAO =OffreDAO.getInstance();
-        System.out.println(oDAO.insertOffre(o));
+        
+        if(sujetOffre.getText().equals("")||contenuOffre.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs " );
+        }
+        else {
+            Offre o = new Offre();
+
+            o.setAgence(AccueilRespAgence.getAgence());
+            o.setSujetOffre(sujetOffre.getText());
+            o.setContenu(contenuOffre.getText());
+
+            OffreDAO oDAO =OffreDAO.getInstance();
+            if(oDAO.insertOffre(o)){
+                JOptionPane.showMessageDialog(null, "Offre ajoutée " );
+                AccueilRespAgence.getGestionOffreGUI().setVisible(true);
+                this.setVisible(false);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Offre Déjà existante " );
+            }
+        }
+        
     }//GEN-LAST:event_ButtonAjouterActionPerformed
+
+    private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
+        AccueilRespAgence.getGestionOffreGUI().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_retourButtonActionPerformed
+
+    private void ButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonResetActionPerformed
+        sujetOffre.setText("");
+        contenuOffre.setText("");
+    }//GEN-LAST:event_ButtonResetActionPerformed
+
+    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
+        sujetOffre.setText("");
+        contenuOffre.setText("");
+    }//GEN-LAST:event_formWindowStateChanged
 
     /**
      * @param args the command line arguments
@@ -182,12 +223,11 @@ public class AddOffre extends javax.swing.JFrame {
     private javax.swing.JButton ButtonAjouter;
     private javax.swing.JButton ButtonReset;
     private javax.swing.JTextArea contenuOffre;
-    private javax.swing.JTextField identifiant;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelContenu;
-    private javax.swing.JLabel labelIdentifiant;
     private javax.swing.JLabel labelSujet;
+    private javax.swing.JButton retourButton;
     private javax.swing.JTextField sujetOffre;
     // End of variables declaration//GEN-END:variables
 }

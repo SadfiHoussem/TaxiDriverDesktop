@@ -7,8 +7,11 @@ package edu.esprit.gui.responsableagence;
 
 import edu.esprit.DAO.classes.ChauffeurDAO;
 import edu.esprit.adapters.ConsulterChauffeurs;
-
 import edu.esprit.entities.Chauffeur;
+import java.util.List;
+import java.util.regex.Pattern;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -19,13 +22,16 @@ public class GestionChauffeur extends javax.swing.JFrame {
     /**
      * Creates new form GestionChauffeur
      */
+    private List<Chauffeur> listeChauffeurs;
+    
     public GestionChauffeur() {
         initComponents();
-        jTable1.setModel(new ConsulterChauffeurs());
+        refresh();
     }
     
-    private void updateModel(){
-        jTable1.setModel(new ConsulterChauffeurs());       
+    private void refresh(){
+        listeChauffeurs=ChauffeurDAO.getInstance().DisplayAllChauffeurByAgence(AccueilRespAgence.getAgence());
+        jTable1.setModel(new ConsulterChauffeurs(listeChauffeurs));       
     }
 
     /**
@@ -66,6 +72,8 @@ public class GestionChauffeur extends javax.swing.JFrame {
         ButtonSupprimer = new javax.swing.JButton();
         ButtonReset = new javax.swing.JButton();
         retourButton = new javax.swing.JButton();
+        recherche = new javax.swing.JTextField();
+        critereRecherche = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -258,27 +266,104 @@ public class GestionChauffeur extends javax.swing.JFrame {
             }
         });
 
+        recherche.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                rech();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                rech();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                rech();
+            }
+
+            public void rech() {
+                List<Chauffeur> listeChauffeur;
+                switch(critereRecherche.getSelectedItem()+""){
+                    case "Identifiant":
+                    if (Pattern.matches("[0-9]*", recherche.getText())&&(!recherche.getText().equals(""))){
+                        listeChauffeur=ChauffeurDAO.getInstance().FindByIdLike(Integer.parseInt(recherche.getText()));
+                        jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    }
+                    else
+                    refresh();
+                    break;
+                    case "Login":
+                    listeChauffeur=ChauffeurDAO.getInstance().FindByLoginLike(recherche.getText());
+                    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    break;
+                    case "CIN":
+                    if (Pattern.matches("[0-9]*", recherche.getText())&&(!recherche.getText().equals(""))){
+                        listeChauffeur =ChauffeurDAO.getInstance().FindByCinLike(Integer.parseInt(recherche.getText()));
+                        jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    }
+                    else
+                    refresh();
+                    break;
+                    case "Nom":
+                    listeChauffeur =ChauffeurDAO.getInstance().FindByNomLike(recherche.getText());
+                    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    break;
+                    case "Prenom":
+                    listeChauffeur =ChauffeurDAO.getInstance().FindByPrenomLike(recherche.getText());
+                    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    break;
+                    case "Numéro Permis":
+                    if (Pattern.matches("[0-9]*", recherche.getText())&&(!recherche.getText().equals(""))){
+                        listeChauffeur =ChauffeurDAO.getInstance().FindByNPermisLike(Integer.parseInt(recherche.getText()));
+                        jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    }
+                    else
+                    refresh();
+                    break;
+                    case "Email":
+                    listeChauffeur =ChauffeurDAO.getInstance().FindByEmailLike(recherche.getText());
+                    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    break;
+                    case "Telephone":
+                    if (Pattern.matches("[0-9]*", recherche.getText())&&(!recherche.getText().equals(""))){
+                        listeChauffeur =ChauffeurDAO.getInstance().FindByTelLike(Integer.parseInt(recherche.getText()));
+                        jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    }
+                    else
+                    refresh();
+                    break;
+                    case "Adresse":
+                    listeChauffeur =ChauffeurDAO.getInstance().FindByAdresseLike(recherche.getText());
+                    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));
+                    break;
+                }
+            }
+        });
+
+        critereRecherche.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Identifiant","Login" , "CIN", "Numéro Permis", "Nom", "Prenom", "Telephone", "Email", "Adresse" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(retourButton)
-                .addGap(33, 33, 33)
-                .addComponent(ButtonReset)
-                .addGap(41, 41, 41)
-                .addComponent(ButtonSupprimer)
-                .addGap(31, 31, 31)
-                .addComponent(ButtonUpdate)
-                .addGap(42, 42, 42)
-                .addComponent(ButtonAjouter)
-                .addGap(118, 118, 118))
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(critereRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(156, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(retourButton)
+                .addGap(18, 18, 18)
+                .addComponent(ButtonReset)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ButtonSupprimer)
+                .addGap(18, 18, 18)
+                .addComponent(ButtonUpdate)
+                .addGap(18, 18, 18)
+                .addComponent(ButtonAjouter)
+                .addGap(28, 28, 28))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -290,13 +375,17 @@ public class GestionChauffeur extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(critereRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonAjouter)
                     .addComponent(ButtonUpdate)
                     .addComponent(ButtonSupprimer)
-                    .addComponent(ButtonReset)
-                    .addComponent(retourButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(retourButton)
+                    .addComponent(ButtonReset))
                 .addContainerGap())
         );
 
@@ -307,11 +396,12 @@ public class GestionChauffeur extends javax.swing.JFrame {
 
         Chauffeur c=new Chauffeur();
         
+        c.setAgence(AccueilRespAgence.getAgence());
         c.setNumPermis(numPermis.getText());
         if (etatDispo.isSelected())
-            c.setEtat(true);
+            c.setConge(true);
         else if (etatNDispo.isSelected())
-            c.setEtat(false);
+            c.setConge(false);
         
         c.setLogin(login.getText());
         c.setPwd(password.getText());
@@ -325,17 +415,18 @@ public class GestionChauffeur extends javax.swing.JFrame {
         ChauffeurDAO cDAO =ChauffeurDAO.getInstance();
         cDAO.insertChauffeur(c);
         
-        updateModel();
+        refresh();
     }//GEN-LAST:event_ButtonAjouterActionPerformed
 
     private void ButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUpdateActionPerformed
         Chauffeur c=new Chauffeur();
         
+        c.setAgence(AccueilRespAgence.getAgence());
         c.setNumPermis(numPermis.getText());
         if (etatDispo.isSelected())
-            c.setEtat(true);
+            c.setConge(true);
         else if (etatNDispo.isSelected())
-            c.setEtat(false);
+            c.setConge(false);
         
         c.setLogin(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),1).toString());
         c.setNom(nom.getText());
@@ -346,7 +437,7 @@ public class GestionChauffeur extends javax.swing.JFrame {
         c.setCin(Long.parseLong(cin.getText()));
         
         ChauffeurDAO.getInstance().updateChauffeur(c);
-        updateModel();
+        refresh();
     }//GEN-LAST:event_ButtonUpdateActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -369,11 +460,9 @@ public class GestionChauffeur extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void ButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSupprimerActionPerformed
-
-
-         String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
-           ChauffeurDAO.getInstance().deleteChauffeur(Integer.parseInt(id));
-           updateModel();
+            String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
+            ChauffeurDAO.getInstance().deleteChauffeur(Integer.parseInt(id));
+            refresh();
     }//GEN-LAST:event_ButtonSupprimerActionPerformed
 
     private void etatNDispoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_etatNDispoActionPerformed
@@ -434,6 +523,7 @@ public class GestionChauffeur extends javax.swing.JFrame {
     private javax.swing.JButton ButtonUpdate;
     private javax.swing.JTextField adresse;
     private javax.swing.JTextField cin;
+    private javax.swing.JComboBox critereRecherche;
     private javax.swing.JTextField email;
     private javax.swing.JRadioButton etatDispo;
     private javax.swing.JRadioButton etatNDispo;
@@ -455,6 +545,7 @@ public class GestionChauffeur extends javax.swing.JFrame {
     private javax.swing.JTextField numPermis;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField prenom;
+    private javax.swing.JTextField recherche;
     private javax.swing.JButton retourButton;
     private javax.swing.JTextField telephone;
     // End of variables declaration//GEN-END:variables

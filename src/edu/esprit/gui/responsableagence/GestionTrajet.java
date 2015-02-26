@@ -5,10 +5,8 @@
  */
 package edu.esprit.gui.responsableagence;
 
-import edu.esprit.DAO.classes.ClientDAO;
 import edu.esprit.DAO.classes.TrajetDAO;
 import edu.esprit.adapters.ConsulterTrajets;
-import edu.esprit.entities.Client;
 import edu.esprit.entities.Trajet;
 import java.util.ArrayList;
 import java.util.List;
@@ -267,20 +265,7 @@ public class GestionTrajet extends javax.swing.JFrame {
     private void ajouterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterButtonActionPerformed
         Trajet t =new Trajet();
         
-        // Client vide ou pas de Client
-            Client c = new Client();
-            c.setIdClient(0);
-            c.setCin(0);
-            c.setAdresse("adresse");
-            c.setLogin("login");
-            c.setNom("nom");
-            c.setPrenom("prenom");
-            c.setPwd("123456");
-            c.setEmail("email");
-            c.setTelephone(715592);
-            
-        t.setClient(c);
-        t.setRespAgence(AccueilRespAgence.getRespAgence());
+        t.setAgence(AccueilRespAgence.getAgence());
         t.setAdresseDep(adresseDep.getText());
         t.setAdresseDest(adresseDest.getText());
         t.setCout(0);
@@ -293,22 +278,9 @@ public class GestionTrajet extends javax.swing.JFrame {
     private void modifierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifierButtonActionPerformed
         try {
             Trajet t =new Trajet();
-        
-        // Client vide ou pas de Client
-            Client c = new Client();
-            c.setIdClient(0);
-            c.setCin(0);
-            c.setAdresse("adresse");
-            c.setLogin("login");
-            c.setNom("nom");
-            c.setPrenom("prenom");
-            c.setPwd("123456");
-            c.setEmail("email");
-            c.setTelephone(715592);
             
             t.setIdTrajet(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(),0).toString()));
-            t.setClient(ClientDAO.getInstance().findClientById(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(),1).toString())));
-            t.setRespAgence(AccueilRespAgence.getRespAgence());
+            t.setAgence(AccueilRespAgence.getAgence());
             t.setAdresseDep(adresseDep.getText());
             t.setAdresseDest(adresseDest.getText());
             t.setCout(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(),5).toString()));

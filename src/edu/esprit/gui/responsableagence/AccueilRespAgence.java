@@ -5,7 +5,6 @@
  */
 package edu.esprit.gui.responsableagence;
 
-import edu.esprit.gui.administrateur.GestionReclamation;
 import edu.esprit.DAO.classes.AgenceDAO;
 import edu.esprit.DAO.classes.ResponsableAgenceDAO;
 import edu.esprit.entities.Agence;
@@ -23,7 +22,6 @@ public class AccueilRespAgence extends javax.swing.JFrame {
     
     private static ResponsableAgence respAgence;
     private static Agence agence;
-    private final String login="loginRespAgence";
     
     private static ProfileRespAgence profileGUI;
     private static GestionChauffeur gestionChauffeurGUI;
@@ -32,13 +30,21 @@ public class AccueilRespAgence extends javax.swing.JFrame {
     private static GestionReclamation gestionReclamationGUI;
     private static GestionReservation gestionReservationGUI;
     private static GestionTrajet gestionTrajetGUI;
+    private static GestionOffre gestionOffreGUI;
+    private static GestionTaxi gestionTaxiGUI;
+    
     private static AccueilRespAgence AccueilGUI;
     
     public AccueilRespAgence() {
         initComponents();
+    }
+    
+    public AccueilRespAgence(String login) {
+        initComponents();
+        
         respAgence=ResponsableAgenceDAO.getInstance().findRespAgenceByLogin(login);
         agence=AgenceDAO.getInstance().findAgenceByRespAgence(respAgence.getIdResponsableAgence());
-        
+
         AccueilGUI=this;
         profileGUI=new ProfileRespAgence();
         gestionChauffeurGUI=new GestionChauffeur();
@@ -47,7 +53,8 @@ public class AccueilRespAgence extends javax.swing.JFrame {
         gestionReclamationGUI= new GestionReclamation();
         gestionReservationGUI= new GestionReservation();
         gestionTrajetGUI= new GestionTrajet();
-        
+        gestionOffreGUI=new GestionOffre();
+        gestionTaxiGUI=new GestionTaxi();
         
     }
 
@@ -99,7 +106,17 @@ public class AccueilRespAgence extends javax.swing.JFrame {
         return gestionTrajetGUI;
     }
 
-    
+    public static GestionOffre getGestionOffreGUI() {
+        return gestionOffreGUI;
+    }
+
+    public static GestionTaxi getGestionTaxiGUI() {
+        return gestionTaxiGUI;
+    }
+
+    public static void setGestionTaxiGUI(GestionTaxi gestionTaxiGUI) {
+        AccueilRespAgence.gestionTaxiGUI = gestionTaxiGUI;
+    }
     
     
     /**
@@ -119,6 +136,7 @@ public class AccueilRespAgence extends javax.swing.JFrame {
         reclamationButton = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        taxiButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,6 +190,18 @@ public class AccueilRespAgence extends javax.swing.JFrame {
         });
 
         jButton9.setText("Gestion Offre");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        taxiButton.setText("Gestion Taxi");
+        taxiButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taxiButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -179,16 +209,18 @@ public class AccueilRespAgence extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton9)
-                        .addComponent(jButton8)
-                        .addComponent(agenceButton)
-                        .addComponent(voitureButton)
-                        .addComponent(chauffeurButton)
-                        .addComponent(profileButton)
-                        .addComponent(reclamationButton))
-                    .addComponent(reservationButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(taxiButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton9)
+                            .addComponent(jButton8)
+                            .addComponent(agenceButton)
+                            .addComponent(voitureButton)
+                            .addComponent(chauffeurButton)
+                            .addComponent(profileButton)
+                            .addComponent(reclamationButton))
+                        .addComponent(reservationButton)))
                 .addContainerGap(502, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -210,7 +242,9 @@ public class AccueilRespAgence extends javax.swing.JFrame {
                 .addComponent(jButton8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton9)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(taxiButton)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         pack();
@@ -250,6 +284,16 @@ public class AccueilRespAgence extends javax.swing.JFrame {
         gestionTrajetGUI.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        gestionOffreGUI.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void taxiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taxiButtonActionPerformed
+        gestionTaxiGUI.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_taxiButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,6 +342,7 @@ public class AccueilRespAgence extends javax.swing.JFrame {
     private javax.swing.JButton profileButton;
     private javax.swing.JButton reclamationButton;
     private javax.swing.JButton reservationButton;
+    private javax.swing.JButton taxiButton;
     private javax.swing.JButton voitureButton;
     // End of variables declaration//GEN-END:variables
 }

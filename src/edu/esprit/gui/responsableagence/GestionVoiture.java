@@ -5,13 +5,14 @@
  */
 package edu.esprit.gui.responsableagence;
 
-import edu.esprit.DAO.classes.AgenceDAO;
 import edu.esprit.DAO.classes.VoitureDAO;
 import edu.esprit.adapters.ConsulterVoitures;
-import edu.esprit.entities.Agence;
 import edu.esprit.entities.Voiture;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -23,32 +24,21 @@ public class GestionVoiture extends javax.swing.JFrame {
      * Creates new form GestionVoiture
      */
     
-    private List<Agence> listeAgences = new ArrayList<>();
-    private List<Voiture> listeVoitures = new ArrayList<>();
+    private List<Voiture> listeVoitures;
     
     public GestionVoiture() {
         initComponents();
-        jTable1.setModel(new ConsulterVoitures());
-        listeAgences=getListeAgence();
-        setMyListBox();
+        listeVoitures=VoitureDAO.getInstance().DisplayAllVoituresByAgence(AccueilRespAgence.getAgence().getIdAgence());
+        jTable1.setModel(new ConsulterVoitures(listeVoitures));
+        
     }
     
-    private void updateModel(){
-        
-        jTable1.setModel(new ConsulterVoitures());
+    private void refresh(){
+        listeVoitures=VoitureDAO.getInstance().DisplayAllVoituresByAgence(AccueilRespAgence.getAgence().getIdAgence());
+        jTable1.setModel(new ConsulterVoitures(listeVoitures));
     }
 
-    private List<Agence> getListeAgence() {
-        
-        AgenceDAO agenceDao = AgenceDAO.getInstance();
-        return agenceDao.DisplayAllAgences();         
-    }
-    
-    private void setMyListBox(){
-        for (Agence a : listeAgences) {
-            idagence.addItem(a.getNomAgence());
-        }
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,12 +61,12 @@ public class GestionVoiture extends javax.swing.JFrame {
         labelPrenom = new javax.swing.JLabel();
         etatNDispo = new javax.swing.JRadioButton();
         labelNom = new javax.swing.JLabel();
-        idagence = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
         ButtonUpdate = new javax.swing.JButton();
         ButtonSupprimer = new javax.swing.JButton();
         ButtonReset = new javax.swing.JButton();
         retourButton = new javax.swing.JButton();
+        recherche = new javax.swing.JTextField();
+        critereRecherche = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,8 +123,6 @@ public class GestionVoiture extends javax.swing.JFrame {
 
         labelNom.setText("Nombre de Place");
 
-        jLabel1.setText("Agence");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -149,30 +137,22 @@ public class GestionVoiture extends javax.swing.JFrame {
                                 .addGap(34, 34, 34)
                                 .addComponent(nbrPlace, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(107, 107, 107)
+                                .addGap(117, 117, 117)
+                                .addComponent(typeVoiture, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(292, 292, 292)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(339, 339, 339)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(typeVoiture, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(idagence, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(57, 57, 57)
-                                                .addComponent(jLabel2))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(104, 104, 104)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(etatNDispo)
-                                                    .addComponent(etatDispo)))))))))
+                                    .addComponent(etatNDispo)
+                                    .addComponent(etatDispo)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelPrenom)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(idChauffeur))
+                                .addComponent(idChauffeur)
                                 .addGap(30, 30, 30)
                                 .addComponent(matricule, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(91, Short.MAX_VALUE))
@@ -184,18 +164,11 @@ public class GestionVoiture extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(idChauffeur)
                     .addComponent(matricule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(etatDispo)
-                            .addComponent(jLabel2)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(idagence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(etatDispo)
+                    .addComponent(jLabel2))
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(etatNDispo)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -231,45 +204,91 @@ public class GestionVoiture extends javax.swing.JFrame {
             }
         });
 
+        //"Matricule", "Nombre de place", "Marque"
+        recherche.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                rech();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                rech();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                rech();
+            }
+
+            public void rech() {
+                List<Voiture> listeVoiture;
+                switch(critereRecherche.getSelectedItem()+""){
+                    case "Nombre de place":
+                    if (Pattern.matches("[0-9]*", recherche.getText())&&(!recherche.getText().equals(""))){
+                        listeVoiture=VoitureDAO.getInstance().FindByNbrPlaceLike(Integer.parseInt(recherche.getText()));
+                        jTable1.setModel(new ConsulterVoitures(listeVoiture));
+                    }
+                    else
+                    refresh();
+                    break;
+                    case "Matricule":
+                    listeVoiture=VoitureDAO.getInstance().FindByMatriculeLike(recherche.getText());
+                    jTable1.setModel(new ConsulterVoitures(listeVoiture));
+                    break;
+                    case "Marque":
+                    listeVoiture =VoitureDAO.getInstance().FindByMarqueLike(recherche.getText());
+                    jTable1.setModel(new ConsulterVoitures(listeVoiture));
+                    break;
+                }
+            }
+        });
+
+        critereRecherche.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Matricule", "Nombre de place", "Marque" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(retourButton)
-                .addGap(18, 18, 18)
-                .addComponent(ButtonReset)
-                .addGap(56, 56, 56)
-                .addComponent(ButtonSupprimer)
-                .addGap(31, 31, 31)
-                .addComponent(ButtonUpdate)
-                .addGap(42, 42, 42)
-                .addComponent(ButtonAjouter)
-                .addGap(118, 118, 118))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(retourButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ButtonReset)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ButtonSupprimer)
+                .addGap(18, 18, 18)
+                .addComponent(ButtonUpdate)
+                .addGap(18, 18, 18)
+                .addComponent(ButtonAjouter)
+                .addGap(46, 46, 46))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(66, 66, 66)
+                        .addComponent(critereRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(critereRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonAjouter)
                     .addComponent(ButtonUpdate)
                     .addComponent(ButtonSupprimer)
                     .addComponent(ButtonReset)
                     .addComponent(retourButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -279,7 +298,6 @@ public class GestionVoiture extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         
         matricule.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString());
-        idagence.setSelectedItem(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),1).toString());
         nbrPlace.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),2).toString());
         typeVoiture.setText(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),3).toString());
         
@@ -296,13 +314,10 @@ public class GestionVoiture extends javax.swing.JFrame {
     private void ButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAjouterActionPerformed
 
         Voiture v=new Voiture();
+        
+        v.setAgence(AccueilRespAgence.getAgence());
         v.setMatricule(matricule.getText());
-        for (Agence a : listeAgences) {
-            if(a.getNomAgence().equals(idagence.getSelectedItem())){
-                v.setAgence(a);
-                break;
-            }        
-        }
+        
         if (etatDispo.isSelected())
             v.setEtat(true);
         else if (etatNDispo.isSelected())
@@ -314,7 +329,7 @@ public class GestionVoiture extends javax.swing.JFrame {
         VoitureDAO vDAO =VoitureDAO.getInstance();
         vDAO.insertVoiture(v);
 
-        updateModel();
+        refresh();
     }//GEN-LAST:event_ButtonAjouterActionPerformed
 
     private void matriculeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matriculeActionPerformed
@@ -324,14 +339,10 @@ public class GestionVoiture extends javax.swing.JFrame {
     private void ButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUpdateActionPerformed
 
         Voiture v=new Voiture();
-        v.setMatricule(matricule.getText());
-                for (Agence a : listeAgences) {
-            if(a.getNomAgence().equals(idagence.getSelectedItem())){
-                v.setAgence(a);
-                break;
-            }        
-        }
         
+        v.setAgence(AccueilRespAgence.getAgence());
+        v.setMatricule(matricule.getText());
+               
         if (etatDispo.isSelected())
             v.setEtat(true);
         else if (etatNDispo.isSelected())
@@ -340,14 +351,14 @@ public class GestionVoiture extends javax.swing.JFrame {
         v.setTypeVoiture(typeVoiture.getText());
 
         VoitureDAO.getInstance().updateVoiture(v);
-        updateModel();
+        refresh();
     }//GEN-LAST:event_ButtonUpdateActionPerformed
 
     private void ButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSupprimerActionPerformed
 
         String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
         VoitureDAO.getInstance().deleteVoiture(id);
-        updateModel();
+        refresh();
     }//GEN-LAST:event_ButtonSupprimerActionPerformed
 
     private void etatNDispoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_etatNDispoActionPerformed
@@ -406,11 +417,10 @@ public class GestionVoiture extends javax.swing.JFrame {
     private javax.swing.JButton ButtonReset;
     private javax.swing.JButton ButtonSupprimer;
     private javax.swing.JButton ButtonUpdate;
+    private javax.swing.JComboBox critereRecherche;
     private javax.swing.JRadioButton etatDispo;
     private javax.swing.JRadioButton etatNDispo;
     private javax.swing.JLabel idChauffeur;
-    private javax.swing.JComboBox idagence;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -419,6 +429,7 @@ public class GestionVoiture extends javax.swing.JFrame {
     private javax.swing.JLabel labelPrenom;
     private javax.swing.JTextField matricule;
     private javax.swing.JTextField nbrPlace;
+    private javax.swing.JTextField recherche;
     private javax.swing.JButton retourButton;
     private javax.swing.JTextField typeVoiture;
     // End of variables declaration//GEN-END:variables

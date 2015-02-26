@@ -7,6 +7,12 @@ package edu.esprit.gui.responsableagence;
 
 import edu.esprit.DAO.classes.ResponsableAgenceDAO;
 import edu.esprit.entities.ResponsableAgence;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,8 +35,6 @@ public class ProfileRespAgence extends javax.swing.JFrame {
         email.setText(ra.getEmail());
         cin.setText(ra.getCin()+"");
         adresse.setText(ra.getAdresse());
-        login.setText(ra.getLogin());
-        password.setText(ra.getPwd());
         
     }
 
@@ -51,9 +55,7 @@ public class ProfileRespAgence extends javax.swing.JFrame {
         labelLogin = new javax.swing.JLabel();
         prenom = new javax.swing.JTextField();
         labelPwd = new javax.swing.JLabel();
-        password = new javax.swing.JPasswordField();
         labelCin = new javax.swing.JLabel();
-        login = new javax.swing.JTextField();
         labelEmail = new javax.swing.JLabel();
         labelPrenom = new javax.swing.JLabel();
         labelTelephone = new javax.swing.JLabel();
@@ -62,6 +64,12 @@ public class ProfileRespAgence extends javax.swing.JFrame {
         telephone = new javax.swing.JTextField();
         labelNom = new javax.swing.JLabel();
         retourButton = new javax.swing.JButton();
+        photo = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        cpwd = new javax.swing.JPasswordField();
+        pwd = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
+        apwd = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,9 +82,9 @@ public class ProfileRespAgence extends javax.swing.JFrame {
             }
         });
 
-        labelLogin.setText("Login");
+        labelLogin.setText("Confirmation du mot de passe");
 
-        labelPwd.setText("Password");
+        labelPwd.setText("Mot de passe");
 
         labelCin.setText("CIN");
 
@@ -102,63 +110,89 @@ public class ProfileRespAgence extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Télécharger photo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Ancien mot de passe");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(132, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(labelTelephone)
-                                        .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(photo, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelLogin)
+                        .addGap(39, 39, 39)
+                        .addComponent(cpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(retourButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(ButtonReset)
+                            .addGap(65, 65, 65)
+                            .addComponent(ButtonUpdate))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(labelPwd))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(apwd, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(pwd)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(32, 32, 32)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(labelTelephone, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(labelCin)
                                                 .addComponent(labelEmail)
                                                 .addComponent(labelNom))
-                                            .addGap(12, 12, 12)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(14, 14, 14)
-                                        .addComponent(labelPrenom)))
-                                .addGap(16, 16, 16))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(labelAdresse)
-                                .addGap(18, 18, 18)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(adresse)
-                            .addComponent(cin)
-                            .addComponent(email)
-                            .addComponent(prenom, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(nom)
-                            .addComponent(telephone, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(100, 100, 100)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelPwd)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(login)
-                                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(labelLogin)))
-                        .addGap(149, 149, 149))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(retourButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(ButtonReset)
-                        .addGap(18, 18, 18)
-                        .addComponent(ButtonUpdate)
-                        .addGap(245, 245, 245))))
+                                            .addGap(12, 12, 12))
+                                        .addComponent(labelPrenom, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(labelAdresse, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(66, 66, 66)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(cin)
+                                                .addComponent(email)
+                                                .addComponent(prenom, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(nom)
+                                                .addComponent(telephone, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(18, 18, 18)
+                                            .addComponent(adresse, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGap(2, 2, 2))))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(167, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(126, 126, 126))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(photo, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNom))
@@ -167,23 +201,13 @@ public class ProfileRespAgence extends javax.swing.JFrame {
                     .addComponent(prenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelPrenom))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelEmail))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelCin)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelLogin))
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelPwd)
-                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(telephone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,21 +216,43 @@ public class ProfileRespAgence extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(adresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelAdresse))
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelPwd))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(apwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelLogin)
+                    .addComponent(cpwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonUpdate)
                     .addComponent(ButtonReset)
                     .addComponent(retourButton))
-                .addGap(62, 62, 62))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUpdateActionPerformed
-                
-        ra.setLogin(login.getText());
-        ra.setPwd(password.getText());
+        
+        if (nom.getText().isEmpty()
+                | prenom.getText().isEmpty()
+                | cin.getText().isEmpty()
+                | adresse.getText().isEmpty()
+                | telephone.getText().isEmpty()
+                | email.getText().isEmpty()
+                ) {
+            JOptionPane.showMessageDialog(null, "veuiller remplir tous les champs ", "Champ vide", JOptionPane.ERROR_MESSAGE);
+        }else
+        {
         ra.setNom(nom.getText());
         ra.setPrenom(prenom.getText());
         ra.setEmail(email.getText());
@@ -214,9 +260,45 @@ public class ProfileRespAgence extends javax.swing.JFrame {
         ra.setAdresse(adresse.getText());
         ra.setCin(Long.parseLong(cin.getText()));
 
-        ResponsableAgenceDAO raDAO =ResponsableAgenceDAO.getInstance();
-        raDAO.updateRespAgence(ra);
-        //AccueilRespAgence.setRespAgence(ra);
+        if(cpwd.getText().isEmpty()&&apwd.getText().isEmpty()&&pwd.getText().isEmpty()){
+            ResponsableAgenceDAO raDAO =ResponsableAgenceDAO.getInstance();
+            raDAO.updateRespAgence(ra);
+            JOptionPane.showMessageDialog(this, "Modification réussie");
+        }
+        else{
+            if(!(cpwd.getText().isEmpty())&&!(apwd.getText().isEmpty())&&!(pwd.getText().isEmpty())){
+                if(apwd.getText().equals(ra.getPwd())){
+                    if(pwd.getText().equals(cpwd.getText())){
+                        ra.setPwd(pwd.getText());
+                        ResponsableAgenceDAO.getInstance().updateRespAgence(ra);
+                        JOptionPane.showMessageDialog(this, "Modification réussie !");
+                        apwd.setText("");
+                        pwd.setText("");
+                        cpwd.setText("");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, "Les deux champs du mot de passe sont différents ");
+                        apwd.setText("");
+                        pwd.setText("");
+                        cpwd.setText("");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "L'ancien mot de passe est incorrect");
+                    apwd.setText("");
+                    pwd.setText("");
+                    cpwd.setText("");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs (mot de passe)");
+                apwd.setText("");
+                pwd.setText("");
+                cpwd.setText("");
+            }
+        }
+        
+        }
     }//GEN-LAST:event_ButtonUpdateActionPerformed
 
     private void ButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonResetActionPerformed
@@ -226,14 +308,40 @@ public class ProfileRespAgence extends javax.swing.JFrame {
         email.setText(ra.getEmail());
         cin.setText(ra.getCin()+"");
         adresse.setText(ra.getAdresse());
-        login.setText(ra.getLogin());
-        password.setText(ra.getPwd());
+        apwd.setText("");
+        pwd.setText("");
+        cpwd.setText("");
     }//GEN-LAST:event_ButtonResetActionPerformed
 
     private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
         AccueilRespAgence.getAccueilGUI().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_retourButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser Chooser = new JFileChooser();
+        Chooser.showOpenDialog(null);
+        File f = Chooser.getSelectedFile();
+        String name=f.getAbsolutePath();
+
+        try{
+            File image = new File(name);
+
+            FileInputStream fis = new FileInputStream(image);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf =new byte[1024];
+            for(int num;(num=fis.read(buf))!=-1;)
+            { bos.write(buf,0,num);
+            }
+            person_image=bos.toByteArray();
+            ImageIcon format = new ImageIcon(person_image);
+            //user.setImage(bos.toByteArray());
+            //ImageIcon format = new ImageIcon(user.getImage());
+            photo.setIcon(format);
+        }
+        catch(Exception exception)
+        {JOptionPane.showMessageDialog(null, exception);}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,8 +383,12 @@ public class ProfileRespAgence extends javax.swing.JFrame {
     private javax.swing.JButton ButtonReset;
     private javax.swing.JButton ButtonUpdate;
     private javax.swing.JTextField adresse;
+    private javax.swing.JPasswordField apwd;
     private javax.swing.JTextField cin;
+    private javax.swing.JPasswordField cpwd;
     private javax.swing.JTextField email;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelAdresse;
     private javax.swing.JLabel labelCin;
     private javax.swing.JLabel labelEmail;
@@ -285,11 +397,12 @@ public class ProfileRespAgence extends javax.swing.JFrame {
     private javax.swing.JLabel labelPrenom;
     private javax.swing.JLabel labelPwd;
     private javax.swing.JLabel labelTelephone;
-    private javax.swing.JTextField login;
     private javax.swing.JTextField nom;
-    private javax.swing.JPasswordField password;
+    private javax.swing.JLabel photo;
     private javax.swing.JTextField prenom;
+    private javax.swing.JPasswordField pwd;
     private javax.swing.JButton retourButton;
     private javax.swing.JTextField telephone;
     // End of variables declaration//GEN-END:variables
+    byte[] person_image=null;
 }

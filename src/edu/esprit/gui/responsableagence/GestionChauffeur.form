@@ -23,25 +23,32 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="retourButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="ButtonReset" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-              <Component id="ButtonSupprimer" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Component id="ButtonUpdate" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-              <Component id="ButtonAjouter" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="50" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="recherche" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="critereRecherche" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="156" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="retourButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="ButtonReset" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="ButtonSupprimer" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="ButtonUpdate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="ButtonAjouter" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -55,14 +62,19 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="recherche" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="critereRecherche" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="155" max="-2" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ButtonAjouter" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ButtonUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ButtonSupprimer" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ButtonReset" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="retourButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonReset" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="155" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -361,6 +373,19 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="retourButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="recherche">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField()"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="recherche.getDocument().addDocumentListener(new DocumentListener() {&#xa;  public void changedUpdate(DocumentEvent e) {&#xa;    rech();&#xa;  }&#xa;  public void removeUpdate(DocumentEvent e) {&#xa;    rech();&#xa;  }&#xa;  public void insertUpdate(DocumentEvent e) {&#xa;    rech();&#xa;  }&#xa;  &#xa;  public void rech() {&#xa;List&lt;Chauffeur&gt; listeChauffeur;&#xa;switch(critereRecherche.getSelectedItem()+&quot;&quot;){&#xa;case &quot;Identifiant&quot;: &#xa;    if (Pattern.matches(&quot;[0-9]*&quot;, recherche.getText())&amp;&amp;(!recherche.getText().equals(&quot;&quot;))){&#xa;        listeChauffeur=ChauffeurDAO.getInstance().FindByIdLike(Integer.parseInt(recherche.getText()));&#xa;        jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));&#xa;    }&#xa;    else&#xa;        refresh();&#xa;break;&#xa;case &quot;Login&quot;: &#xa;    listeChauffeur=ChauffeurDAO.getInstance().FindByLoginLike(recherche.getText());&#xa;    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur)); &#xa;break;&#xa;case &quot;CIN&quot;:&#xa;    if (Pattern.matches(&quot;[0-9]*&quot;, recherche.getText())&amp;&amp;(!recherche.getText().equals(&quot;&quot;))){&#xa;        listeChauffeur =ChauffeurDAO.getInstance().FindByCinLike(Integer.parseInt(recherche.getText()));&#xa;        jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));&#xa;    }&#xa;    else&#xa;        refresh(); &#xa;break;&#xa;case &quot;Nom&quot;: &#xa;    listeChauffeur =ChauffeurDAO.getInstance().FindByNomLike(recherche.getText());&#xa;    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur)); &#xa;break;&#xa;case &quot;Prenom&quot;: &#xa;    listeChauffeur =ChauffeurDAO.getInstance().FindByPrenomLike(recherche.getText());&#xa;    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur)); &#xa;break;&#xa;case &quot;Num&#xe9;ro Permis&quot;: &#xa;    if (Pattern.matches(&quot;[0-9]*&quot;, recherche.getText())&amp;&amp;(!recherche.getText().equals(&quot;&quot;))){&#xa;        listeChauffeur =ChauffeurDAO.getInstance().FindByNPermisLike(Integer.parseInt(recherche.getText()));&#xa;        jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));&#xa;    }&#xa;    else&#xa;        refresh(); &#xa;break;&#xa;case &quot;Email&quot;: &#xa;    listeChauffeur =ChauffeurDAO.getInstance().FindByEmailLike(recherche.getText());&#xa;    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur)); &#xa;break;&#xa;case &quot;Telephone&quot;: &#xa;    if (Pattern.matches(&quot;[0-9]*&quot;, recherche.getText())&amp;&amp;(!recherche.getText().equals(&quot;&quot;))){&#xa;        listeChauffeur =ChauffeurDAO.getInstance().FindByTelLike(Integer.parseInt(recherche.getText()));&#xa;        jTable1.setModel(new ConsulterChauffeurs(listeChauffeur));&#xa;    }&#xa;    else&#xa;        refresh(); &#xa;break;&#xa;case &quot;Adresse&quot;: &#xa;    listeChauffeur =ChauffeurDAO.getInstance().FindByAdresseLike(recherche.getText());&#xa;    jTable1.setModel(new ConsulterChauffeurs(listeChauffeur)); &#xa;break;&#xa;}&#xa;}&#xa;});"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="critereRecherche">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;Identifiant&quot;,&quot;Login&quot; , &quot;CIN&quot;, &quot;Num&#xe9;ro Permis&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Telephone&quot;, &quot;Email&quot;, &quot;Adresse&quot; })" type="code"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
