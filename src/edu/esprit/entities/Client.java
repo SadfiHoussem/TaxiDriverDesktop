@@ -9,10 +9,11 @@ package edu.esprit.entities;
  *
  * @author Houssem
  */
+
 public class Client extends User{
     
     private int idClient;
-    private int actif;
+    private boolean actif;
 
     public int getIdClient() {
         return idClient;
@@ -22,14 +23,11 @@ public class Client extends User{
         this.idClient = idClient;
     }
 
-    public int getActif() {
+    public boolean isActif() {
         return actif;
     }
 
-    public void setActif(int actif) {
+    public void setActif(boolean actif) {
         this.actif = actif;
-    }
-    
-    
-    
+    }   
 }

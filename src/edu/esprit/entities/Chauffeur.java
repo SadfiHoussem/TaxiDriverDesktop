@@ -12,6 +12,7 @@ package edu.esprit.entities;
 public class Chauffeur extends User{
     
     private int idChauffeur;
+    private Agence agence;
     private String numPermis;
     private boolean conge;
     
@@ -38,6 +39,13 @@ public class Chauffeur extends User{
     public void setConge(boolean conge) {
         this.conge = conge;
     }
-    
+
+    public Agence getAgence() {
+        return agence;
+    }
+
+    public void setAgence(Agence agence) {
+        this.agence = agence;
+    }
     
 }

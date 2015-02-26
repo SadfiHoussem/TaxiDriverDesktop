@@ -12,15 +12,13 @@ package edu.esprit.entities;
 public class Taxi {
     
     private int idTaxi;
+    private Agence agence;
     private Chauffeur chauffeur;
     private Voiture voiture;
     private boolean etat;
 
-    public Taxi(int idTaxi,Chauffeur chauffeur, Voiture voiture) {
-        this.idTaxi=idTaxi;
-        this.chauffeur = chauffeur;
-        this.voiture = voiture;
-        this.etat=(this.chauffeur.isConge())&&(this.voiture.isEtat());
+    public Taxi() {
+        
     }
 
     public int getIdTaxi() {
@@ -30,7 +28,14 @@ public class Taxi {
     public void setIdTaxi(int idTaxi) {
         this.idTaxi = idTaxi;
     }
-    
+
+    public Agence getAgence() {
+        return agence;
+    }
+
+    public void setAgence(Agence agence) {
+        this.agence = agence;
+    }
     
     public Chauffeur getChauffeur() {
         return chauffeur;

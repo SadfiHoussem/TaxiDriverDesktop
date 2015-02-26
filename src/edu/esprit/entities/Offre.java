@@ -5,6 +5,8 @@
  */
 package edu.esprit.entities;
 
+import java.util.Date;
+
 /**
  *
  * @author Houssem
@@ -15,6 +17,7 @@ public class Offre {
     private Agence agence;
     private String sujetOffre;
     private String contenu;
+    private Date date;
 
     public int getIdOffre() {
         return idOffre;
@@ -47,6 +50,14 @@ public class Offre {
 
     public void setContenu(String contenue) {
         this.contenu = contenue;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
     
     
