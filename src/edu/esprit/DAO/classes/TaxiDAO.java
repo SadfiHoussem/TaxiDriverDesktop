@@ -39,13 +39,14 @@ public class TaxiDAO implements ITaxiDAO{
     }
     @Override
     public void insertTaxi(Taxi taxi) {
-        String requete = "insert into taxi values (?,?,?,?)";
+        String requete = "insert into taxi values (?,?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             ps.setInt(1, taxi.getIdTaxi());
-            ps.setInt(2, taxi.getChauffeur().getIdChauffeur());
-            ps.setString(3, taxi.getVoiture().getMatricule());
-            ps.setBoolean(4, taxi.isEtat());
+            ps.setInt(2, taxi.getAgence().getIdAgence());
+            ps.setInt(3, taxi.getChauffeur().getIdChauffeur());
+            ps.setString(4, taxi.getVoiture().getMatricule());
+            ps.setBoolean(5, taxi.isEtat());
             
             ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
@@ -57,7 +58,7 @@ public class TaxiDAO implements ITaxiDAO{
 
     @Override
     public void updateTaxi(Taxi taxi) {
-        String requete = "update taxi set idChauffeur=?, idVoiture=?, etat=? where idTaxi=?";
+        String requete = "update taxi set idChauffeur=?, matricule=?, etat=? where idTaxi=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             
@@ -106,7 +107,12 @@ public class TaxiDAO implements ITaxiDAO{
                 VoitureDAO voitureDAO = VoitureDAO.getInstance();
                 Voiture voiture;
                 voiture=voitureDAO.findVoitureByMatricule(resultat.getString("matricule"));
-                taxi = new Taxi(id,chauffeur, voiture);
+                taxi = new Taxi();
+                taxi.setChauffeur(chauffeur);
+                taxi.setVoiture(voiture);
+                taxi.setEtat();
+                taxi.setIdTaxi(id);
+                
             }
             return taxi;
         } catch (SQLException ex) {
@@ -133,9 +139,53 @@ public class TaxiDAO implements ITaxiDAO{
                 
                 VoitureDAO voitureDAO = VoitureDAO.getInstance();
                 Voiture voiture;
-                voiture=voitureDAO.findVoitureByMatricule(resultat.getString("idVoiture"));
-                taxi = new Taxi(resultat.getInt("idTaxi"),chauffeur, voiture);
-
+                voiture=voitureDAO.findVoitureByMatricule(resultat.getString("matricule"));
+                
+                taxi = new Taxi();
+                taxi.setChauffeur(chauffeur);
+                taxi.setVoiture(voiture);
+                taxi.setEtat();
+                taxi.setIdTaxi(resultat.getInt("idTaxi"));
+                
+                listeTaxi.add(taxi);
+            }
+            return listeTaxi;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des taxis " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
+    public List<Taxi> DisplayAllTaxiByAgence(int idAgence) {
+        List<Taxi> listeTaxi = new ArrayList<>();
+        
+        String requete = "select * from taxi where idAgence='"+idAgence+"'";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat;
+            resultat = statement.executeQuery(requete);
+            Taxi taxi;
+            
+            while (resultat.next()) {
+                ChauffeurDAO chauffeurDAO = ChauffeurDAO.getInstance(); 
+                Chauffeur chauffeur;
+                chauffeur=chauffeurDAO.findChauffeurById(resultat.getInt("idChauffeur"));
+                
+                VoitureDAO voitureDAO = VoitureDAO.getInstance();
+                Voiture voiture;
+                voiture=voitureDAO.findVoitureByMatricule(resultat.getString("matricule"));
+                
+                taxi = new Taxi();
+                
+                taxi.setIdTaxi(resultat.getInt("idTaxi"));
+                taxi.setAgence(AgenceDAO.getInstance().findAgenceById(resultat.getInt("idAgence")));
+                taxi.setChauffeur(chauffeur);
+                taxi.setVoiture(voiture);
+                taxi.setEtat();
+                
+                
                 listeTaxi.add(taxi);
             }
             return listeTaxi;
@@ -148,14 +198,12 @@ public class TaxiDAO implements ITaxiDAO{
     
     public ResultSet DisplayAllTaxiTypeResultSetByIdAgence(int idAgence) {
 
-     String requete = "select idTaxi, typeVoiture, nbrPlace, nom, prenom, email, telephone from taxi, voiture, chauffeur where taxi.matricule=voiture.matricule and taxi.idChauffeur=chauffeur.idChauffeur and taxi.idAgence="+idAgence;
+    String requete = "select idTaxi, typeVoiture, nbrPlace, nom, prenom, email, telephone from taxi, voiture, chauffeur where taxi.matricule=voiture.matricule and taxi.idChauffeur=chauffeur.idChauffeur and taxi.idAgence="+idAgence;
         try {
             Statement statement = conn.createStatement();
             ResultSet resultat;
             resultat = statement.executeQuery(requete);
-         
-            
-        
+    
             return resultat;
         } 
         catch (SQLException ex) {

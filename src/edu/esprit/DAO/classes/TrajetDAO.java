@@ -180,6 +180,7 @@ public class TrajetDAO implements ITrajetDAO{
             while (resultat.next()) {
                 Trajet trajet = new Trajet();
                 
+                trajet.setIdTrajet(resultat.getInt("idTrajet"));
                 trajet.setAgence(AgenceDAO.getInstance().findAgenceById(resultat.getInt("idAgence")));
                 trajet.setAdresseDep(resultat.getString("adresseDep"));
                 trajet.setAdresseDest(resultat.getString("adresseDest"));
@@ -193,21 +194,6 @@ public class TrajetDAO implements ITrajetDAO{
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("erreur lors du chargement des trajets " + ex.getMessage());
             return null;
-        }
-    }
-    
-    public void insertTrajet2(Trajet t) {
-        String requete = "insert into trajet (adresseDep,adresseDest) values (?,?)";
-        try {
-            PreparedStatement ps = conn.prepareStatement(requete);
-            
-            ps.setString(1, t.getAdresseDep());
-            ps.setString(2, t.getAdresseDest());
-
-            ps.executeUpdate();
-            System.out.println("Ajout effectuée avec succès");
-        } catch (SQLException ex) {
-            System.out.println("erreur lors de l'insertion dans trajet " + ex.getMessage());
         }
     }
     

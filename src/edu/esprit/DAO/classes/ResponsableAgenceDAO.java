@@ -196,7 +196,7 @@ public class ResponsableAgenceDAO implements IResponsableAgenceDAO{
                 PreparedStatement ps = conn.prepareStatement(requete);
                 ps.setString(1, loginRespAgence);
                 ResultSet resultat = ps.executeQuery();
-                System.out.println(ps);
+
                 ResponsableAgence respAgence = new ResponsableAgence();
 
                 while (resultat.next()) {

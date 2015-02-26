@@ -6,6 +6,7 @@
 package edu.esprit.DAO.classes;
 
 import edu.esprit.DAO.interfaces.IVoitureDAO;
+import edu.esprit.entities.Agence;
 import edu.esprit.entities.Voiture;
 import edu.esprit.technique.MyConnection;
 import java.sql.Connection;
@@ -181,5 +182,163 @@ public class VoitureDAO implements IVoitureDAO{
         }
     }
     
+    @Override
+    public List<Voiture> DisplayAllVoituresByAgence(int idAgence) {
+        List<Voiture> listeVoitures = new ArrayList<>();
+        
+        String requete = "select * from voiture where idAgence='"+idAgence+"'";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat;
+            resultat = statement.executeQuery(requete);
+            AgenceDAO agenceDAO=AgenceDAO.getInstance();
+            
+            while (resultat.next()) {
+                Voiture voiture = new Voiture();
+
+                voiture.setMatricule(resultat.getString("matricule"));
+                voiture.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
+                voiture.setNbrPlace(resultat.getInt("nbrPlace"));
+                voiture.setTypeVoiture(resultat.getString("typeVoiture"));
+                voiture.setEtat(resultat.getBoolean("etat"));
+
+                listeVoitures.add(voiture);
+            }
+            return listeVoitures;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des voitures " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
+    public List<Voiture> DisplayVoitureNAByAgence(Agence agence) {
+        
+        List<Voiture> listeVoitures = new ArrayList<>();
+        
+        String requete="SELECT DISTINCT(v1.matricule) FROM voiture v1 LEFT JOIN taxi v2 on v1.matricule = v2.matricule WHERE v2.matricule IS NULL and v1.idAgence="+agence.getIdAgence();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultat;
+            resultat = statement.executeQuery(requete);
+            
+            while (resultat.next()) {
+                Voiture voiture;
+                
+                voiture=VoitureDAO.getInstance().findVoitureByMatricule(resultat.getString("matricule"));
+                
+                listeVoitures.add(voiture);
+            }
+            return listeVoitures;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des voitures " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
+    public List<Voiture> FindByMatriculeLike(String matricule) {
+        List<Voiture> listeVoitures = new ArrayList<>();
+
+        String requete = "select * from voiture where matricule LIKE '"+matricule+"%'";
+        
+        boolean b=false;
+        try {
+            b=true;
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+            
+            while (resultat.next()) {
+                Voiture voiture = new Voiture();
+                
+                voiture.setMatricule(resultat.getString("matricule"));
+                voiture.setAgence(AgenceDAO.getInstance().findAgenceById(resultat.getInt("idAgence")));
+                voiture.setNbrPlace(resultat.getInt("nbrPlace"));
+                voiture.setTypeVoiture(resultat.getString("typeVoiture"));
+                voiture.setEtat(resultat.getBoolean("etat"));
+                
+                listeVoitures.add(voiture);
+            }
+            if (b==false)
+                return null;
+            return listeVoitures;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des voitures " + ex.getMessage());
+            return null;
+    
+        }
+    }
+    
+    @Override
+    public List<Voiture> FindByNbrPlaceLike(int nbrPlace) {
+        List<Voiture> listeVoitures = new ArrayList<>();
+
+        String requete = "select * from voiture where nbrPlace LIKE '"+nbrPlace+"%'";
+        
+        boolean b=false;
+        try {
+            b=true;
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+            
+            while (resultat.next()) {
+                Voiture voiture = new Voiture();
+                
+                voiture.setMatricule(resultat.getString("matricule"));
+                voiture.setAgence(AgenceDAO.getInstance().findAgenceById(resultat.getInt("idAgence")));
+                voiture.setNbrPlace(resultat.getInt("nbrPlace"));
+                voiture.setTypeVoiture(resultat.getString("typeVoiture"));
+                voiture.setEtat(resultat.getBoolean("etat"));
+                
+                listeVoitures.add(voiture);
+            }
+            if (b==false)
+                return null;
+            return listeVoitures;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des voitures " + ex.getMessage());
+            return null;
+    
+        }
+    }
+    
+    @Override
+    public List<Voiture> FindByMarqueLike(String marque) {
+        List<Voiture> listeVoitures = new ArrayList<>();
+
+        String requete = "select * from voiture where typeVoiture LIKE '"+marque+"%'";
+        
+        boolean b=false;
+        try {
+            b=true;
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+            
+            while (resultat.next()) {
+                Voiture voiture = new Voiture();
+                
+                voiture.setMatricule(resultat.getString("matricule"));
+                voiture.setAgence(AgenceDAO.getInstance().findAgenceById(resultat.getInt("idAgence")));
+                voiture.setNbrPlace(resultat.getInt("nbrPlace"));
+                voiture.setTypeVoiture(resultat.getString("typeVoiture"));
+                voiture.setEtat(resultat.getBoolean("etat"));
+                
+                listeVoitures.add(voiture);
+            }
+            if (b==false)
+                return null;
+            return listeVoitures;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des voitures " + ex.getMessage());
+            return null;
+    
+        }
+    }
     
 }

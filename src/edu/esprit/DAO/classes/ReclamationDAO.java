@@ -63,7 +63,6 @@ public class ReclamationDAO implements IReclamationDAO{
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             
-            
             ps.setInt(1, reclamation.getClient().getIdClient());
             ps.setInt(2, reclamation.getAgence().getIdAgence());
             ps.setString(3, reclamation.getsujetReclamation());

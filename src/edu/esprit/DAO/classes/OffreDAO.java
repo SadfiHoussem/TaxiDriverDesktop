@@ -54,29 +54,49 @@ public class OffreDAO implements IOffreDAO{
     }
     
     @Override
-    public boolean insertOffre(Offre o) {
-        if(isOffreExist(o.getIdOffre())){
+    public boolean isOffreExist2(Offre o) {
+    String requete = "select * from offre where idOffre=? and sujetOffre=?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            ps.setInt(1, o.getIdOffre());
+            ps.setString(2, o.getSujetOffre());
+            
+            ResultSet resultat = ps.executeQuery();
+            return resultat.next();
+        }
+        catch (SQLException ex) {
+            System.out.println("erreur lors du chargement du offre" + ex.getMessage());
             return false;
         }
-            
+                
+    }
+    
+    @Override
+    public boolean insertOffre(Offre o) {
+        if(isOffreExist2(o)){
+            return false;
+        }    
         else{
-            String requete="insert into offre values (?,?,?,?)";
+            
+            String requete="insert into offre (idAgence,sujetOffre,contenu) values (?,?,?)";
             try {
                 PreparedStatement ps = conn.prepareStatement(requete);
                 
-                ps.setInt(1, o.getIdOffre());
-                ps.setInt(2, o.getAgence().getIdAgence());
-                ps.setString(3, o.getSujetOffre());
-                ps.setString(4, o.getContenu());
+                ps.setInt(1, o.getAgence().getIdAgence());
+                ps.setString(2, o.getSujetOffre());
+                ps.setString(3, o.getContenu());
                 
                 ps.executeUpdate();
+                System.out.println("Offre ajoutée avec succès");
                 return true;
             } catch (SQLException ex) {
-                System.out.println("erreur lors du chargement des offres" + ex.getMessage());
+                System.out.println("erreur lors d'ajout de l'offre" + ex.getMessage());
                 return false;
             }
     }
     }
+    
     @Override
     public boolean deleteOffre(int idOffre) {
         if(!isOffreExist(idOffre))
@@ -158,12 +178,13 @@ public class OffreDAO implements IOffreDAO{
     public Offre findOffreById(int id) {
         
         String requete="select * from offre where idOffre=?";
+        boolean b=false;
         try {
+            b=true;
             PreparedStatement ps = conn.prepareStatement(requete);
             ps.setInt(1, id);
             ResultSet resultat = ps.executeQuery();
-            if(resultat.next())
-                return null;
+            
             Offre offre = new Offre();
             AgenceDAO agenceDAO = AgenceDAO.getInstance();
             
@@ -172,7 +193,10 @@ public class OffreDAO implements IOffreDAO{
                 offre.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
                 offre.setSujetOffre(resultat.getString("sujetOffre"));
                 offre.setContenu(resultat.getString("contenu"));
+                offre.setDate(resultat.getDate("date"));
             }
+            if(b==false)
+                return null;
             return offre;
         } catch (SQLException ex) {
             System.out.println("erreur lors du chargement des offres" + ex.getMessage());
@@ -184,12 +208,12 @@ public class OffreDAO implements IOffreDAO{
     public List<Offre> DisplayAllOffres() {
         List<Offre> listeOffres = new ArrayList<>();
 
-        String requete = "select * from stock";
+        String requete = "select * from offre";
+        boolean b=false;
         try {
+            b=true;
             Statement statement = conn.createStatement();
             ResultSet resultat = statement.executeQuery(requete);
-            if (resultat.next())
-                return null;
             AgenceDAO agenceDAO = AgenceDAO.getInstance();
             while (resultat.next()) {
                 Offre offre = new Offre();
@@ -197,9 +221,78 @@ public class OffreDAO implements IOffreDAO{
                 offre.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
                 offre.setSujetOffre(resultat.getString("sujetOffre"));
                 offre.setContenu(resultat.getString("contenu"));
+                offre.setDate(resultat.getDate("date"));
 
                 listeOffres.add(offre);
             }
+            if (b==false)
+                return null;
+            return listeOffres;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des offres " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
+    public List<Offre> FindBySujetLike(String sujet) {
+        List<Offre> listeOffres = new ArrayList<>();
+
+        String requete = "select * from offre where sujetOffre LIKE '"+sujet+"%'";
+        
+        boolean b=false;
+        try {
+            b=true;
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+            
+            AgenceDAO agenceDAO = AgenceDAO.getInstance();
+            while (resultat.next()) {
+                Offre offre = new Offre();
+                offre.setIdOffre(resultat.getInt("idOffre"));
+                offre.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
+                offre.setSujetOffre(resultat.getString("sujetOffre"));
+                offre.setContenu(resultat.getString("contenu"));
+                offre.setDate(resultat.getDate("date"));
+
+                listeOffres.add(offre);
+            }
+            if (b==false)
+                return null;
+            return listeOffres;
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors du chargement des offres " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
+    public List<Offre> FindByDateLike(String date) {
+        List<Offre> listeOffres = new ArrayList<>();
+        
+        String requete = "select * from offre where date LIKE '"+date+"%'";
+        
+        boolean b=false;
+        try {
+            b=true;
+            Statement statement = conn.createStatement();
+            ResultSet resultat = statement.executeQuery(requete);
+            
+            AgenceDAO agenceDAO = AgenceDAO.getInstance();
+            while (resultat.next()) {
+                Offre offre = new Offre();
+                offre.setIdOffre(resultat.getInt("idOffre"));
+                offre.setAgence(agenceDAO.findAgenceById(resultat.getInt("idAgence")));
+                offre.setSujetOffre(resultat.getString("sujetOffre"));
+                offre.setContenu(resultat.getString("contenu"));
+                offre.setDate(resultat.getDate("date"));
+
+                listeOffres.add(offre);
+            }
+            if (b==false)
+                return null;
             return listeOffres;
         } catch (SQLException ex) {
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);

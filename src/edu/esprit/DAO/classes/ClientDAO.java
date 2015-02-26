@@ -78,18 +78,19 @@ public class ClientDAO implements IClientDAO{
         if(!isClientExist(client))
             return false;
         else{
-            String requete = "insert into client values (?,?,?,?,?,?,?,?,?)";
+            String requete = "insert into client values (?,?,?,?,?,?,?,?)";
             try {
             PreparedStatement ps = conn.prepareStatement(requete);
-            ps.setInt(1, client.getIdClient());
-            ps.setString(2, client.getLogin());
-            ps.setString(3, client.getPwd());
-            ps.setString(4, client.getNom());
-            ps.setString(5, client.getPrenom());
-            ps.setString(6, client.getEmail());
-            ps.setInt(7, client.getTelephone());
-            ps.setString(8, client.getAdresse());
-            ps.setLong(9, client.getCin());
+
+            ps.setString(1, client.getLogin());
+            ps.setString(2, client.getPwd());
+            ps.setString(3, client.getNom());
+            ps.setString(4, client.getPrenom());
+            ps.setString(5, client.getEmail());
+            ps.setInt(6, client.getTelephone());
+            ps.setString(7, client.getAdresse());
+            ps.setLong(8, client.getCin());
+            
             ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
             return true;
@@ -104,23 +105,22 @@ public class ClientDAO implements IClientDAO{
 
     @Override
     public boolean updateClient(Client client) {
-        if(!isClientExist(client))
+        if(!isClientExistUpdate(client))
             return false;
         else{
-            String requete = "update client set login=?, pwd=?, nom=?, prenom=?, email=?, telephone=?, adresse=?, cin=? where idClient=?";
+            String requete = "update client set pwd=?, nom=?, prenom=?, email=?, telephone=?, adresse=?, cin=? where idClient=?";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
             
-            ps.setString(1, client.getLogin());
-            ps.setString(2, client.getPwd());
-            ps.setString(3, client.getNom());
-            ps.setString(4, client.getPrenom());
-            ps.setString(5, client.getEmail());
-            ps.setInt(6, client.getTelephone());
-            ps.setString(7, client.getAdresse());
-            ps.setLong(8, client.getCin());
-            ps.setInt(9, client.getIdClient());
-             
+            ps.setString(1, client.getPwd());
+            ps.setString(2, client.getNom());
+            ps.setString(3, client.getPrenom());
+            ps.setString(4, client.getEmail());
+            ps.setInt(5, client.getTelephone());
+            ps.setString(6, client.getAdresse());
+            ps.setLong(7, client.getCin());
+            ps.setInt(8, client.getIdClient());
+
             ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
             return true;
@@ -175,6 +175,7 @@ public class ClientDAO implements IClientDAO{
                 client.setTelephone(resultat.getInt("telephone"));
                 client.setAdresse(resultat.getString("adresse"));
                 client.setCin(resultat.getInt("cin"));
+                client.setActif(resultat.getBoolean("actif"));
             }
             if(b==false)
                 return null;
@@ -206,6 +207,7 @@ public class ClientDAO implements IClientDAO{
                 client.setTelephone(resultat.getInt("telephone"));
                 client.setAdresse(resultat.getString("adresse"));
                 client.setCin(resultat.getInt("cin"));
+                client.setActif(resultat.getBoolean("actif"));
             }
             if(b==false)
                 return null;
@@ -239,6 +241,7 @@ public class ClientDAO implements IClientDAO{
                 client.setTelephone(resultat.getInt("telephone"));
                 client.setAdresse(resultat.getString("adresse"));
                 client.setCin(resultat.getInt("cin"));
+                client.setActif(resultat.getBoolean("actif"));
 
                 listeClients.add(client);
             }
@@ -268,6 +271,52 @@ public class ClientDAO implements IClientDAO{
         } catch (SQLException ex) {
             System.out.println("erreur lors du chargement du administrateur" + ex.getMessage());
             return false;
+        }
+    }
+    
+    @Override
+    public boolean desacCompteClient(int idClient){
+        if(!isClientExist(ClientDAO.getInstance().findClientById(idClient)))
+            return false;
+        else{
+            String requete = "update client set actif=? where idClient=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            
+            ps.setBoolean(1, false);
+            ps.setInt(2, idClient);
+             
+            ps.executeUpdate();
+            System.out.println("Le compte du client a était désactivé avec succès");
+            return true;
+            } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors de la désactivation du compte du client " + ex.getMessage());
+            return false;
+            }
+        }
+    }
+    
+    @Override
+    public boolean activCompteClient(int idClient){
+        if(!isClientExist(ClientDAO.getInstance().findClientById(idClient)))
+            return false;
+        else{
+            String requete = "update client set actif=? where idClient=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(requete);
+            
+            ps.setBoolean(1, true);
+            ps.setInt(2, idClient);
+             
+            ps.executeUpdate();
+            System.out.println("Le compte du client a était activé avec succès");
+            return true;
+            } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors de l'activation du compte du client " + ex.getMessage());
+            return false;
+            }
         }
     }
     

@@ -39,23 +39,23 @@ public class ReservationDAO implements IReservationDAO{
     
     @Override
     public void insertReservation(Reservation r) {
-          String requete="insert into reservation (idReservation,idClient,idTrajet,idChauffeur,idAgence,date) values (?,?,?,?,?,?)";
+          String requete="insert into reservation (idClient,idTaxi,idTrajet,idAgence,confirme,note,date) values (?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(requete);
-    
-            ps.setInt(1, r.getIdReservation());
-            ps.setInt(2, r.getClient().getIdClient());
+
+            ps.setInt(1, r.getClient().getIdClient());
+            ps.setInt(2, r.getTaxi().getIdTaxi());
             ps.setInt(3, r.getTrajet().getIdTrajet());
-            ps.setInt(4, r.getChauffeur().getIdChauffeur());
-            ps.setInt(5, r.getAgence().getIdAgence());
-            Date date=new Date();            
-            
-            ps.setDate(6, (java.sql.Date) date);
+            ps.setInt(4, r.getAgence().getIdAgence());
+            ps.setBoolean(5, r.isConfirme());
+            ps.setInt(6, r.getNote());
+            java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(r.getDate().getTime());
+            ps.setTimestamp(7, sqlTimestamp );
             
             ps.executeUpdate();
             
         } catch (SQLException ex) {
-            System.out.println("erreur lors du chargement des réservations" + ex.getMessage());
+            System.out.println("erreur lors de l'ajout de la réservation" + ex.getMessage());
           
             }
     }
@@ -217,6 +217,7 @@ public class ReservationDAO implements IReservationDAO{
         }
     }
     
+     @Override
     public ResultSet DisplayAllReservationByChauffeur(String login) {
 
         String requete = "select adresseDep as 'Adresse de départ', adresseDest as 'Adresse de destination' , cout as 'Coût', Date, chauffeur.login from reservation, taxi, chauffeur, trajet where reservation.idTrajet=trajet.idTrajet and taxi.idChauffeur=chauffeur.idChauffeur and taxi.idTaxi=reservation.idTaxi and Date >= CURRENT_DATE and chauffeur.login='"+login+"' ";
@@ -249,25 +250,28 @@ public class ReservationDAO implements IReservationDAO{
             return null;
         }
     }
-     public void insertReservation2(Reservation r) {
-          String requete="insert into reservation (idClient,idTaxi,idTrajet,idAgence,confirme,date) values (?,?,?,?,?,?)";
-        try {
-            PreparedStatement ps = conn.prepareStatement(requete);
     
-            ps.setInt(1, r.getClient().getIdClient());
-            ps.setInt(2, r.getTaxi().getIdTaxi());
-
-            ps.setInt(3, r.getTrajet().getIdTrajet());
-            ps.setInt(4, r.getAgence().getIdAgence());
-            ps.setInt(5, 0);
-            ps.setString(6,r.getDateRes());
-            ps.executeUpdate();
-            
-        } catch (SQLException ex) {
-            System.out.println("erreur lors de l'ajout de la réservation" + ex.getMessage());
-          
-            }
-    }
+//     public void insertReservation2(Reservation r) {
+//          String requete="insert into reservation (idClient,idTaxi,idTrajet,idAgence,confirme,note,date) values (?,?,?,?,?,?,?)";
+//        try {
+//            PreparedStatement ps = conn.prepareStatement(requete);
+//    
+//            ps.setInt(1, r.getClient().getIdClient());
+//            ps.setInt(2, r.getTaxi().getIdTaxi());
+//
+//            ps.setInt(3, r.getTrajet().getIdTrajet());
+//            ps.setInt(4, r.getAgence().getIdAgence());
+//            ps.setInt(5, 0);
+//            ps.setInt(6, r.getNote());
+//            
+//            
+//            ps.executeUpdate();
+//            
+//        } catch (SQLException ex) {
+//            System.out.println("erreur lors de l'ajout de la réservation" + ex.getMessage());
+//          
+//            }
+//    }
      
      public ResultSet DisplayReservationByIdClient(int id) {
 
