@@ -13,13 +13,13 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Houssem
  */
-public class ConsulterChauffeurs extends AbstractTableModel{
+public class ConsulterChauffeurTaxi extends AbstractTableModel{
 
-    String[] headers = {"Identifiant","Login" , "CIN", "Numéro Permis", "Nom", "Prenom", "Telephone", "Email", "Adresse", "Etat"};
+    String[] headers = {"Identifiant", "CIN", "Numéro Permis", "Nom", "Prenom","En Congé"};
     List<Chauffeur> chauffeurs;
 
 
-    public ConsulterChauffeurs(List<Chauffeur> listeChauffeur) {
+    public ConsulterChauffeurTaxi(List<Chauffeur> listeChauffeur) {
         chauffeurs = listeChauffeur;
     }
     
@@ -38,28 +38,21 @@ public class ConsulterChauffeurs extends AbstractTableModel{
         return headers[i];
     }
     
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
                 return chauffeurs.get(rowIndex).getIdChauffeur();
             case 1:
-                return chauffeurs.get(rowIndex).getLogin();
-            case 2:
                 return chauffeurs.get(rowIndex).getCin();
-            case 3:
+            case 2:
                 return chauffeurs.get(rowIndex).getNumPermis();
-            case 4:
+            case 3:
                 return chauffeurs.get(rowIndex).getNom();
-            case 5:
+            case 4:
                 return chauffeurs.get(rowIndex).getPrenom();
-            case 6:
-                return chauffeurs.get(rowIndex).getTelephone();
-            case 7:
-                return chauffeurs.get(rowIndex).getEmail();
-            case 8:
-                return chauffeurs.get(rowIndex).getAdresse();
-            case 9:
+            case 5:
                 return chauffeurs.get(rowIndex).isConge();
             default:
                 return null;

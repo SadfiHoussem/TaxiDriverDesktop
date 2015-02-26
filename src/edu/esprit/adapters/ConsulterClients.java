@@ -8,7 +8,6 @@ package edu.esprit.adapters;
 
 
 import edu.esprit.entities.Client;
-import edu.esprit.DAO.interfaces.IClientDAO;
 import edu.esprit.DAO.classes.ClientDAO;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ConsulterClients extends AbstractTableModel{
 
-    String[] headers = {"Identifiant","Login" ,"Password", "CIN","Nom","Prenom", "Telephone", "Email", "Adresse"};
+    String[] headers = {"Identifiant","Login" ,"Password", "CIN","Nom","Prenom", "Telephone", "Email", "Adresse","Actif"};
     List<Client>Clients = new ArrayList<>();
    ClientDAO ClientDAO;
 
@@ -67,7 +66,8 @@ public class ConsulterClients extends AbstractTableModel{
                 return  Clients.get(rowIndex).getEmail();
             case 8:
                 return Clients.get(rowIndex).getAdresse();
-            
+            case 9:
+                return Clients.get(rowIndex).isActif();
             default:
                 return null;
         }

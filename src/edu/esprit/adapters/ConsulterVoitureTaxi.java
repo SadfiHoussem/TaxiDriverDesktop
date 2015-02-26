@@ -5,10 +5,7 @@
  */
 package edu.esprit.adapters;
 
-
-import edu.esprit.DAO.classes.VoitureDAO;
 import edu.esprit.entities.Voiture;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -16,12 +13,13 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Houssem
  */
-public class ConsulterVoitures extends AbstractTableModel{
 
-    String[] headers = {"Matricule", "Agence", "Nombre Places", "Marque", "Disponibilité"};
+public class ConsulterVoitureTaxi extends AbstractTableModel{
+
+    String[] headers = {"Matricule", "Nombre Places", "Marque", "Disponibilité"};
     List<Voiture> voitures;
 
-    public ConsulterVoitures(List<Voiture> voitures) {
+    public ConsulterVoitureTaxi(List<Voiture> voitures) {
         this.voitures=voitures;
     }
     
@@ -46,12 +44,10 @@ public class ConsulterVoitures extends AbstractTableModel{
             case 0:
                 return voitures.get(rowIndex).getMatricule();
             case 1:
-                return voitures.get(rowIndex).getAgence().getNomAgence();
-            case 2:
                 return voitures.get(rowIndex).getNbrPlace();
-            case 3:
+            case 2:
                 return voitures.get(rowIndex).getTypeVoiture();
-            case 4:
+            case 3:
                 return voitures.get(rowIndex).isEtat();
             default:
                 return null;

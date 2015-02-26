@@ -47,11 +47,11 @@ public class ConsulterTrajets extends AbstractTableModel{
                 return trajets.get(rowIndex).getIdTrajet();
             case 1:
                 return trajets.get(rowIndex).getAgence().getNomAgence();
-            case 3:
+            case 2:
                 return trajets.get(rowIndex).getAdresseDep();
-            case 4:
+            case 3:
                 return trajets.get(rowIndex).getAdresseDest();
-            case 5:
+            case 4:
                 if (trajets.get(rowIndex).getCout()==0)
                     return "None";
                 return trajets.get(rowIndex).getCout();

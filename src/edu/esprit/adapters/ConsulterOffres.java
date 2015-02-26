@@ -5,10 +5,7 @@
  */
 package edu.esprit.adapters;
 
-
-import edu.esprit.DAO.classes.VoitureDAO;
-import edu.esprit.entities.Voiture;
-import java.util.ArrayList;
+import edu.esprit.entities.Offre;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -16,18 +13,18 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Houssem
  */
-public class ConsulterVoitures extends AbstractTableModel{
+public class ConsulterOffres extends AbstractTableModel{
 
-    String[] headers = {"Matricule", "Agence", "Nombre Places", "Marque", "Disponibilité"};
-    List<Voiture> voitures;
+    String[] headers = {"Identifiant","Sujet","Date"};
+    List<Offre> offres;
 
-    public ConsulterVoitures(List<Voiture> voitures) {
-        this.voitures=voitures;
+    public ConsulterOffres(List<Offre> offres) {
+        this.offres=offres;
     }
     
     @Override
     public int getRowCount() {
-        return voitures.size();
+        return offres.size();
     }
 
     @Override
@@ -44,15 +41,11 @@ public class ConsulterVoitures extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return voitures.get(rowIndex).getMatricule();
+                return offres.get(rowIndex).getIdOffre();
             case 1:
-                return voitures.get(rowIndex).getAgence().getNomAgence();
+                return offres.get(rowIndex).getSujetOffre();
             case 2:
-                return voitures.get(rowIndex).getNbrPlace();
-            case 3:
-                return voitures.get(rowIndex).getTypeVoiture();
-            case 4:
-                return voitures.get(rowIndex).isEtat();
+                return offres.get(rowIndex).getDate();
             default:
                 return null;
         }
