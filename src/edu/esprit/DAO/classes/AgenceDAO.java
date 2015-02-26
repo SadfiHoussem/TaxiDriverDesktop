@@ -174,6 +174,7 @@ public class AgenceDAO implements IAgenceDAO{
     
     @Override
     public Agence findAgenceByRespAgence(int id) {
+        
         String requete="select * from agence where idRespAgence=?";
         try {
             boolean b=false;
@@ -183,10 +184,11 @@ public class AgenceDAO implements IAgenceDAO{
             Agence agence = new Agence();
             while (resultat.next()) {
                 b=true;
+                
                 ResponsableAgenceDAO respAgenceDAO=ResponsableAgenceDAO.getInstance();
                 ResponsableAgence respAgence;
                 
-                agence.setIdAgence(id);
+                agence.setIdAgence(resultat.getInt("idAgence"));
                 respAgence=respAgenceDAO.findRespAgenceById(resultat.getInt("idRespAgence"));
                 agence.setRespAgence(respAgence);
                 agence.setNomAgence(resultat.getString("nomAgence"));
