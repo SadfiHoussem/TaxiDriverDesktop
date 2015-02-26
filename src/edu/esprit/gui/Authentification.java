@@ -43,7 +43,7 @@ public class Authentification extends javax.swing.JFrame {
         rDAO=ResponsableAgenceDAO.getInstance();
         chDAO=ChauffeurDAO.getInstance();
         cDAO=ClientDAO.getInstance();
-               
+
     }
 
     /**
