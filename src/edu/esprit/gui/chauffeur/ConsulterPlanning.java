@@ -4,24 +4,8 @@
  * and open the template in the editor.
  */
 package edu.esprit.gui.chauffeur;
-import edu.esprit.DAO.classes.TrajetDAO;
-import edu.esprit.DAO.classes.TaxiDAO;
-import edu.esprit.DAO.classes.ClientDAO;
-import edu.esprit.entities.Client;
-import edu.esprit.DAO.interfaces.IClientDAO;
-import edu.esprit.DAO.classes.AgenceDAO;
-import edu.esprit.DAO.classes.ChauffeurDAO;
 import edu.esprit.DAO.classes.ReservationDAO;
-import edu.esprit.entities.Chauffeur;
-import edu.esprit.DAO.interfaces.IChauffeurDAO;
-import edu.esprit.technique.MyConnection;
-import edu.esprit.entities.Reservation;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -41,8 +25,8 @@ public class ConsulterPlanning extends javax.swing.JFrame {
      */
     public ConsulterPlanning() {
       
-       setTitle("Planning ");
-                initComponents();
+        setTitle("Planning ");
+        initComponents();
 
               
     }
@@ -149,9 +133,7 @@ private void updateModelPlanning()
         }
         }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-updateModelPlanning();
-        
-// TODO add your handling code here:
+        updateModelPlanning();
     }//GEN-LAST:event_formWindowOpened
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed

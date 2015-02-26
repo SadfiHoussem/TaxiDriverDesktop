@@ -22,27 +22,29 @@ public class AccueilChauffeur extends javax.swing.JFrame {
    
     
       private static Chauffeur chauffeur;
-       private final String login="login1";
-       
-           private final Profil profileGUI;
-   
-   
-    
- 
+      
+      private static Profil profileGUI;
+      private static ConsulterFeedback consulterFeedbackGUI;
+      private static ConsulterPlanning consulterPlanningGUI;
+      
     /**
      * Creates new form AccueilChauffeur
      */
     public AccueilChauffeur() {
-      
-          this.chauffeur=ChauffeurDAO.getInstance().findChauffeurByLogin(login);
-        
-        profileGUI=new Profil(chauffeur );
-          initComponents();
+        initComponents();
     }
     
+    public AccueilChauffeur(String login) {
+        initComponents();
+        this.chauffeur=ChauffeurDAO.getInstance().findChauffeurByLogin(login);
+        
+        profileGUI=new Profil(chauffeur );
+        consulterFeedbackGUI=new ConsulterFeedback();
+        consulterPlanningGUI=new ConsulterPlanning();
+          
+    }
     
-    
-     public static Chauffeur getChauffeur() {
+    public static Chauffeur getChauffeur() {
         return chauffeur;
     }
 
@@ -50,6 +52,15 @@ public class AccueilChauffeur extends javax.swing.JFrame {
         AccueilChauffeur.chauffeur = chauffeur;
     }
 
+    public static ConsulterFeedback getConsulterFeedbackGUI() {
+        return consulterFeedbackGUI;
+    }
+
+    public static ConsulterPlanning getConsulterPlanningGUI() {
+        return consulterPlanningGUI;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -172,9 +183,8 @@ public class AccueilChauffeur extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void feedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feedbackActionPerformed
-         ConsulterFeedback feedback = new ConsulterFeedback(login);
        this. setVisible(false);
-         feedback.setVisible(true);
+       consulterFeedbackGUI.setVisible(true);
     }//GEN-LAST:event_feedbackActionPerformed
 
     private void planningMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planningMouseEntered
@@ -187,17 +197,15 @@ public class AccueilChauffeur extends javax.swing.JFrame {
     }//GEN-LAST:event_profilActionPerformed
 
     private void planningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planningActionPerformed
-         ConsulterPlanning planning2 = new ConsulterPlanning(login);
-       this. setVisible(false);
-         planning2.setVisible(true);
+        this. setVisible(false);
+        consulterPlanningGUI.setVisible(true);
        
        
     }//GEN-LAST:event_planningActionPerformed
 
     private void accueilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accueilActionPerformed
-       AccueilChauffeur accueilChauffeur = new AccueilChauffeur();
-    accueilChauffeur.setVisible(true);
-    setVisible(false);
+        setVisible(false);
+        this.setVisible(true);
     }//GEN-LAST:event_accueilActionPerformed
 
     /**

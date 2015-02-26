@@ -320,13 +320,14 @@ public class Profil extends javax.swing.JFrame {
     }//GEN-LAST:event_emailActionPerformed
 
     private void TelechargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelechargerActionPerformed
-       JFileChooser Chooser = new JFileChooser();
-        Chooser.showOpenDialog(null);
-        File f = Chooser.getSelectedFile();
-        String name=f.getAbsolutePath();
-        
         
         try{ 
+            JFileChooser Chooser = new JFileChooser();
+            Chooser.showOpenDialog(null);
+            File f = Chooser.getSelectedFile();
+        
+            String name=f.getAbsolutePath();
+        
             File image = new File(name);
             
             FileInputStream fis = new FileInputStream(image);
@@ -341,8 +342,11 @@ public class Profil extends javax.swing.JFrame {
             //ImageIcon format = new ImageIcon(user.getImage());
             photo.setIcon(format);
             }
-        catch(Exception exception)
-        {JOptionPane.showMessageDialog(null, exception);}
+            catch(NullPointerException e){
+            }
+            catch(Exception exception)
+                {JOptionPane.showMessageDialog(null, "erreur");
+                    System.out.println(exception);}
                                  
     }//GEN-LAST:event_TelechargerActionPerformed
 
