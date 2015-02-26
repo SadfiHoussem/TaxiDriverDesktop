@@ -6,6 +6,7 @@
 package edu.esprit.gui.administrateur;
 
 import edu.esprit.DAO.classes.AgenceDAO;
+import edu.esprit.DAO.classes.VoitureDAO;
 import edu.esprit.adapters.ConsulterVoitures;
 import edu.esprit.entities.Agence;
 import edu.esprit.entities.Voiture;
@@ -23,12 +24,12 @@ public class GestionVoiture extends javax.swing.JFrame {
     
     public GestionVoiture() {
         initComponents();
-        jTable1.setModel(new ConsulterVoitures());
+        jTable1.setModel(new ConsulterVoitures(VoitureDAO.getInstance().DisplayAllVoitures()));
         listeAgences=getListeAgence();
     }
 
     private void updateModel(){        
-        jTable1.setModel(new ConsulterVoitures());
+        jTable1.setModel(new ConsulterVoitures(VoitureDAO.getInstance().DisplayAllVoitures()));
     }
 
     private List<Agence> getListeAgence() {    

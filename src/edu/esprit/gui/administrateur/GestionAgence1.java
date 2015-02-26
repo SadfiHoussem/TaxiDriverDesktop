@@ -13,6 +13,7 @@ import edu.esprit.entities.Agence;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -215,7 +216,7 @@ public class GestionAgence1 extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -283,8 +284,13 @@ public class GestionAgence1 extends javax.swing.JFrame {
     private void ButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUpdateActionPerformed
 
       Agence g =new Agence();
+        try {
+            g.setIdAgence(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Veuillez selectionner une ligne du tableau" );
+		return;
+        }
       
-      g.setIdAgence(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
       
       g.setNomAgence(nom.getText());
       
@@ -301,12 +307,16 @@ public class GestionAgence1 extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonUpdateActionPerformed
 
     private void ButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSupprimerActionPerformed
-
-        String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
-        Agence a=AgenceDAO.getInstance().findAgenceById(Integer.parseInt(id));
+        try {
+            String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
+            Agence a=AgenceDAO.getInstance().findAgenceById(Integer.parseInt(id));
         
-        AgenceDAO.getInstance().deleteAgence(a);
-        updateModel();
+            AgenceDAO.getInstance().deleteAgence(a);
+            updateModel();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Veuillez selectionner une ligne du tableau" );
+        }
+        
     }//GEN-LAST:event_ButtonSupprimerActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

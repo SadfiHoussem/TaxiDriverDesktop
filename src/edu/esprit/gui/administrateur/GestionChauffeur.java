@@ -5,6 +5,7 @@
  */
 package edu.esprit.gui.administrateur;
 
+import edu.esprit.DAO.classes.ChauffeurDAO;
 import edu.esprit.adapters.ConsulterChauffeurs;
 
 
@@ -16,11 +17,11 @@ public class GestionChauffeur extends javax.swing.JFrame {
 
     public GestionChauffeur() {
         initComponents();
-        jTable1.setModel(new ConsulterChauffeurs());
+        jTable1.setModel(new ConsulterChauffeurs(ChauffeurDAO.getInstance().DisplayAllChauffeur()));
     }
 
     private void updateModel(){
-        jTable1.setModel(new ConsulterChauffeurs());       
+        jTable1.setModel(new ConsulterChauffeurs(ChauffeurDAO.getInstance().DisplayAllChauffeur()));       
     }
 
     /**

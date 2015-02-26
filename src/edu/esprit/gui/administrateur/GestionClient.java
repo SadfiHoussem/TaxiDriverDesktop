@@ -8,6 +8,8 @@ package edu.esprit.gui.administrateur;
 import edu.esprit.DAO.classes.ClientDAO;
 import edu.esprit.adapters.ConsulterClients;
 import edu.esprit.entities.Client;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -258,42 +260,82 @@ public class GestionClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BannirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BannirButtonActionPerformed
-
-        Client c =new Client();
-   
-       
-        c.setLogin(login.getText());
-        c.setPwd(password.getText());
-        c.setCin(Long.parseLong(cin.getText()));
-         c.setNom(nom.getText());
-         c.setPrenom(prenom.getText());
-         c.setTelephone(Integer.parseInt(telephone.getText()));
-         c.setEmail(email.getText());
-        c.setAdresse(adresse.getText());
-      
-
-     ClientDAO cDAO = ClientDAO.getInstance();
-        cDAO.insertClient(c);
+        try {
+            if(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),9).toString().equals("true"))
+                ClientDAO.getInstance().desacCompteClient(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
+            else 
+                ClientDAO.getInstance().activCompteClient(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
         
         updateModel();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Veuillez selectionner une ligne du tableau" );
+        }
+        
     }//GEN-LAST:event_BannirButtonActionPerformed
 
     private void ButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUpdateActionPerformed
-   
-        Client c =new Client();
-         
-        c.setIdClient(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
-        c.setLogin(login.getText());
-        c.setPwd(password.getText());
-        c.setNom(nom.getText());
-        c.setPrenom(prenom.getText());
-        c.setEmail(email.getText());
-        c.setTelephone(Integer.parseInt(telephone.getText()));
-        c.setAdresse(adresse.getText());
-        c.setCin(Long.parseLong(cin.getText()));
+        try {
+            String nomClient = nom.getText();
+	if ((!Pattern.matches("[a-zA-Z]*", nomClient))||(nomClient.equals("")))
+	{
+		JOptionPane.showMessageDialog(null, "Rentrez un nom valide" );
+		return;
+        }
         
-    ClientDAO.getInstance().updateClient(c);
-        updateModel();
+        String prenomClient = prenom.getText();
+        if ((!Pattern.matches("[a-zA-Z]*", prenomClient)||(prenomClient.equals(""))))
+	{
+		JOptionPane.showMessageDialog(null, "Rentrez un prenom valide" );
+		return;
+        }
+  
+            try {
+                if ( !(cin.getText().length() == 8 )){{
+                    JOptionPane.showMessageDialog(null, "Rentrer une CIN de 8 chiffres" );
+		return;
+        }
+                        }
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Le champ CIN n'accepte que les chiffres ", "Alert", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            try {
+                    if ( !(telephone.getText().length() == 8 )){{
+                        JOptionPane.showMessageDialog(null, "Rentrer un numero de telephone de 8 chiffres" );
+                        return;
+                    }
+                        }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Le champ Numero de telephone n'accepte que les chiffres ", "Alert", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            String mail = email.getText();
+         if ((!mail.contains("@"))&&(!mail.contains("."))) {
+         {
+		JOptionPane.showMessageDialog(null, "Rentrez un mail valide" );
+		return;
+        }}
+            Client c =new Client();
+            
+            c.setIdClient(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
+            c.setLogin(login.getText());
+            c.setPwd(password.getText());
+            c.setNom(nom.getText());
+            c.setPrenom(prenom.getText());
+            c.setEmail(email.getText());
+            c.setTelephone(Integer.parseInt(telephone.getText()));
+            c.setAdresse(adresse.getText());
+            c.setCin(Long.parseLong(cin.getText()));
+
+            ClientDAO.getInstance().updateClient(c);
+            updateModel();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Veuillez selectionner une ligne du tableau" );
+        }
+        
     }//GEN-LAST:event_ButtonUpdateActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -311,11 +353,14 @@ public class GestionClient extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void ButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSupprimerActionPerformed
-
-
-         String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
-           ClientDAO.getInstance().deleteClient(Integer.parseInt(id));
-           updateModel();
+        try {
+            String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
+            ClientDAO.getInstance().deleteClient(Integer.parseInt(id));
+            updateModel();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Veuillez selectionner une ligne du tableau" );	
+        }
+         
     }//GEN-LAST:event_ButtonSupprimerActionPerformed
 
     private void ButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonResetActionPerformed

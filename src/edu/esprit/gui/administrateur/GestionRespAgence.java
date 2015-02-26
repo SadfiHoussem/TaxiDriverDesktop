@@ -228,26 +228,25 @@ public class GestionRespAgence extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 201, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addComponent(ButtonReset)
-                .addGap(53, 53, 53)
-                .addComponent(ButtonSupprimer)
-                .addGap(46, 46, 46)
-                .addComponent(ButtonUpdate)
-                .addGap(41, 41, 41)
-                .addComponent(ButtonAjouter)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(29, 29, 29))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ButtonReset)
+                        .addGap(37, 37, 37)
+                        .addComponent(ButtonSupprimer)
+                        .addGap(35, 35, 35)
+                        .addComponent(ButtonUpdate)
+                        .addGap(31, 31, 31)
+                        .addComponent(ButtonAjouter))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 201, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,71 +370,74 @@ public class GestionRespAgence extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonAjouterActionPerformed
 
     private void ButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUpdateActionPerformed
-      ResponsableAgence  resp =new ResponsableAgence();
+        try {
+            ResponsableAgence  resp =new ResponsableAgence();
         
-       String nomParent = nom.getText();
-	if (!Pattern.matches("[a-zA-Z]*", nomParent))
-	{
-		JOptionPane.showMessageDialog(null, "Rentrez un nom valide" );
-		return;
-        }
-        
-        String prenomParent = prenom.getText();
-        if (!Pattern.matches("[a-zA-Z]*", prenomParent))
-	{
-		JOptionPane.showMessageDialog(null, "Rentrez un prenom valide" );
-		return;
-        }
-        
-        
-            
-            try {
+            String nomParent = nom.getText();
+            if (!Pattern.matches("[a-zA-Z]*", nomParent))
+            {
+                    JOptionPane.showMessageDialog(null, "Rentrez un nom valide" );
+                    return;
+            }
 
-                int acin = Integer.parseInt(this.cin.getText());
-                
-                 if ( !(cin.getText().length() == 8 )){{
-                            JOptionPane.showMessageDialog(null, "Rentrer une CIN de 8 chiffres" );
-		return;
-        }
-                        }
-                
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Le champ CIN n'accepte que les chiffres ", "Alert", JOptionPane.ERROR_MESSAGE);
-                return;
+            String prenomParent = prenom.getText();
+            if (!Pattern.matches("[a-zA-Z]*", prenomParent))
+            {
+                    JOptionPane.showMessageDialog(null, "Rentrez un prenom valide" );
+                    return;
             }
-            
-            try {
-                int numtel = Integer.parseInt(this.telephone.getText());
-                 
-                        if ( !(telephone.getText().length() == 8 )){{
-                            JOptionPane.showMessageDialog(null, "Rentrer un numero de telephone de 8 chiffres" );
-		return;
-        }
-                        }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Le champ Numero de telephone n'accepte que les chiffres ", "Alert", JOptionPane.ERROR_MESSAGE);
-                return;
+
+                try {
+
+                    int acin = Integer.parseInt(this.cin.getText());
+
+                     if ( !(cin.getText().length() == 8 )){{
+                                JOptionPane.showMessageDialog(null, "Rentrer une CIN de 8 chiffres" );
+                    return;
             }
-            
-            String mail = email.getText();
-         if ((!mail.contains("@"))&&(!mail.contains("."))) {
-         {
-		JOptionPane.showMessageDialog(null, "Rentrez un mail valide" );
-		return;
-        }}
+                            }
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Le champ CIN n'accepte que les chiffres ", "Alert", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                try {
+                    int numtel = Integer.parseInt(this.telephone.getText());
+
+                            if ( !(telephone.getText().length() == 8 )){{
+                                JOptionPane.showMessageDialog(null, "Rentrer un numero de telephone de 8 chiffres" );
+                    return;
+            }
+                            }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Le champ Numero de telephone n'accepte que les chiffres ", "Alert", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                String mail = email.getText();
+             if ((!mail.contains("@"))&&(!mail.contains("."))) {
+             {
+                    JOptionPane.showMessageDialog(null, "Rentrez un mail valide" );
+                    return;
+            }}
+
+            resp.setIdResponsableAgence(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
+            resp.setLogin(login.getText());
+            resp.setPwd(password.getText());
+            resp.setNom(nom.getText());
+            resp.setPrenom(prenom.getText());
+            resp.setEmail(email.getText());
+            resp.setTelephone(Integer.parseInt(telephone.getText()));
+            resp.setAdresse(adresse.getText());
+            resp.setCin(Long.parseLong(cin.getText()));
+
+            ResponsableAgenceDAO.getInstance().updateRespAgence(resp);
+            updateModel();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Veuillez selectionner une ligne du tableau" );
+        }
         
-        resp.setIdResponsableAgence(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString()));
-        resp.setLogin(login.getText());
-        resp.setPwd(password.getText());
-        resp.setNom(nom.getText());
-        resp.setPrenom(prenom.getText());
-        resp.setEmail(email.getText());
-        resp.setTelephone(Integer.parseInt(telephone.getText()));
-        resp.setAdresse(adresse.getText());
-        resp.setCin(Long.parseLong(cin.getText()));
-        
-        ResponsableAgenceDAO.getInstance().updateRespAgence(resp);
-        updateModel();
     }//GEN-LAST:event_ButtonUpdateActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -453,11 +455,15 @@ public class GestionRespAgence extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void ButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSupprimerActionPerformed
-
-
-         String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
+        try {
+           String id= jTable1.getModel().getValueAt(jTable1.getSelectedRow(),0).toString();
            ResponsableAgenceDAO.getInstance().deleteRespAgence(Integer.parseInt(id));
            updateModel();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Veuillez selectionner une ligne du tableau" );
+        }
+
+         
     }//GEN-LAST:event_ButtonSupprimerActionPerformed
 
     private void ButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonResetActionPerformed
